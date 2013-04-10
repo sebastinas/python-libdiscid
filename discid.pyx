@@ -1,4 +1,4 @@
-# Copyright 20123 Sebastian Ramacher <sebastian+dev@ramacher.at>
+# Copyright 2013 Sebastian Ramacher <sebastian+dev@ramacher.at>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the “Software”), to deal
@@ -38,7 +38,6 @@ cdef bool _has_feature(int feature):
 class DiscError(IOError):
   """ :func:`DiscId.read` will raise this exception when an error occured.
   """
-  pass
 
 cdef unicode _to_unicode(char* s):
   return s.decode('UTF-8', 'strict')
