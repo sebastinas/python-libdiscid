@@ -1,0 +1,7 @@
+dist/
+build/
+doc/_build/
+*.py[co]
+MANIFEST
+discid.c
+*.egg-info

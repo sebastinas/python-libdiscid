@@ -1,0 +1,4 @@
+include discid-wrapper.h
+include cdiscid.pxd
+include discid.pyx
+exclude discid.c
