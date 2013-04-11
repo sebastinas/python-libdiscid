@@ -112,17 +112,12 @@ cdef class DiscId:
     raised.
     """
 
-    try:
-      iter(offsets)
-    except TypeError:
-      raise TypeError("offsets has to be iterable")
-
     cdef array coffsets = array(shape=(len(offsets) + 1, ),
                                 itemsize=sizeof(int),
                                 format="i")
     coffsets[0] = sectors
-    for i in range(len(offsets)):
-      coffsets[i + 1] = offsets[i]
+    for (i, v) in enumerate(offsets):
+      coffsets[i + 1] = v
 
     return self._put(first, last, coffsets)
 
