@@ -24,17 +24,17 @@ class TestLibDiscId(unittest.TestCase):
     disc = libdiscid.put(first, last, sectors, offsets)
     self.assertTrue(disc is not None)
 
-    self.assertEquals(disc.id, disc_id)
-    self.assertEquals(disc.freedb_id, freedb_id)
+    self.assertEqual(disc.id, disc_id)
+    self.assertEqual(disc.freedb_id, freedb_id)
     self.assertTrue(disc.submission_url is not None)
     self.assertTrue(disc.webservice_url is not None)
-    self.assertEquals(disc.first_track, first)
-    self.assertEquals(disc.last_track, last)
-    self.assertEquals(disc.sectors, sectors)
+    self.assertEqual(disc.first_track, first)
+    self.assertEqual(disc.last_track, last)
+    self.assertEqual(disc.sectors, sectors)
 
-    self.assertEquals(len(disc.track_offsets), len(offsets))
+    self.assertEqual(len(disc.track_offsets), len(offsets))
     for l, r in zip(disc.track_offsets, offsets):
-      self.assertEquals(l, r)
+      self.assertEqual(l, r)
 
   def test_put_fail(self):
     first = 13
