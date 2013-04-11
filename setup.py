@@ -11,7 +11,7 @@ def read(name):
   return ret
 
 setup(
-  name="libdiscid",
+  name="python-libdiscid",
   version="0.1",
   description="Python bindings for libdiscid",
   long_description=read("README.rst"),

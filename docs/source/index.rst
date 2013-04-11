@@ -51,8 +51,8 @@ it and run::
 
  python setup.py install
 
-.. __: https://pypi.python.org/pypi/libdiscid/
-.. __: https://pypi.python.org/pypi/libdiscid/
+.. __: https://pypi.python.org/pypi/python-libdiscid/
+.. __: https://pypi.python.org/pypi/python-libdiscid/
 
 Usage
 -----
