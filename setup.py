@@ -11,6 +11,10 @@ setup(
   author_email="sebastian+dev@ramacher.at",
   license="Expat",
   ext_modules = cythonize([
-      Extension("discid", ["discid.pyx", "discid-wrapper.c"])
+    Extension("discid", ["discid.pyx", "discid-wrapper.c"])
   ]),
+  install_requires = [
+    "cython",
+    "setuptools"
+  ]
 )
