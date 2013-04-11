@@ -123,8 +123,8 @@ cdef class DiscId:
     """
 
     def __get__(self):
-      if not self._have_read:
-        return None
+      assert self._have_read
+
       return _to_unicode(cdiscid.discid_get_id(self._c_discid))
 
   property freedb_id:
@@ -132,8 +132,8 @@ cdef class DiscId:
     """
 
     def __get__(self):
-      if not self._have_read:
-        return None
+      assert self._have_read
+
       return _to_unicode(cdiscid.discid_get_freedb_id(self._c_discid))
 
   property submission_url:
@@ -144,8 +144,8 @@ cdef class DiscId:
     """
 
     def __get__(self):
-      if not self._have_read:
-        return None
+      assert self._have_read
+
       return _to_unicode(cdiscid.discid_get_submission_url(self._c_discid))
 
   property webservice_url:
@@ -156,8 +156,8 @@ cdef class DiscId:
     """
 
     def __get__(self):
-      if not self._have_read:
-        return None
+      assert self._have_read
+
       return _to_unicode(cdiscid.discid_get_webservice_url(self._c_discid))
 
   property first_track:
@@ -165,8 +165,8 @@ cdef class DiscId:
     """
 
     def __get__(self):
-      if not self._have_read:
-        return None
+      assert self._have_read
+
       return cdiscid.discid_get_first_track_num(self._c_discid)
 
   property last_track:
@@ -174,8 +174,8 @@ cdef class DiscId:
     """
 
     def __get__(self):
-      if not self._have_read:
-        return None
+      assert self._have_read
+
       return cdiscid.discid_get_last_track_num(self._c_discid)
 
   property sectors:
@@ -183,8 +183,8 @@ cdef class DiscId:
     """
 
     def __get__(self):
-      if not self._have_read:
-        return None
+      assert self._have_read
+
       return cdiscid.discid_get_sectors(self._c_discid)
 
   property leadout_track:
@@ -195,68 +195,68 @@ cdef class DiscId:
       return self.sectors
 
   property track_offsets:
-    """ A list of all track offsets.
+    """ Tuple of all track offsets.
 
     The first element corresponds to the offset of the track denoted by
     :attr:`first_track` and so on.
     """
 
     def __get__(self):
-      if not self._have_read:
-        return None
-      return [cdiscid.discid_get_track_offset(self._c_discid, track) for \
-              track in range(self.first_track, self.last_track + 1)]
+      assert self._have_read
+
+      return tuple(cdiscid.discid_get_track_offset(self._c_discid, track) \
+                   for track in range(self.first_track, self.last_track + 1))
 
   property pregap:
     """ Pregap of the first track.
     """
 
     def __get__(self):
-      if self.track_offsets is None:
-        return None
+      assert self._have_read
+
       return self.track_offsets[0]
 
   property track_lengths:
-    """ A list of all track lengths.
+    """ Tuple of all track lengths.
 
     The first element corresponds to the length of the track denoted by
     :attr:`first_track` and so on.
     """
 
     def __get__(self):
-      if not self._have_read:
-        return None
-      return [cdiscid.discid_get_track_length(self._c_discid, track) for \
-              track in range(self.first_track, self.last_track + 1)]
+      assert self._have_read
+
+      return tuple(cdiscid.discid_get_track_length(self._c_discid, track) \
+                   for track in range(self.first_track, self.last_track + 1))
 
   property mcn:
     """ Media Catalogue Number of the disc.
     """
 
     def __get__(self):
+      assert self._have_read
+
       if not _has_feature(cdiscid.DISCID_FEATURE_MCN):
         raise NotImplementedError("MCN is not available with this version " \
                                   "of libdiscid and/or platform")
-      if not self._have_read:
-        return None
       return _to_unicode(cdiscid.discid_get_mcn(self._c_discid))
 
   property track_isrcs:
-    """ A list if all track ISRCs.
+    """ Tuple if all track ISRCs.
 
     The first element of the list corresponds to the the ISRC of the
     :attr:`first_track` and so on.
     """
 
     def __get__(self):
+      assert self._have_read
+
       if not _has_feature(cdiscid.DISCID_FEATURE_ISRC):
         raise NotImplementedError("ISRC is not available with this version " \
                                   "of libdiscid and/or platform")
-
-      if not self._have_read:
-        return None
-      return [_to_unicode(cdiscid.discid_get_track_isrc(self._c_discid, track)) for \
-              track in range(self.first_track, self.last_track + 1)]
+      return tuple(_to_unicode(cdiscid.discid_get_track_isrc(self._c_discid,
+                                                             track)) for \
+                   track in range(self.first_track, self.last_track + 1))
 
 
 DEFAULT_DEVICE = _to_unicode(cdiscid.discid_get_default_device())
