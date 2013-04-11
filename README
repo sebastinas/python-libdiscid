@@ -1,27 +1,27 @@
 libdiscid Python bindings
--------------------------
+=========================
 
-python-libdiscid implements Python bindings for libdiscid using cython. Both
+python-libdiscid implements Python bindings for libdiscid using Cython. Both
 Python 2.x and 3.x are supported.
 
 Dependencies
-~~~~~~~~~~~~
+------------
 
 libdiscid
-cython (>= 0.15)
+Cython (>= 0.15)
 
 Usage
-~~~~~
+-----
 
 ::
 
-    from libdiscid import DiscId
+  from libdiscid import DiscId
 
-    disc = DiscId()
-    disc.read("/dev/cdrom")
-    print "id: %s" % (disc.id, )
+  disc = DiscId()
+  disc.read("/dev/cdrom")
+  print "id: %s" % (disc.id, )
 
 License
-~~~~~~~
+-------
 
 python-libdiscid is release under the Expat license. Check LICENSE for details.
