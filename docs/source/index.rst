@@ -1,13 +1,11 @@
-python-libdiscid
-================
+python-libdiscid |release|
+==========================
 
 `python-libdiscid` provides Python bindings for :musicbrainz:`libdiscid`.
 `libdiscid`'s main purpose is the calculation of identifiers for audio discs
 to use for the MusicBrainz_ database.
 
 `python-libdiscid` is released under the :ref:`Expat license <license>`.
-
-Please report bugs to the project's issue tracker at GitHub_.
 
 Contents
 --------
@@ -22,18 +20,39 @@ Contents
 Installation
 ------------
 
+Dependencies
+^^^^^^^^^^^^
+
 `python-libdiscid` depends on the following components:
 
 * :musicbrainz:`libdiscid`
-* Cython_ (>= 0.15)
+* `Cython`__ (>= 0.15)
 
 On Debian based systems, the dependencies are only an `apt-get` away::
 
  apt-get install cython libdiscid0-dev
 
-`Cython` is also available via `PyPI <_CythonPyPI>`_::
+`Cython` is also available via `PyPI`__::
 
  pip install cython
+
+.. __: http://www.cython.org/
+.. __: https://pypi.python.org/pypi/Cython/
+
+PyPI
+^^^^
+
+`python-libdiscid` is available from `PyPI`__::
+
+ pip install libdiscid
+
+You can also download the tarball from `PyPI`__ manually, unpack
+it and run::
+
+ python setup.py install
+
+.. __: https://pypi.python.org/pypi/libdiscid/
+.. __: https://pypi.python.org/pypi/libdiscid/
 
 Usage
 -----
@@ -50,6 +69,12 @@ it will read from :data:`libdiscid.DEFAULT_DEVICE`. If reading is not supported
 on your platform, :py:exc:`NotImplentedError` will be raised. If anything goes
 wrong while reading from the device, :exc:`libdiscid.discid.DiscError` will
 be raised.
+
+Bugs
+----
+
+Please report bugs to the project's issue tracker at `GitHub`_.
+
 
 libdiscid features support
 --------------------------
@@ -75,7 +100,7 @@ However, there are subtle differences:
     from discid import DiscId
     with DiscId() as disc:
       disc.read()
-      # now disk.id et al are available
+      # now disk.id, etc. are available
 
   This also requires the user to clean up the memory manually if the ``with``
   statement is not used. These details are hidden in `python-libdiscid`.
@@ -88,5 +113,3 @@ However, there are subtle differences:
 
 .. _GitHub: https://github.com/sebastinas/python-libdiscid
 .. _MusicBrainz: http://musicbrainz.org
-.. _Cython: http://www.cython.org/
-.. _CythonPyPI: https://pypi.python.org/pypi/Cython/
