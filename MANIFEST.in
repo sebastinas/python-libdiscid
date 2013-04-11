@@ -1,4 +1,4 @@
-include discid-wrapper.h
-include cdiscid.pxd discid.pyx
+include libdiscid/discid-wrapper.h
+include libdiscid/cdiscid.pxd libdiscid/discid.pyx
+exclude libdiscid/discid.c
 include LICENSE README
-exclude discid.c

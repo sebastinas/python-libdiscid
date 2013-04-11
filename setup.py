@@ -4,7 +4,7 @@ from setuptools import setup, Extension
 from Cython.Build import cythonize
 
 setup(
-  name="libdiscid",
+  name="python-libdiscid",
   version="0.1",
   description="Python binding of libdiscid",
   author="Sebastian Ramacher",
