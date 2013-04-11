@@ -21,8 +21,8 @@
 cimport cdiscid
 cimport cpython
 from libc cimport limits
+from libc.stdlib cimport malloc, free
 from cpython cimport bool
-from cython.view cimport array
 
 """ cython based Python bindings of libdiscid
 
@@ -97,8 +97,8 @@ cdef class DiscId:
     cdef char* cdevice = py_byte_device
     return self._read(cdevice, features)
 
-  cdef _put(self, int first, int last, array[int] offsets):
-    if not cdiscid.discid_put(self._c_discid, first, last, <int*>offsets.data):
+  cdef _put(self, int first, int last, int* offsets):
+    if not cdiscid.discid_put(self._c_discid, first, last, offsets):
       raise DiscError(self._get_error_msg())
     self._have_read = True
 
@@ -112,14 +112,17 @@ cdef class DiscId:
     raised.
     """
 
-    cdef array coffsets = array(shape=(len(offsets) + 1, ),
-                                itemsize=sizeof(int),
-                                format="i")
-    coffsets[0] = sectors
-    for (i, v) in enumerate(offsets):
-      coffsets[i + 1] = v
+    cdef int* coffsets = <int*> malloc((len(offsets) + 1) * sizeof(int))
+    if coffsets is NULL:
+      raise MemoryError()
 
-    return self._put(first, last, coffsets)
+    try:
+      coffsets[0] = sectors
+      for (i, v) in enumerate(offsets):
+        coffsets[i + 1] = v
+      return self._put(first, last, coffsets)
+    finally:
+      free(coffsets)
 
   cdef unicode _get_error_msg(self):
     return _to_unicode(cdiscid.discid_get_error_msg(self._c_discid))

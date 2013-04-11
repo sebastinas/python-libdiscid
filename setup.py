@@ -14,7 +14,7 @@ setup(
     Extension("libdiscid", ["discid.pyx", "discid-wrapper.c"])
   ]),
   install_requires = [
-    "cython",
+    "cython >= 0.15",
     "setuptools"
   ]
 )
