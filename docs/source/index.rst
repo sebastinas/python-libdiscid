@@ -70,6 +70,19 @@ on your platform, :py:exc:`NotImplentedError` will be raised. If anything goes
 wrong while reading from the device, :exc:`libdiscid.discid.DiscError` will
 be raised.
 
+Starting with `libdiscid` 0.5.0, it is possible to explicitly state what should
+be read. For example, to read the MCN, one would use::
+
+ from libdiscid import read, FEATURE_MCN
+ disc = read(features=FEATURE_MCN)
+
+:func:`libdiscid.put` can be used to compute the disc ID based on the first and
+last track, the number of total sectors and track offsets::
+
+ from libdiscid import put
+ disc = put(first_track, last_track, num_sectors, offsets)
+ print "id: %s" % (disc.id, )
+
 Bugs
 ----
 
