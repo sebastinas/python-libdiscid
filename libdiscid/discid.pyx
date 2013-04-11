@@ -28,7 +28,8 @@ cdef bool _has_feature(int feature):
   return <bool>cdiscid.discid_has_feature(feature)
 
 class DiscError(IOError):
-  """ :func:`DiscId.read` will raise this exception when an error occured.
+  """ :func:`DiscId.read` and :func:`DiscId.put` will raise this exception when
+  an error occurred.
   """
 
 cdef unicode _to_unicode(char* s):
@@ -73,7 +74,7 @@ cdef class DiscId:
     """ Reads the TOC from the device given as string.
 
     If no device is given, :data:`DEFAULT_DEVICE` is used. features can be any
-    combination of :data:`FEATURE_MCN` and :data:`FEATURE_ISCR`. Note that prior
+    combination of :data:`FEATURE_MCN` and :data:`FEATURE_ISRC`. Note that prior
     to libdiscid version 0.5.0 features has no effect.
 
     A :exc:`DiscError` exception is raised when reading fails, and

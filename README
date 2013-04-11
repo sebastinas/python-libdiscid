@@ -1,14 +1,14 @@
 libdiscid Python bindings
 -------------------------
 
-python-libdiscid implements Python bindings for libdiscid. Both Python 2.x and
-3.x are supported.
+python-libdiscid implements Python bindings for libdiscid using cython. Both
+Python 2.x and 3.x are supported.
 
 Dependencies
 ~~~~~~~~~~~~
 
 libdiscid
-cython
+cython (>= 0.15)
 
 Usage
 ~~~~~
