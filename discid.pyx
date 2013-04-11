@@ -22,6 +22,7 @@ cimport cdiscid
 cimport cpython
 from libc cimport limits
 from cpython cimport bool
+from cython.view cimport array
 
 """ cython based Python bindings of libdiscid
 
@@ -96,6 +97,35 @@ cdef class DiscId:
     cdef char* cdevice = py_byte_device
     return self._read(cdevice, features)
 
+  cdef _put(self, int first, int last, array[int] offsets):
+    if not cdiscid.discid_put(self._c_discid, first, last, <int*>offsets.data):
+      raise DiscError(self._get_error_msg())
+    self._have_read = True
+
+  cpdef put(self, int first, int last, int sectors, offsets):
+    """ Creates a TOC based on the given offets.
+
+    Takes the *first* and *last* audio tracks, as well as the number of sectors
+    and *offsets* as in :attr:`track_offsets`.
+
+    If the operation fails for some reason, a :exc:`DiscError` exception is
+    raised.
+    """
+
+    try:
+      iter(offsets)
+    except TypeError:
+      raise TypeError("offsets has to be iterable")
+
+    cdef array coffsets = array(shape=(len(offsets) + 1, ),
+                                itemsize=sizeof(int),
+                                format="i")
+    coffsets[0] = sectors
+    for i in range(len(offsets)):
+      coffsets[i + 1] = offsets[i]
+
+    return self._put(first, last, coffsets)
+
   cdef unicode _get_error_msg(self):
     return _to_unicode(cdiscid.discid_get_error_msg(self._c_discid))
 
@@ -168,35 +198,51 @@ cdef class DiscId:
         return None
       return cdiscid.discid_get_sectors(self._c_discid)
 
+  property leadout_track:
+    """ Leadout track.
+    """
+
+    def __get__(self):
+      return self.sectors
+
   property track_offsets:
     """ A list of all track offsets.
 
-    The first element is the leadout track and contains the total number of
-    sectors on the disc. The following elements are the offsets for all
-    audio tracks. ``track_offsets[i]`` is the offset for the ``i``-th track.
+    The first element corresponds to the offset of the track denoted by
+    :attr:`first_track` and so on.
     """
 
     def __get__(self):
       if not self._have_read:
         return None
-      return [self.sectors] + [cdiscid.discid_get_track_offset(self._c_discid, track) for \
+      return [cdiscid.discid_get_track_offset(self._c_discid, track) for \
               track in range(self.first_track, self.last_track + 1)]
+
+  property pregap:
+    """ Pregap of the first track.
+    """
+
+    def __get__(self):
+      if self.track_offsets is None:
+        return None
+      return self.track_offsets[0]
 
   property track_lengths:
     """ A list of all track lengths.
 
-    The first element is the length of the pregap of the first track. The
-    following elements are the lengths for all audio tracks. ``track_length[i]``
-    is the length for the ``i``-th track.
+    The first element corresponds to the length of the track denoted by
+    :attr:`first_track` and so on.
     """
 
     def __get__(self):
       if not self._have_read:
         return None
-      return [self.track_offsets[1]] + [cdiscid.discid_get_track_length(self._c_discid, track) for \
+      return [cdiscid.discid_get_track_length(self._c_discid, track) for \
               track in range(self.first_track, self.last_track + 1)]
 
   property mcn:
+    """ Media Catalogue Number of the disc.
+    """
 
     def __get__(self):
       if not _has_feature(cdiscid.DISCID_FEATURE_MCN):
@@ -207,6 +253,11 @@ cdef class DiscId:
       return _to_unicode(cdiscid.discid_get_mcn(self._c_discid))
 
   property track_isrcs:
+    """ A list if all track ISRCs.
+
+    The first element of the list corresponds to the the ISRC of the
+    :attr:`first_track` and so on.
+    """
 
     def __get__(self):
       if not _has_feature(cdiscid.DISCID_FEATURE_ISRC):
