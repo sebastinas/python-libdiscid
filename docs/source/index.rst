@@ -46,7 +46,7 @@ from a disc and compute the disc id::
 
 If no additional arguments are passed to :func:`libdiscid.read`,
 it will read from :data:`libdiscid.DEFAULT_DEVICE`. If reading is not supported
-on your platform, :exc:`NotImplentedError` will be raised. If anything goes
+on your platform, :py:exc:`NotImplentedError` will be raised. If anything goes
 wrong while reading from the device, :exc:`libdiscid.discid.DiscError` will
 be raised.
 
@@ -59,6 +59,31 @@ version 0.5.0, meaning:
 * retrieval of the disc's Media Catalogue Number and retrieving the ISRCs of
   the tracks if you're using `libdiscid` 0.4.0 and above
 * selective reading support if you're using `libdiscid` 0.5.0 and above
+
+Other Python bindings
+---------------------
+
+There are other Python bindings available. For a full list of bindings check
+:musicbrainz:`libdiscid`.
+
+Note that there are similarities between `python-libdiscid` and `python-discid`.
+However, there are subtle differences:
+
+* `python-discid` follows the typical usage of `libdiscid`'s API more closely::
+
+    from discid import DiscId
+    with DiscId() as disc:
+      disc.read()
+      # now disk.id et al are available
+
+  This also requires the user to clean up the memory manually if the ``with``
+  statement is not used. These details are hidden in `python-libdiscid`.
+* Although `python-discid`'s ``DiscId`` properties are named similarly to the
+  ones of the objects returned by :func:`libdiscid.read` and
+  :func:`libdiscid.read`, there are a few properties where the values are not
+  the same: :data:`libdiscid.DiscId.track_lengths` and
+  :data:`libdiscid.DiscId.track_offsets`
+  are noteworthy examples.
 
 .. _GitHub: https://github.com/sebastinas/python-libdiscid
 .. _MusicBrainz: http://musicbrainz.org
