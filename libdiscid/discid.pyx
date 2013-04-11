@@ -1,5 +1,3 @@
-# cython: embedsignature=True
-
 # Copyright 2013 Sebastian Ramacher <sebastian+dev@ramacher.at>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -40,17 +38,16 @@ cdef unicode _to_unicode(char* s):
 cdef class DiscId:
   """ Class to calculate MusicBrainz Disc IDs.
 
-  >>> d =DiscId()
-  >>> d.id
+  >>> d = DiscId()
   >>> d.read()
   >>> d.id is not None
-  >>> True
+  True
 
   Note that all the properties are only set after an successful read.
   """
 
   cdef cdiscid.DiscId *_c_discid
-  cdef bint _have_read
+  cdef bool _have_read
 
   def __cinit__(self):
     self._c_discid = cdiscid.discid_new()
@@ -287,6 +284,6 @@ FEATURE_MCN = cdiscid.DISCID_FEATURE_MCN
 FEATURE_ISRC = cdiscid.DISCID_FEATURE_ISRC
 
 __discid_version__ = _to_unicode(cdiscid.discid_get_version_string())
-""" Version of libdiscid. This will only give meaningful results for libdisic
+""" Version of libdiscid. This will only give meaningful results for libdiscid
     0.4.0 and higher.
 """

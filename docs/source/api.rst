@@ -17,6 +17,10 @@ API documentation
 
 .. data:: FEATURE_ISRC
 
+.. data:: __libdiscid_version__
+
+  The version of the underlying libdiscid.
+
 Classes
 -------
 

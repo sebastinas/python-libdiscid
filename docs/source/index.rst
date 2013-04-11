@@ -37,15 +37,14 @@ On Debian based systems, the dependencies are only an `apt-get` away::
 Usage
 -----
 
-:class:`libdiscid.DiscId` provides everything needed to read the information
+:func:`libdiscid.read` provides everything needed to read the information
 from a disc and compute the disc id::
 
- from libdiscid import DiscId
- d = DiscId()
- d.read()
- print "id: %s" % (d.id, )
+ from libdiscid import read
+ disc = read()
+ print "id: %s" % (disc.id, )
 
-If no additional arguments are passed to :func:`libdiscid.DiscId.read`,
+If no additional arguments are passed to :func:`libdiscid.read`,
 it will read from :data:`libdiscid.DEFAULT_DEVICE`. If reading is not supported
 on your platform, :exc:`NotImplentedError` will be raised. If anything goes
 wrong while reading from the device, :exc:`libdiscid.discid.DiscError` will

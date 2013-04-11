@@ -15,10 +15,9 @@ Usage
 
 ::
 
-  from libdiscid import DiscId
+  from libdiscid import read
 
-  disc = DiscId()
-  disc.read("/dev/cdrom")
+  disc = read("/dev/cdrom")
   print "id: %s" % (disc.id, )
 
 License
