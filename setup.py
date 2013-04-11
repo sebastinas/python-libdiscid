@@ -1,8 +1,7 @@
 #!/usr/bin/python
 
 from setuptools import setup, Extension
-# from Cython.Build import cythonize
-from Cython.Distutils import build_ext
+from Cython.Build import cythonize
 
 setup(
   name="python-libdiscid",
@@ -12,15 +11,14 @@ setup(
   author_email="sebastian+dev@ramacher.at",
   url="https://github.com/sebastinas/python-libdiscid",
   license="Expat",
-  ext_modules=[
-    Extension("libdiscid/discid",
+  ext_modules=cythonize([
+    Extension("libdiscid.discid",
       [
         "libdiscid/discid.pyx",
         "libdiscid/discid-wrapper.c"
-      ],
-      libraries=['discid']
+      ]
     )
-  ],
+  ]),
   packages=[
     'libdiscid',
     'libdiscid.tests'
@@ -30,8 +28,5 @@ setup(
     "setuptools"
   ],
   test_suite="libdiscid.tests",
-  use_2to3=True,
-  cmdclass = {
-    'build_ext': build_ext
-  }
+  use_2to3=True
 )

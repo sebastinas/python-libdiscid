@@ -7,8 +7,8 @@ Python 2.x and 3.x are supported.
 Dependencies
 ------------
 
-libdiscid
-Cython (>= 0.15)
+* libdiscid
+* Cython (>= 0.15)
 
 Usage
 -----
