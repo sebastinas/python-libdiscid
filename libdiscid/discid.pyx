@@ -24,15 +24,6 @@ from libc cimport limits
 from libc.stdlib cimport malloc, free
 from cpython cimport bool
 
-""" cython based Python bindings of libdiscid
-
-libdiscid is a library to calculate MusicBrainz Disc IDs.
-This module provides Python-bindings for libdiscid.
-
->>> d = DiscId()
->>> d.read()
-"""
-
 cdef bool _has_feature(int feature):
   return <bool>cdiscid.discid_has_feature(feature)
 
