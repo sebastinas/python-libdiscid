@@ -1,5 +1,5 @@
-API
-===
+API documentation
+=================
 
 .. automodule:: libdiscid
    :members:

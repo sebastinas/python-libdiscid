@@ -5,9 +5,18 @@ python-libdiscid
 `libdiscid`'s main purpose is the calculation of identifiers for audio discs
 to use for the MusicBrainz_ database.
 
-`python-libdiscid` is released under the Expat_ license.
+`python-libdiscid` is released under the :ref:`Expat license <license>`.
 
 Please report bugs to the project's issue tracker at GitHub_.
+
+Contents
+--------
+
+.. toctree::
+   :maxdepth: 2
+
+   api
+   license
 
 Installation
 ------------
@@ -25,6 +34,23 @@ On Debian based systems, the dependencies are only an `apt-get` away::
 
  pip install cython
 
+Usage
+-----
+
+:class:`libdiscid.DiscId` provides everything needed to read the information
+from a disc and compute the disc id::
+
+ from libdiscid import DiscId
+ d = DiscId()
+ d.read()
+ print "id: %s" % (d.id, )
+
+If no additional arguments are passed to :func:`libdiscid.DiscId.read`,
+it will read from :data:`libdiscid.DEFAULT_DEVICE`. If reading is not supported
+on your platform, :exc:`NotImplentedError` will be raised. If anything goes
+wrong while reading from the device, :exc:`libdiscid.discid.DiscError` will
+be raised.
+
 libdiscid features support
 --------------------------
 
@@ -35,16 +61,6 @@ version 0.5.0, meaning:
   the tracks if you're using `libdiscid` 0.4.0 and above
 * selective reading support if you're using `libdiscid` 0.5.0 and above
 
-Contents
---------
-
-.. toctree::
-   :maxdepth: 2
-
-   usage
-   api
-
-.. _Expat: https://en.wikipedia.org/wiki/MIT_License
 .. _GitHub: https://github.com/sebastinas/python-libdiscid
 .. _MusicBrainz: http://musicbrainz.org
 .. _Cython: http://www.cython.org/
