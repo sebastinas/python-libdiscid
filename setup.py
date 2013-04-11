@@ -10,6 +10,7 @@ setup(
   description="Python bindings of libdiscid",
   author="Sebastian Ramacher",
   author_email="sebastian+dev@ramacher.at",
+  url="https://github.com/sebastinas/python-libdiscid",
   license="Expat",
   ext_modules=[
     Extension("libdiscid/discid",
