@@ -30,7 +30,7 @@ This module provides Python-bindings for libdiscid.
 True
 """
 
-__version__ = '0.1'
+__version__ = '0.1.1'
 
 from libdiscid.discid import __discid_version__
 from libdiscid.discid import DiscId, DEFAULT_DEVICE
