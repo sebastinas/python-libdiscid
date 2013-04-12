@@ -1,3 +1,10 @@
+python-libdiscid (0.1.1) UNRELEASED; urgency=low
+
+  * Fix issues with symbol names if python-libdiscid was built against
+    a libdiscid version prior to 0.5.0 and then used with 0.5.0.
+
+ -- Sebastian Ramacher <sebastian+dev@ramacher.at>  Fri, 12 Apr 2013 19:30:07 +0200
+
 python-libdiscid (0.1) unstable; urgency=low
 
   * Initial release.
