@@ -25,7 +25,7 @@ from libc.stdlib cimport malloc, free
 from cpython cimport bool
 
 cdef bool _has_feature(int feature):
-  return <bool>cdiscid.discid_has_feature(feature)
+  return <bool>cdiscid.wrap_has_feature(feature)
 
 class DiscError(IOError):
   """ :func:`DiscId.read` and :func:`DiscId.put` will raise this exception when
@@ -65,7 +65,7 @@ cdef class DiscId:
       raise NotImplementedError("read is not available with this version of " \
                                 "libdiscid and/or platform")
 
-    if not cdiscid.discid_read_sparse(self._c_discid, device, features):
+    if not cdiscid.wrap_read_sparse(self._c_discid, device, features):
       raise DiscError(self._get_error_msg())
     self._have_read = True
 
@@ -239,7 +239,7 @@ cdef class DiscId:
       if not _has_feature(cdiscid.DISCID_FEATURE_MCN):
         raise NotImplementedError("MCN is not available with this version " \
                                   "of libdiscid and/or platform")
-      return _to_unicode(cdiscid.discid_get_mcn(self._c_discid))
+      return _to_unicode(cdiscid.wrap_get_mcn(self._c_discid))
 
   property track_isrcs:
     """ Tuple if all track ISRCs.
@@ -254,8 +254,8 @@ cdef class DiscId:
       if not _has_feature(cdiscid.DISCID_FEATURE_ISRC):
         raise NotImplementedError("ISRC is not available with this version " \
                                   "of libdiscid and/or platform")
-      return tuple(_to_unicode(cdiscid.discid_get_track_isrc(self._c_discid,
-                                                             track)) for \
+      return tuple(_to_unicode(cdiscid.wrap_get_track_isrc(self._c_discid,
+                                                           track)) for \
                    track in range(self.first_track, self.last_track + 1))
 
 
@@ -283,7 +283,7 @@ FEATURES = _feature_list()
 FEATURE_MCN = cdiscid.DISCID_FEATURE_MCN
 FEATURE_ISRC = cdiscid.DISCID_FEATURE_ISRC
 
-__discid_version__ = _to_unicode(cdiscid.discid_get_version_string())
+__discid_version__ = _to_unicode(cdiscid.wrap_get_version_string())
 """ Version of libdiscid. This will only give meaningful results for libdiscid
     0.4.0 and higher.
 """

@@ -27,7 +27,7 @@ cdef extern from "discid-wrapper.h":
 
   DiscId* discid_new()
   void discid_free(DiscId* d)
-  int discid_read_sparse(DiscId *d, const_char* device, unsigned int features)
+  int wrap_read_sparse(DiscId *d, const_char* device, unsigned int features)
   int discid_put(DiscId *d, int first, int last, int *offsets)
   char *discid_get_error_msg(DiscId *d)
   char *discid_get_id(DiscId *d)
@@ -50,8 +50,8 @@ cdef extern from "discid-wrapper.h":
   char* DISCID_FEATURE_STR_MCN
   char* DISCID_FEATURE_STR_ISRC
 
-  int discid_has_feature(int feature)
-  char *discid_get_version_string()
+  int wrap_has_feature(int feature)
+  char* wrap_get_version_string()
 
-  char* discid_get_mcn(DiscId *d)
-  char* discid_get_track_isrc(DiscId *d, int track_num)
+  char* wrap_get_mcn(DiscId *d)
+  char* wrap_get_track_isrc(DiscId *d, int track_num)

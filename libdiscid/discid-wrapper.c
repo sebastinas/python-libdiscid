@@ -34,12 +34,12 @@
 
 #ifndef DISCID_FEATURE_LENGTH
 
-char* discid_get_version_string(void)
+char* wrap_get_version_string(void)
 {
   return "libdiscid < 0.4.0";
 }
 
-int discid_has_feature(enum discid_feature feature)
+int wrap_has_feature(enum discid_feature feature)
 {
   /* except for GNU Hurd, read is available for all platforms */
 #ifndef __GNU__
@@ -50,24 +50,56 @@ int discid_has_feature(enum discid_feature feature)
     return 0;
 }
 
-char* discid_get_mcn(DiscId* UNUSED(d))
+char* wrap_get_mcn(DiscId* UNUSED(d))
 {
   return NULL;
 }
 
-char* discid_get_track_isrc(DiscId* UNUSED(d), int UNUSED(track_num))
+char* wrap_get_track_isrc(DiscId* UNUSED(d), int UNUSED(track_num))
 {
   return NULL;
+}
+
+#else
+
+char* wrap_get_version_string(void)
+{
+  return discid_get_version_string();
+}
+
+int wrap_has_feature(enum discid_feature feature)
+{
+  return discid_has_feature(feature);
+}
+
+char* wrap_get_mcn(DiscId* d)
+{
+  return discid_get_mcn(d);
+}
+
+char* wrap_get_track_isrc(DiscId* d, int track_num)
+{
+  return discid_get_track_isrc(d, track_num);
 }
 
 #endif /* libdiscid < 0.4.0 */
 
-#if !defined(DISCID_VERSION_MAJOR) || (DISCID_VERSION_MAJOR == 0 && DISCID_VERSION_MINOR < 5)
+/* discid_read_sparse appeared in 0.5.0 and 0.5.0 finally introduced defines for
+ * the version */
+#if !defined(DISCID_VERSION_MAJOR) || \
+  (DISCID_VERSION_MAJOR == 0 && DISCID_VERSION_MINOR < 5)
 
-int discid_read_sparse(DiscId *d, const char *device,
+int wrap_read_sparse(DiscId *d, const char *device,
     unsigned int UNUSED(features))
 {
   return discid_read(d, device);
+}
+
+#else
+
+int wrap_read_sparse(DiscId *d, const char *device, unsigned int features)
+{
+  return discid_read_sparse(d, device, features);
 }
 
 #endif /* libdiscid < 0.5.0 */

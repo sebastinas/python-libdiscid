@@ -24,6 +24,14 @@
 
 #include <discid/discid.h>
 
+#if (defined(__GNUC__) && (__GNUC__ >= 4)) || defined(__clang__)
+#	define INTERNAL __attribute__((visibility("hidden")))
+#elif defined(__SUNPRO_C)
+#	define INTERNAL __hidden
+#else
+#	define INTERNAL
+#endif
+
 /* use the availability of DISCID_FEATURE_LENGTH to detect libdiscid < 0.4.0 */
 #ifndef DISCID_FEATURE_LENGTH
 
@@ -37,23 +45,17 @@ enum discid_feature {
 #define DISCID_FEATURE_STR_MCN "mcn"
 #define DISCID_FEATURE_STR_ISRC "isrc"
 
-int discid_has_feature(enum discid_feature feature);
-char* discid_get_version_string(void);
+#endif /* libdiscid < 0.4.0 */
+
+int wrap_has_feature(enum discid_feature feature) INTERNAL;
+char* wrap_get_version_string(void) INTERNAL;
 
 /* discid_get_mcn and discid_get_track_isrc were introduced in 0.3.0 but there
  * is no way to reliable detect if the current platform supports mcn and isrc,
  * so let's assume they are not available and replace them with placeholders */
-char* discid_get_mcn(DiscId* d);
-char* discid_get_track_isrc(DiscId* d, int track_num);
+char* wrap_get_mcn(DiscId* d) INTERNAL;
+char* wrap_get_track_isrc(DiscId* d, int track_num) INTERNAL;
 
-#endif /* libdiscid < 0.4.0 */
-
-/* discid_read_sparse appeared in 0.5.0 and 0.5.0 finally introduced defines for
- * the version */
-#if !defined(DISCID_VERSION_MAJOR) || (DISCID_VERSION_MAJOR == 0 && DISCID_VERSION_MINOR < 5)
-
-int discid_read_sparse(DiscId *d, const char *device, unsigned int features);
-
-#endif /* libdisdic < 0.5.0 */
+int wrap_read_sparse(DiscId *d, const char *device, unsigned int features) INTERNAL;
 
 #endif
