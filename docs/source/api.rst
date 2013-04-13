@@ -15,7 +15,11 @@ API documentation
 
 .. data:: FEATURE_MCN
 
+  Read the Media Catalogue Number of the disc.
+
 .. data:: FEATURE_ISRC
+
+  Read :musicbrainz:`ISRC`s of all the tracks.
 
 .. data:: __libdiscid_version__
 

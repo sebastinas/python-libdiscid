@@ -257,4 +257,5 @@ extlinks = {
 
 intersphinx_mapping = {
   'python': ('http://docs.python.org/', None),
+  'pydiscid': ('https://python-discid.readthedocs.org/en/latest/', None),
 }

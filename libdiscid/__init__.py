@@ -28,6 +28,15 @@ This module provides Python-bindings for libdiscid.
 >>> disc = libdiscid.read()
 >>> disc.id is not None
 True
+
+* DEFAULT_DEVICE: The default device to use for :func:`DiscId.read` on this
+  platform.
+* FEATURES: The features libdiscid supports for the libdiscid/platform
+  combination.
+* FEATURE_MCN: Read the Media Catalogue Number of the disc.
+* FEATURE_ISRC: Read the :musicbrainz:`ISRC` of all the tracks.
+* __discid_version__: Version of libdiscid. This will only give meaningful
+  results for libdiscid 0.4.0 and higher.
 """
 
 __version__ = '0.1.1'

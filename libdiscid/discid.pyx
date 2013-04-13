@@ -195,7 +195,7 @@ cdef class DiscId:
       return self.sectors
 
   property track_offsets:
-    """ Tuple of all track offsets.
+    """ Tuple of all track offsets (in sectors).
 
     The first element corresponds to the offset of the track denoted by
     :attr:`first_track` and so on.
@@ -208,7 +208,7 @@ cdef class DiscId:
                    for track in range(self.first_track, self.last_track + 1))
 
   property pregap:
-    """ Pregap of the first track.
+    """ Pregap of the first track (in sectors).
     """
 
     def __get__(self):
@@ -217,7 +217,7 @@ cdef class DiscId:
       return self.track_offsets[0]
 
   property track_lengths:
-    """ Tuple of all track lengths.
+    """ Tuple of all track lengths (in sectors).
 
     The first element corresponds to the length of the track denoted by
     :attr:`first_track` and so on.
@@ -242,7 +242,7 @@ cdef class DiscId:
       return _to_unicode(cdiscid.wrap_get_mcn(self._c_discid))
 
   property track_isrcs:
-    """ Tuple if all track ISRCs.
+    """ Tuple of :musicbrainz:`ISRC`s of all tracks.
 
     The first element of the list corresponds to the the ISRC of the
     :attr:`first_track` and so on.
@@ -259,10 +259,6 @@ cdef class DiscId:
                    track in range(self.first_track, self.last_track + 1))
 
 
-DEFAULT_DEVICE = _to_unicode(cdiscid.discid_get_default_device())
-""" The default device to use for :func:`DiscId.read` on this platform.
-"""
-
 cdef _feature_list():
   _FEATURES = {
     cdiscid.DISCID_FEATURE_READ: cdiscid.DISCID_FEATURE_STR_READ,
@@ -276,14 +272,8 @@ cdef _feature_list():
       res.append(_to_unicode(s))
   return res
 
+DEFAULT_DEVICE = _to_unicode(cdiscid.discid_get_default_device())
 FEATURES = _feature_list()
-""" The features libdiscid supports for the libdiscid/platform combination.
-"""
-
 FEATURE_MCN = cdiscid.DISCID_FEATURE_MCN
 FEATURE_ISRC = cdiscid.DISCID_FEATURE_ISRC
-
 __discid_version__ = _to_unicode(cdiscid.wrap_get_version_string())
-""" Version of libdiscid. This will only give meaningful results for libdiscid
-    0.4.0 and higher.
-"""

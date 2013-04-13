@@ -2,8 +2,9 @@ python-libdiscid |release|
 ==========================
 
 `python-libdiscid` provides Python bindings for :musicbrainz:`libdiscid`.
-`libdiscid`'s main purpose is the calculation of identifiers for audio discs
-to use for the MusicBrainz_ database.
+`libdiscid`'s main purpose is the calculation of
+:musicbrainz:`identifiers <Disc ID>` for audio discs to use for the
+MusicBrainz_ database.
 
 `python-libdiscid` is released under the :ref:`Expat license <license>`.
 
@@ -66,9 +67,9 @@ from a disc and compute the disc id::
 
 If no additional arguments are passed to :func:`libdiscid.read`,
 it will read from :data:`libdiscid.DEFAULT_DEVICE`. If reading is not supported
-on your platform, :py:exc:`NotImplentedError` will be raised. If anything goes
-wrong while reading from the device, :exc:`libdiscid.discid.DiscError` will
-be raised.
+on your platform, :py:exc:`NotImplementedError` will be raised. If anything
+goes wrong while reading from the device, :exc:`libdiscid.discid.DiscError`
+will be raised.
 
 Starting with `libdiscid` 0.5.0, it is possible to explicitly state what should
 be read. For example, to read the MCN, one would use::
@@ -95,7 +96,8 @@ libdiscid features support
 `python-libdiscid` supports all the features introduced by `libdiscid` up to
 version 0.5.0, meaning:
 
-* Retrieval of the disc's Media Catalogue Number and retrieving the ISRCs of
+* Retrieval of the disc's Media Catalogue Number and retrieving the
+  :musicbrainz:`International Standard Recording Code <ISRC>` of
   the tracks if you're using `libdiscid` 0.4.0 and above.
 * Selective reading support if you're using `libdiscid` 0.5.0 and above.
 
@@ -109,24 +111,32 @@ Other Python bindings
 There are other Python bindings available. For a full list of bindings check
 :musicbrainz:`libdiscid`.
 
-Note that there are similarities between `python-libdiscid` and `python-discid`.
-However, there are subtle differences:
+Note that there are similarities between `python-libdiscid` and
+`python-discid`__. However, there are subtle differences:
 
 * `python-discid` follows the typical usage of `libdiscid`'s API more closely::
 
     from discid import DiscId
+    # with with statement
     with DiscId() as disc:
       disc.read()
       # now disk.id, etc. are available
 
+    # without with statement
+    disc = DiscId()
+    disc.read()
+    # now disk.id, etc. are available
+    disc.free()
+
   This also requires the user to clean up the memory manually if the ``with``
   statement is not used. These details are hidden in `python-libdiscid`.
-* Although `python-discid`'s ``DiscId`` properties are named similarly to the
+* Although `python-discid`'s :py:class:`discid.DiscId` properties are named similarly to the
   ones of the objects returned by :func:`libdiscid.read` and
-  :func:`libdiscid.read`, there are a few properties where the values are not
+  :func:`libdiscid.put`, there are a few properties where the values are not
   the same: :data:`libdiscid.DiscId.track_lengths` and
   :data:`libdiscid.DiscId.track_offsets`
   are noteworthy examples.
 
+.. __: https://github.com/JonnyJD/python-discid
 .. _GitHub: https://github.com/sebastinas/python-libdiscid
 .. _MusicBrainz: http://musicbrainz.org
