@@ -31,17 +31,55 @@ class TestLibDiscId(unittest.TestCase):
     self.assertEqual(disc.first_track, first)
     self.assertEqual(disc.last_track, last)
     self.assertEqual(disc.sectors, sectors)
+    self.assertEqual(disc.pregap, offsets[0])
+    self.assertEqual(disc.leadout_track, sectors)
 
     self.assertEqual(len(disc.track_offsets), len(offsets))
     for l, r in zip(disc.track_offsets, offsets):
       self.assertEqual(l, r)
 
-  def test_put_fail(self):
+    # ISRCs are not available if one calls put
+    self.assertEqual(len(disc.track_isrcs), 15)
+    for l in disc.track_isrcs:
+      self.assertEqual(l, u'')
+
+    # MCN is not available if one calls put
+    self.assertEqual(disc.mcn, u'')
+
+  def test_put_fail_1(self):
+    # !(first < last)
     first = 13
     last = 1
-    sectors = 13
+    sectors = 200
     offsets = (1, 2, 3, 4, 5, 6, 7)
     self.assertRaises(DiscError, libdiscid.put, first, last, sectors, offsets)
+
+  def test_put_fail_2(self):
+    # !(first >= 1)
+    first = 0
+    last = 10
+    sectors = 200
+    offsets = (1, 2, 3, 4, 5, 6, 7)
+    self.assertRaises(DiscError, libdiscid.put, first, last, sectors, offsets)
+
+    # !(first < 100)
+    first = 100
+    last = 200
+    self.assertRaises(DiscError, libdiscid.put, first, last, sectors, offsets)
+
+  def test_put_fail_3(self):
+    # !(last >= 1)
+    first = 0
+    last = 0
+    sectors = 200
+    offsets = (1, 2, 3, 4, 5, 6, 7)
+    self.assertRaises(DiscError, libdiscid.put, first, last, sectors, offsets)
+
+    # !(last < 100)
+    first = 1
+    last = 100
+    self.assertRaises(DiscError, libdiscid.put, first, last, sectors, offsets)
+
 
 if __name__ == '__main__':
   unittest.main()
