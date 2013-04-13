@@ -8,13 +8,8 @@ MusicBrainz_ database.
 
 `python-libdiscid` is released under the :ref:`Expat license <license>`.
 
-Bugs
-----
-
-Please report bugs to the project's issue tracker at `GitHub`_.
-
 Contents
---------
+^^^^^^^^
 
 .. toctree::
 
@@ -25,5 +20,9 @@ Contents
    changelog
    license
 
-.. _GitHub: https://github.com/sebastinas/python-libdiscid
+Index
+^^^^^
+
+* :ref:`genindex`
+
 .. _MusicBrainz: http://musicbrainz.org

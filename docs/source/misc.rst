@@ -1,6 +1,11 @@
 Miscellaneous
 -------------
 
+Bugs
+^^^^
+
+Please report bugs to the project's issue tracker at `GitHub`_.
+
 libdiscid features support
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -47,4 +52,5 @@ Note that there are similarities between `python-libdiscid` and
   semantics in both libraries: :data:`libdiscid.DiscId.track_lengths` and
   :data:`libdiscid.DiscId.track_offsets` are noteworthy examples.
 
+.. _GitHub: https://github.com/sebastinas/python-libdiscid
 .. __: https://github.com/JonnyJD/python-discid
