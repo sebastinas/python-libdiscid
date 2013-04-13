@@ -1,5 +1,5 @@
 API documentation
-=================
+-----------------
 
 .. automodule:: libdiscid
    :members:
@@ -27,13 +27,13 @@ API documentation
   The version of the underlying libdiscid.
 
 Classes
--------
+^^^^^^^
 
 .. autoclass:: libdiscid.DiscId
    :members:
 
 Exceptions
-----------
+^^^^^^^^^^
 
 .. autoexception:: libdiscid.discid.DiscError
    :show-inheritance:
