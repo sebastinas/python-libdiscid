@@ -43,7 +43,8 @@ cdef class DiscId:
   >>> d.id is not None
   True
 
-  Note that all the properties are only set after an successful read.
+  Note that all the properties are only set after an successful call to
+  :func:`DiscId.read` or :func:`DiscId.put`.
   """
 
   cdef cdiscid.DiscId *_c_discid
@@ -242,7 +243,7 @@ cdef class DiscId:
       return _to_unicode(cdiscid.wrap_get_mcn(self._c_discid))
 
   property track_isrcs:
-    """ Tuple of :musicbrainz:`ISRC`s of all tracks.
+    """ Tuple of :musicbrainz:`ISRCs <ISRC>` of all tracks.
 
     The first element of the list corresponds to the the ISRC of the
     :attr:`first_track` and so on.

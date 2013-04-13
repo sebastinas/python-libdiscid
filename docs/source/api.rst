@@ -19,7 +19,8 @@ API documentation
 
 .. data:: FEATURE_ISRC
 
-  Read :musicbrainz:`ISRC`s of all the tracks.
+  Read :musicbrainz:`International Standard Recording Codes <ISRC>` of all the
+  tracks.
 
 .. data:: __libdiscid_version__
 
