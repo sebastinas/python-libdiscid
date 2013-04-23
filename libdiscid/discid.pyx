@@ -23,6 +23,7 @@ cimport cpython
 from libc cimport limits
 from libc.stdlib cimport malloc, free
 from cpython cimport bool
+import warnings
 
 cdef bool _has_feature(int feature):
   return <bool>cdiscid.wrap_has_feature(feature)
@@ -158,6 +159,9 @@ cdef class DiscId:
 
     def __get__(self):
       assert self._have_read
+      warnings.warn("webservice_url is deprecated since it points to the old "
+                    "webservice. Please use python-musicbrainz-ngs to access "
+                    "the webservice.", DeprecationWarning)
 
       return _to_unicode(cdiscid.discid_get_webservice_url(self._c_discid))
 
