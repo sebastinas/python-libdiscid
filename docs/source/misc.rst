@@ -24,33 +24,9 @@ version to detect the features of the newer `libdiscid`.
 Other Python bindings
 ^^^^^^^^^^^^^^^^^^^^^
 
-There are other Python bindings available. For a full list of bindings check
-:musicbrainz:`libdiscid`.
-
-Note that there are similarities between `python-libdiscid` and
-`python-discid`__. However, there are subtle differences:
-
-* `python-discid` follows the typical usage of `libdiscid`'s API more closely::
-
-    from discid import DiscId
-    # with with statement
-    with DiscId() as disc:
-      disc.read()
-      # now disk.id, etc. are available
-
-    # without with statement
-    disc = DiscId()
-    disc.read()
-    # now disk.id, etc. are available
-    disc.free()
-
-  This also requires the user to clean up the memory manually if the ``with``
-  statement is not used. These details are hidden in `python-libdiscid`.
-* Although `python-discid`'s :py:class:`discid.DiscId` properties are named similarly to the
-  ones of the objects returned by :func:`libdiscid.read` and
-  :func:`libdiscid.put`, there are a few properties which have different
-  semantics in both libraries: :data:`libdiscid.DiscId.track_lengths` and
-  :data:`libdiscid.DiscId.track_offsets` are noteworthy examples.
+There are other Python bindings available. `python-discid`__ is the most
+prominent one. For a full list of bindings (including bindings for other
+languages) check musicbrainz:`libdiscid`.
 
 .. _GitHub: https://github.com/sebastinas/python-libdiscid
 .. __: https://github.com/JonnyJD/python-discid
