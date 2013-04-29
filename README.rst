@@ -10,6 +10,28 @@ Dependencies
 * libdiscid
 * Cython (>= 0.15)
 
+Quick installation guide
+------------------------
+
+libdiscid can be installed via ``pip``::
+
+  pip install libdiscid
+
+or by running::
+
+  python setup.py install
+
+If you just want to try it locally, run::
+
+  python setup.py build_ext -i
+
+and hack right away. You can also run::
+
+  python setup.py build
+
+but please make sure that ``build/lib.*`` is in ``sys.path`` before the source
+folder.
+
 Usage
 -----
 
