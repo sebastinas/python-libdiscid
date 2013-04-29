@@ -39,12 +39,14 @@ class TestLibDiscId(unittest.TestCase):
       self.assertEqual(l, r)
 
     # ISRCs are not available if one calls put
-    self.assertEqual(len(disc.track_isrcs), 15)
-    for l in disc.track_isrcs:
-      self.assertEqual(l, u'')
+    if u"isrc" in libdiscid.FEATURES:
+      self.assertEqual(len(disc.track_isrcs), 15)
+      for l in disc.track_isrcs:
+        self.assertEqual(l, u'')
 
     # MCN is not available if one calls put
-    self.assertEqual(disc.mcn, u'')
+    if u"mcn" in libdiscid.FEATURES:
+      self.assertEqual(disc.mcn, u'')
 
   def test_put_fail_1(self):
     # !(first < last)
