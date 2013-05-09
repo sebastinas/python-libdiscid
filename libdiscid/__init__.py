@@ -39,7 +39,7 @@ True
   results for libdiscid 0.4.0 and higher.
 """
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 from libdiscid.discid import __discid_version__
 from libdiscid.discid import DiscId, DEFAULT_DEVICE
