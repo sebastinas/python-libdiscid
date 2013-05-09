@@ -26,7 +26,7 @@ from cpython cimport bool
 import warnings
 
 cdef bool _has_feature(int feature):
-  return <bool>cdiscid.wrap_has_feature(feature)
+  return cdiscid.wrap_has_feature(feature) == 1
 
 class DiscError(IOError):
   """ :func:`DiscId.read` and :func:`DiscId.put` will raise this exception when
