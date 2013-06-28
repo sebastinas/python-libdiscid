@@ -47,3 +47,11 @@ Exceptions
 
 .. autoexception:: libdiscid.discid.DiscError
    :show-inheritance:
+
+
+Subpackages
+^^^^^^^^^^^
+
+.. toctree::
+
+   api.compat

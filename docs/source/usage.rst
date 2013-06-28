@@ -58,3 +58,18 @@ last track, the number of total sectors and track offsets::
 Please note that :data:`libdiscid.DiscId.mcn` and
 :data:`libdiscid.DiscId.track_isrcs` will be empty after a call to
 :func:`libdiscid.put`.
+
+python-discid compat module
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+:mod:`libdiscid.compat.discid` provides the same API as :py:mod:`discid` from
+`python-discid` version 1.0.2. This allows applications to only care about one
+API and be usable with either of `python-libdiscid` or `python-discid`
+installed. Just use the following code to import the module::
+
+ try:
+   from libdiscid.compat import discid
+ except ImportError:
+   import discid
+
+and then use the :py:mod:`discid` interface.
