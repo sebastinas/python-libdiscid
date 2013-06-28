@@ -265,15 +265,15 @@ cdef class DiscId:
                    track in range(self.first_track, self.last_track + 1))
 
 
-cdef _feature_list():
-  _FEATURES = {
+FEATURES_MAPPING = {
     cdiscid.DISCID_FEATURE_READ: cdiscid.DISCID_FEATURE_STR_READ,
     cdiscid.DISCID_FEATURE_MCN: cdiscid.DISCID_FEATURE_STR_MCN,
     cdiscid.DISCID_FEATURE_ISRC: cdiscid.DISCID_FEATURE_STR_ISRC
-  }
+}
 
+cdef _feature_list():
   res = []
-  for f, s in _FEATURES.items():
+  for f, s in FEATURES_MAPPING.items():
     if _has_feature(f):
       res.append(_to_unicode(s))
   return res
@@ -284,6 +284,7 @@ cpdef default_device():
   return _to_unicode(cdiscid.discid_get_default_device())
 
 FEATURES = _feature_list()
+FEATURE_READ = cdiscid.DISCID_FEATURE_READ
 FEATURE_MCN = cdiscid.DISCID_FEATURE_MCN
 FEATURE_ISRC = cdiscid.DISCID_FEATURE_ISRC
 __discid_version__ = _to_unicode(cdiscid.wrap_get_version_string())

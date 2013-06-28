@@ -33,6 +33,7 @@ True
   platform. DEFAULT_DEVICE is deprecated. Please use default_device instead.
 * FEATURES: The features libdiscid supports for the libdiscid/platform
   combination.
+* FEATURE_READ: Read the TOC of the disc to get the disc id.
 * FEATURE_MCN: Read the Media Catalogue Number of the disc.
 * FEATURE_ISRC: Read the :musicbrainz:`ISRC` of all the tracks.
 * __discid_version__: Version of libdiscid. This will only give meaningful
@@ -43,7 +44,8 @@ __version__ = '0.1.2'
 
 from libdiscid.discid import __discid_version__
 from libdiscid.discid import DiscId, default_device
-from libdiscid.discid import FEATURES, FEATURE_MCN, FEATURE_ISRC
+from libdiscid.discid import FEATURES, FEATURE_READ, FEATURE_MCN, FEATURE_ISRC
+from libdiscid.discid import FEATURES_MAPPING
 
 DEFAULT_DEVICE=default_device()
 
