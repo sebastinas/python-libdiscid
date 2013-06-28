@@ -29,14 +29,24 @@ from libdiscid.compat.discid import DiscError, TOCError
 
 class TestCompatDiscID(unittest.TestCase):
   def test_default_device(self):
-    self.assertTrue(discid.get_default_device() is not None)
+    self.assertIsNotNone(discid.get_default_device())
 
   def test_features(self):
-    self.assertTrue(discid.FEATURES is not None)
+    self.assertIsNotNone(discid.FEATURES)
 
   def test_features_implementes(self):
-    self.assertTrue(discid.FEATURES_IMPLEMENTED is not None)
+    self.assertIsNotNone(discid.FEATURES_IMPLEMENTED)
 
+  def test_empty_is_none(self):
+    disc = discid.Disc()
+    self.assertIsNone(disc.id)
+    self.assertIsNone(disc.freedb_id)
+    self.assertIsNone(disc.submission_url)
+    self.assertIsNone(disc.first_track_num)
+    self.assertIsNone(disc.last_track_num)
+    self.assertIsNone(disc.sectors)
+    self.assertIsNone(disc.seconds)
+    self.assertEqual(len(disc.tracks), 0)
 
   def test_read_fail(self):
     self.assertRaises(DiscError, discid.read, u'/does/not/exist')
@@ -45,31 +55,36 @@ class TestCompatDiscID(unittest.TestCase):
     first = 1
     last = 15
     sectors = 258725
+    seconds = 3450
     offsets = (150, 17510, 33275, 45910, 57805, 78310, 94650,109580, 132010,
                149160, 165115, 177710, 203325, 215555, 235590)
+    track_seconds = (231, 210, 168, 159, 273, 218, 199, 299, 229, 213, 168, 342,
+                     163, 267, 308)
     disc_id = 'TqvKjMu7dMliSfmVEBtrL7sBSno-'
     freedb_id = 'b60d770f'
 
     disc = discid.put(first, last, sectors, offsets)
-    self.assertTrue(disc is not None)
+    self.assertIsNotNone(disc)
 
     self.assertEqual(disc.id, disc_id)
     self.assertEqual(disc.freedb_id, freedb_id)
-    self.assertTrue(disc.submission_url is not None)
+    self.assertIsNotNone(disc.submission_url)
     self.assertEqual(disc.first_track_num, first)
     self.assertEqual(disc.last_track_num, last)
     self.assertEqual(disc.sectors, sectors)
+    self.assertEqual(disc.seconds, seconds)
 
     self.assertEqual(len(disc.tracks), len(offsets))
-    for track, offset in zip(disc.tracks, offsets):
+    for track, offset, sec in zip(disc.tracks, offsets, track_seconds):
       self.assertEqual(track.offset, offset)
+      self.assertEqual(track.seconds, sec)
 
     # ISRCs are not available if one calls put
     for track in disc.tracks:
-        self.assertTrue(track.isrc is None)
+        self.assertIsNone(track.isrc)
 
     # MCN is not available if one calls put
-    self.assertTrue(disc.mcn is None)
+    self.assertIsNone(disc.mcn)
 
   def test_put_fail_1(self):
     # !(first < last)
