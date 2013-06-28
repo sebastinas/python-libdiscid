@@ -279,7 +279,8 @@ cdef _feature_list():
   return res
 
 cpdef default_device():
-  """ The default device on this platform. """
+  """ The default device on this platform.
+  """
 
   return _to_unicode(cdiscid.discid_get_default_device())
 

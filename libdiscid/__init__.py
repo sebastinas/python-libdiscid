@@ -42,12 +42,13 @@ True
 
 __version__ = '0.1.2'
 
+import libdiscid.discid
 from libdiscid.discid import __discid_version__
-from libdiscid.discid import DiscId, default_device
+from libdiscid.discid import DiscId
 from libdiscid.discid import FEATURES, FEATURE_READ, FEATURE_MCN, FEATURE_ISRC
 from libdiscid.discid import FEATURES_MAPPING
 
-DEFAULT_DEVICE=default_device()
+DEFAULT_DEVICE=libdiscid.discid.default_device()
 
 def read(device=None, features=None):
   """ Reads the TOC from the device given as string.
@@ -81,3 +82,10 @@ def put(first, last, sectors, offsets):
   disc = DiscId()
   disc.put(first, last, sectors, offsets)
   return disc
+
+# this will help sphinx to properly document this function
+def default_device():
+  """ The default device on this platform.
+  """
+
+  return libdiscid.discid.default_device()

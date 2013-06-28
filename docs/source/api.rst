@@ -1,5 +1,8 @@
-API documentation
+libdiscid package
 -----------------
+
+:mod:`libdiscid` module
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. automodule:: libdiscid
    :members:
@@ -8,10 +11,17 @@ API documentation
 
   The default device of the platform.
 
+.. deprecated:: 0.1.3
+   Use :func:`default_device` instead.
+
 .. data:: FEATURES
 
   List of available features supported by the current combination of libdiscid
   and platform.
+
+.. data:: FEATURE_READ
+
+  Read the TOC of the disc to get the disc ID. This feature is always enabled.
 
 .. data:: FEATURE_MCN
 
@@ -27,13 +37,13 @@ API documentation
   The version of the underlying libdiscid.
 
 Classes
-^^^^^^^
+~~~~~~~
 
 .. autoclass:: libdiscid.DiscId
    :members:
 
 Exceptions
-^^^^^^^^^^
+~~~~~~~~~~
 
 .. autoexception:: libdiscid.discid.DiscError
    :show-inheritance:

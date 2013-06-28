@@ -12,7 +12,7 @@ from a disc and compute the disc id::
  print "id: %s" % (disc.id, )
 
 If no additional arguments are passed to :func:`libdiscid.read`,
-it will read from :data:`libdiscid.DEFAULT_DEVICE`. If reading is not supported
+it will read from :func:`libdiscid.default_device`. If reading is not supported
 on your platform, :py:exc:`NotImplementedError` will be raised. If anything
 goes wrong while reading from the device, :exc:`libdiscid.discid.DiscError`
 will be raised.
@@ -39,7 +39,8 @@ be read. For example, to read the MCN, one would use::
    print "MCN reading not supported on this platform/with this libdiscid"
 
 If you only want to get the disc id and do not care about the MCN and the ISCRs,
-you can tell that to :func:`libdiscid.read` by passing ``0`` to ``features``::
+you can tell that to :func:`libdiscid.read` by passing ``0`` or
+:data:`libdiscid.FEATURE_READ` to ``features``::
 
  from libdiscid import read
  disc = read(features=0)
