@@ -11,7 +11,7 @@ libdiscid package
 
   The default device of the platform.
 
-.. deprecated:: 0.1.3
+.. deprecated:: 0.2.0
    Use :func:`default_device` instead.
 
 .. data:: FEATURES

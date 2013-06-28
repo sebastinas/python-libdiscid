@@ -40,7 +40,7 @@ True
   results for libdiscid 0.4.0 and higher.
 """
 
-__version__ = '0.1.2'
+__version__ = '0.2.0'
 
 import libdiscid.discid
 from libdiscid.discid import __discid_version__
