@@ -6,6 +6,9 @@ class TestLibDiscId(unittest.TestCase):
   def test_default_device(self):
     self.assertTrue(libdiscid.DEFAULT_DEVICE is not None)
 
+  def test_default_device_2(self):
+    self.assertTrue(libdiscid.default_device() is not None)
+
   def test_features(self):
     self.assertTrue(libdiscid.FEATURES is not None)
 

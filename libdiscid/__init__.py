@@ -30,7 +30,7 @@ This module provides Python-bindings for libdiscid.
 True
 
 * DEFAULT_DEVICE: The default device to use for :func:`DiscId.read` on this
-  platform.
+  platform. DEFAULT_DEVICE is deprecated. Please use default_device instead.
 * FEATURES: The features libdiscid supports for the libdiscid/platform
   combination.
 * FEATURE_MCN: Read the Media Catalogue Number of the disc.
@@ -42,8 +42,10 @@ True
 __version__ = '0.1.2'
 
 from libdiscid.discid import __discid_version__
-from libdiscid.discid import DiscId, DEFAULT_DEVICE
+from libdiscid.discid import DiscId, default_device
 from libdiscid.discid import FEATURES, FEATURE_MCN, FEATURE_ISRC
+
+DEFAULT_DEVICE=default_device()
 
 def read(device=None, features=None):
   """ Reads the TOC from the device given as string.
