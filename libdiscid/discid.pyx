@@ -266,16 +266,16 @@ cdef class DiscId:
 
 
 FEATURES_MAPPING = {
-    cdiscid.DISCID_FEATURE_READ: cdiscid.DISCID_FEATURE_STR_READ,
-    cdiscid.DISCID_FEATURE_MCN: cdiscid.DISCID_FEATURE_STR_MCN,
-    cdiscid.DISCID_FEATURE_ISRC: cdiscid.DISCID_FEATURE_STR_ISRC
+    cdiscid.DISCID_FEATURE_READ: _to_unicode(cdiscid.DISCID_FEATURE_STR_READ),
+    cdiscid.DISCID_FEATURE_MCN: _to_unicode(cdiscid.DISCID_FEATURE_STR_MCN),
+    cdiscid.DISCID_FEATURE_ISRC: _to_unicode(cdiscid.DISCID_FEATURE_STR_ISRC)
 }
 
 cdef _feature_list():
   res = []
   for f, s in FEATURES_MAPPING.items():
     if _has_feature(f):
-      res.append(_to_unicode(s))
+      res.append(s)
   return res
 
 cpdef default_device():

@@ -25,11 +25,6 @@
 This module provides a compatible layer so that python-libdiscid can be used as
 a replacement for python-discid. It provides an interface compatible with
 python-discid version 1.0.2.
-
->>> try:
->>>   from libdiscid.compat.discid
->>> except ImportError:
->>>   import discid
 """
 
 from __future__ import division
@@ -170,7 +165,7 @@ def put(first, last, disc_sectors, track_offsets):
   return disc
 
 # constants defined in discid
-__version__ = '1.0.2 (compat wrapper from python-discid %s)' % \
+__version__ = '1.0.2 (compat layer from python-discid %s)' % \
   (libdiscid.__version__, )
 """ This is the version of python-discid this layer is compatible with. """
 
