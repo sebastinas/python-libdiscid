@@ -51,6 +51,12 @@ class TestCompatDiscID(unittest.TestCase):
   def test_read_fail(self):
     self.assertRaises(DiscError, discid.read, u'/does/not/exist')
 
+  def test_encoded_device(self):
+    self.assertRaises(DiscError, discid.read, '/does/not/exist')
+
+  def test_byte_device(self):
+    self.assertRaises(DiscError, discid.read, b'/does/not/exist')
+
   def test_put(self):
     first = 1
     last = 15

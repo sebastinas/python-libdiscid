@@ -54,6 +54,15 @@ def _sectors_to_seconds(sectors):
   return sectors // SECTORS_PER_SECOND + \
     (1 if remainder > SECTORS_PER_SECOND // 2 else 0)
 
+def _decode(string):
+  # Let's do the same thing discid is doing. It always accepts both strings and
+  # unicode objects and encodes/decodes them as it sees fit. libdiscid always
+  # wants unicode objects, so let's handle this.
+  try:
+    return string.decode()
+  except AttributeError:
+    return string
+
 # exceptions defined in discid
 DiscError = libdiscid.discid.DiscError
 
@@ -157,7 +166,7 @@ get_default_device = libdiscid.default_device
 
 def read(device=None, features=[]):
   disc = Disc()
-  disc.read(device, features)
+  disc.read(_decode(device), map(_decode, features))
   return disc
 
 def put(first, last, disc_sectors, track_offsets):
