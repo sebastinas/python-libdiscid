@@ -29,13 +29,13 @@ from libdiscid.discid import DiscError
 
 class TestLibDiscId(unittest.TestCase):
   def test_default_device(self):
-    self.assertTrue(libdiscid.DEFAULT_DEVICE is not None)
+    self.assertIsNotNone(libdiscid.DEFAULT_DEVICE)
 
   def test_default_device_2(self):
-    self.assertTrue(libdiscid.default_device() is not None)
+    self.assertIsNotNone(libdiscid.default_device())
 
   def test_features(self):
-    self.assertTrue(libdiscid.FEATURES is not None)
+    self.assertIsNotNone(libdiscid.FEATURES)
 
   def test_read_fail(self):
     self.assertRaises(DiscError, libdiscid.read, u'/does/not/exist')
@@ -50,12 +50,11 @@ class TestLibDiscId(unittest.TestCase):
     freedb_id = 'b60d770f'
 
     disc = libdiscid.put(first, last, sectors, offsets)
-    self.assertTrue(disc is not None)
+    self.assertIsNotNone(disc)
 
     self.assertEqual(disc.id, disc_id)
     self.assertEqual(disc.freedb_id, freedb_id)
-    self.assertTrue(disc.submission_url is not None)
-    self.assertTrue(disc.webservice_url is not None)
+    self.assertIsNotNone(disc.submission_url)
     self.assertEqual(disc.first_track, first)
     self.assertEqual(disc.last_track, last)
     self.assertEqual(disc.sectors, sectors)
