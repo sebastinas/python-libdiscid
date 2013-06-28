@@ -29,7 +29,8 @@ setup(
   ]),
   packages=[
     'libdiscid',
-    'libdiscid.tests'
+    'libdiscid.tests',
+    'libdiscid.compat'
   ],
   install_requires=[
     "cython >= 0.15",
