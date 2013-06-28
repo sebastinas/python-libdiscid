@@ -32,6 +32,7 @@ from __future__ import division
 import libdiscid
 import libdiscid.discid
 import operator
+import functools
 
 _INVERSE_FEATURES= {
     libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ]: libdiscid.FEATURE_READ,
@@ -95,11 +96,11 @@ class Disc(object):
     self.tracks = []
 
   def read(self, device, features=[]):
-    self.disc = libdiscid.read(device, reduce(
+    self.disc = libdiscid.read(device, functools.reduce(
       operator.or_, (_INVERSE_FEATURES[feature] for feature in FEATURES), 0))
     self.tracks = [
-      Track(self.disc, numb) for numb in xrange(self.disc.first_track,
-                                                self.disc.last_track + 1)]
+      Track(self.disc, numb) for numb in range(self.disc.first_track,
+                                               self.disc.last_track + 1)]
     return True
 
   def put(self, first, last, disc_sectors, track_offsets):
@@ -109,8 +110,8 @@ class Disc(object):
       raise TOCError(str(disc_error))
 
     self.tracks = [
-      Track(self.disc, num) for num in xrange(self.disc.first_track,
-                                              self.disc.last_track + 1)]
+      Track(self.disc, num) for num in range(self.disc.first_track,
+                                             self.disc.last_track + 1)]
     return True
 
   @property
