@@ -250,7 +250,7 @@ cdef class DiscId:
   property track_isrcs:
     """ Tuple of :musicbrainz:`ISRCs <ISRC>` of all tracks.
 
-    The first element of the list corresponds to the the ISRC of the
+    The first element of the list corresponds to the ISRC of the
     :attr:`first_track` and so on.
     """
 
