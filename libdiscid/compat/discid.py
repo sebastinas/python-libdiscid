@@ -46,7 +46,7 @@ class _NoneHelper(object):
                 'last_track', 'sectors', 'mcn'):
       return None
 
-    return super(NoneHelper, self).__getattr__(name)
+    return super(_NoneHelper, self).__getattr__(name)
 
 def _sectors_to_seconds(sectors):
   SECTORS_PER_SECOND = 75
