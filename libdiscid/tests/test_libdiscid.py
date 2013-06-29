@@ -23,11 +23,14 @@
 """ Tests for the libdiscid module
 """
 
-import unittest
+try:
+  from unittest2 import TestCase, main
+except ImportError:
+  from unittest import TestCase, main
 import libdiscid
 from libdiscid.discid import DiscError
 
-class TestLibDiscId(unittest.TestCase):
+class TestLibDiscId(TestCase):
   def test_default_device(self):
     self.assertIsNotNone(libdiscid.DEFAULT_DEVICE)
 
@@ -111,4 +114,4 @@ class TestLibDiscId(unittest.TestCase):
 
 
 if __name__ == '__main__':
-  unittest.main()
+  main()

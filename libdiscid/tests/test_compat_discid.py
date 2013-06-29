@@ -23,11 +23,14 @@
 """ Tests for the libdiscid.compat.discid module
 """
 
-import unittest
+try:
+  from unittest2 import TestCase, main
+except ImportError:
+  from unittest import TestCase, main
 from libdiscid.compat import discid
 from libdiscid.compat.discid import DiscError, TOCError
 
-class TestCompatDiscID(unittest.TestCase):
+class TestCompatDiscID(TestCase):
   def test_default_device(self):
     self.assertIsNotNone(discid.get_default_device())
 
@@ -128,4 +131,4 @@ class TestCompatDiscID(unittest.TestCase):
 
 
 if __name__ == '__main__':
-  unittest.main()
+  main()
