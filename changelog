@@ -1,4 +1,4 @@
-python-libdiscid (0.2.0) UNRELEASED; urgency=low
+python-libdiscid (0.2.0) unstable; urgency=low
 
   * Add libdiscid.compat.discid module that provides the same interface as the
     discid module from python-discid. This allows devlopers to write
@@ -8,7 +8,7 @@ python-libdiscid (0.2.0) UNRELEASED; urgency=low
     The default device might change one some platforms during the runtime, so
     the this shouldn't be a constant.
 
- -- Sebastian Ramacher <sebastian+dev@ramacher.at>  Sat, 29 Jun 2013 00:55:03 +0200
+ -- Sebastian Ramacher <sebastian+dev@ramacher.at>  Sun, 30 Jun 2013 21:39:27 +0200
 
 python-libdiscid (0.1.2) unstable; urgency=low
 
