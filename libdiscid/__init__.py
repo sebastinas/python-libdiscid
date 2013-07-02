@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-""" cython based Python bindings of libdiscid
+""" Python bindings for libdiscid
 
 libdiscid is a library to calculate MusicBrainz Disc IDs.
 This module provides Python-bindings for libdiscid.
@@ -28,36 +28,52 @@ This module provides Python-bindings for libdiscid.
 >>> disc = libdiscid.read()
 >>> disc.id is not None
 True
-
-* DEFAULT_DEVICE: The default device to use for :func:`DiscId.read` on this
-  platform. DEFAULT_DEVICE is deprecated. Please use default_device instead.
-* FEATURES: The features libdiscid supports for the libdiscid/platform
-  combination.
-* FEATURE_READ: Read the TOC of the disc to get the disc id.
-* FEATURE_MCN: Read the Media Catalogue Number of the disc.
-* FEATURE_ISRC: Read the :musicbrainz:`ISRC` of all the tracks.
-* __discid_version__: Version of libdiscid. This will only give meaningful
-  results for libdiscid 0.4.0 and higher.
 """
 
 __version__ = '0.2.0'
 
-import libdiscid.discid
-from libdiscid.discid import __discid_version__
-from libdiscid.discid import DiscId
-from libdiscid.discid import FEATURES, FEATURE_READ, FEATURE_MCN, FEATURE_ISRC
-from libdiscid.discid import FEATURES_MAPPING
+import libdiscid._discid
+from libdiscid._discid import DiscId
+from libdiscid.exceptions import DiscError
 
-DEFAULT_DEVICE=libdiscid.discid.default_device()
+DEFAULT_DEVICE = libdiscid._discid.default_device()
+""" The default device to use for :func:`DiscId.read` on this platform.
+
+.. deprecated:: 0.2.0
+   Please use :func:`default_device` instead.
+"""
+
+FEATURES = libdiscid._discid.FEATURES
+""" List of all available features supported by libdiscid on this platform.
+"""
+FEATURE_READ = libdiscid._discid.FEATURE_READ
+""" Read the TOC of the disc to get the disc ID. This feature is always enabled.
+"""
+FEATURE_MCN = libdiscid._discid.FEATURE_MCN
+"""  Read the Media Catalogue Number of the disc.
+"""
+FEATURE_ISRC = libdiscid._discid.FEATURE_ISRC
+""" Read :musicbrainz:`International Standard Recording Codes <ISRC>` of all the
+    tracks.
+"""
+FEATURES_MAPPING = libdiscid._discid.FEATURES_MAPPING
+""" Mapping between the constants representing a feature and their string
+    representation.
+"""
+__discid_version__ = libdiscid._discid.__discid_version__
+""" The version of the underlying libdiscid.
+"""
+
 
 def read(device=None, features=None):
   """ Reads the TOC from the device given as string.
 
-  If no device is given, :data:`DEFAULT_DEVICE` is used. features can be any
-  combination of :data:`FEATURE_MCN` and :data:`FEATURE_ISRC`. Note that prior
-  to libdiscid version 0.5.0 features has no effect.
+  If no *device* is given, :data:`DEFAULT_DEVICE` is used. *features* can be any
+  combination of :data:`FEATURE_MCN` and :data:`FEATURE_ISRC` and
+  :data:`FEATURE_READ`. Note that prior to libdiscid version 0.5.0 features has
+  no effect and that :data:`FEATURE_READ` is always assumed, even if not given.
 
-  A :exc:`libdiscid.discid.DiscError` exception is raised when reading fails,
+  A :exc:`libdiscid.DiscError` exception is raised when reading fails,
   and :py:exc:`NotImplementedError` when libdiscid doesn't support reading
   discs on the current platform.
   """
@@ -75,7 +91,7 @@ def put(first, last, sectors, offsets):
   Takes the *first* and *last* audio tracks, as well as the number of sectors
   and *offsets* as in :attr:`track_offsets`.
 
-  If the operation fails for some reason, a :exc:`libdiscid.discid.DiscError`
+  If the operation fails for some reason, a :exc:`libdiscid.DiscError`
   exception raised.
   """
 
@@ -83,9 +99,19 @@ def put(first, last, sectors, offsets):
   disc.put(first, last, sectors, offsets)
   return disc
 
-# this will help sphinx to properly document this function
 def default_device():
   """ The default device on this platform.
+
+  The default device can change during the run-time of the program. This can
+  happen with removable devices for example.
   """
 
-  return libdiscid.discid.default_device()
+  return libdiscid._discid.default_device()
+
+__all__ = [
+  'read', 'put', 'default_device',
+  '__version__', '__discid_version__',
+  'FEATURES', 'FEATURES_MAPPING', 'FEATURE_READ', 'FEATURE_MCN', 'FEATURE_ISRC',
+  'DEFAULT_DEVICE',
+  'DiscId', 'DiscError'
+]

@@ -23,15 +23,11 @@ cimport cpython
 from libc cimport limits
 from libc.stdlib cimport malloc, free
 from cpython cimport bool
+from libdiscid.exceptions import DiscError
 import warnings
 
 cdef bool _has_feature(int feature):
   return cdiscid.wrap_has_feature(feature) == 1
-
-class DiscError(IOError):
-  """ :func:`DiscId.read` and :func:`DiscId.put` will raise this exception when
-  an error occurred.
-  """
 
 cdef unicode _to_unicode(char* s):
   return s.decode('UTF-8', 'strict')
@@ -71,7 +67,7 @@ cdef class DiscId:
       raise DiscError(self._get_error_msg())
     self._have_read = True
 
-  cpdef read(self, unicode device=None, unsigned int features=limits.UINT_MAX):
+  def read(self, unicode device=None, unsigned int features=limits.UINT_MAX):
     """ Reads the TOC from the device given as string.
 
     If no device is given, the device given by :func:`default_device` is used.
@@ -96,7 +92,7 @@ cdef class DiscId:
       raise DiscError(self._get_error_msg())
     self._have_read = True
 
-  cpdef put(self, int first, int last, int sectors, offsets):
+  def put(self, int first, int last, int sectors, offsets):
     """ Creates a TOC based on the given offets.
 
     Takes the *first* and *last* audio tracks, as well as the number of sectors
@@ -278,7 +274,7 @@ cdef _feature_list():
       res.append(s)
   return res
 
-cpdef default_device():
+def default_device():
   """ The default device on this platform.
   """
 

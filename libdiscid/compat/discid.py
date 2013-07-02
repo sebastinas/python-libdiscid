@@ -30,7 +30,6 @@ python-discid version 1.0.2.
 from __future__ import division
 
 import libdiscid
-import libdiscid.discid
 import operator
 import functools
 
@@ -64,7 +63,7 @@ def _decode(string):
     return string
 
 # exceptions defined in discid
-DiscError = libdiscid.discid.DiscError
+DiscError = libdiscid.DiscError
 
 class TOCError(Exception):
   pass

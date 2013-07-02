@@ -3,5 +3,5 @@ build/
 doc/_build/
 *.py[co]
 MANIFEST
-discid.c
+libdiscid/_discid.c
 *.egg-info

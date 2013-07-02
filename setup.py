@@ -25,9 +25,9 @@ setup(
   url="https://github.com/sebastinas/python-libdiscid",
   license="Expat",
   ext_modules=cythonize([
-    Extension("libdiscid.discid",
+    Extension("libdiscid._discid",
       [
-        "libdiscid/discid.pyx",
+        "libdiscid/_discid.pyx",
         "libdiscid/discid-wrapper.c"
       ]
     )
