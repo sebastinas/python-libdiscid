@@ -33,7 +33,7 @@ from libdiscid import DiscError
 class TestLibDiscId(TestCase):
   def test_version(self):
     self.assertIsNotNone(libdiscid.__version__)
-    self.assertIsNone(libdiscid.__discid_version__)
+    self.assertIsNotNone(libdiscid.__discid_version__)
 
   def test_default_device(self):
     self.assertIsNotNone(libdiscid.DEFAULT_DEVICE)
