@@ -31,6 +31,10 @@ import libdiscid
 from libdiscid import DiscError
 
 class TestLibDiscId(TestCase):
+  def test_version(self):
+    self.assertIsNotNone(libdiscid.__version__)
+    self.assertIsNone(libdiscid.__discid_version__)
+
   def test_default_device(self):
     self.assertIsNotNone(libdiscid.DEFAULT_DEVICE)
 
@@ -39,6 +43,10 @@ class TestLibDiscId(TestCase):
 
   def test_features(self):
     self.assertIsNotNone(libdiscid.FEATURES)
+    self.assertIsNotNone(libdiscid.FEATURE_READ)
+    self.assertIsNotNone(libdiscid.FEATURE_MCN)
+    self.assertIsNotNone(libdiscid.FEATURE_ISRC)
+    self.assertIsNotNone(libdiscid.FEATURES_MAPPING)
 
   def test_read_fail(self):
     self.assertRaises(DiscError, libdiscid.read, u'/does/not/exist')
@@ -66,17 +74,17 @@ class TestLibDiscId(TestCase):
     self.assertEqual(disc.leadout_track, sectors)
 
     self.assertEqual(len(disc.track_offsets), len(offsets))
-    for l, r in zip(disc.track_offsets, offsets):
-      self.assertEqual(l, r)
+    for read_offset, expected_offset in zip(disc.track_offsets, offsets):
+      self.assertEqual(read_offset, expected_offset)
 
     # ISRCs are not available if one calls put
-    if u"isrc" in libdiscid.FEATURES:
+    if libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_ISRC] in libdiscid.FEATURES:
       self.assertEqual(len(disc.track_isrcs), 15)
-      for l in disc.track_isrcs:
-        self.assertEqual(l, u'')
+      for read_isrc in disc.track_isrcs:
+        self.assertEqual(read_isrc, u'')
 
     # MCN is not available if one calls put
-    if u"mcn" in libdiscid.FEATURES:
+    if libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_MCN] in libdiscid.FEATURES:
       self.assertEqual(disc.mcn, u'')
 
   def test_put_fail_1(self):
