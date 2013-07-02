@@ -68,14 +68,15 @@ __discid_version__ = libdiscid._discid.__discid_version__
 def read(device=None, features=None):
   """ Reads the TOC from the device given as string.
 
-  If no *device* is given, :data:`DEFAULT_DEVICE` is used. *features* can be any
-  combination of :data:`FEATURE_MCN` and :data:`FEATURE_ISRC` and
-  :data:`FEATURE_READ`. Note that prior to libdiscid version 0.5.0 features has
-  no effect and that :data:`FEATURE_READ` is always assumed, even if not given.
+  If *device* is ``None``, :data:`DEFAULT_DEVICE` is used. *features* can be
+  any combination of :data:`FEATURE_MCN` and :data:`FEATURE_ISRC` and
+  :data:`FEATURE_READ`. Note that prior to libdiscid version 0.5.0 *features*
+  has no effect and that :data:`FEATURE_READ` is always assumed, even if not
+  given.
 
-  A :exc:`libdiscid.DiscError` exception is raised when reading fails,
-  and :py:exc:`NotImplementedError` when libdiscid doesn't support reading
-  discs on the current platform.
+  A :exc:`libdiscid.DiscError` exception is raised when reading fails, and
+  :py:exc:`NotImplementedError` when libdiscid does not support reading discs on
+  the current platform.
   """
 
   disc = DiscId()
@@ -88,11 +89,11 @@ def read(device=None, features=None):
 def put(first, last, sectors, offsets):
   """ Creates a TOC based on the given offets.
 
-  Takes the *first* and *last* audio tracks, as well as the number of sectors
-  and *offsets* as in :attr:`track_offsets`.
+  Takes the *first* and *last* audio track, as well as the number of
+  *sectors* and a list of *offsets* as in :attr:`track_offsets`.
 
   If the operation fails for some reason, a :exc:`libdiscid.DiscError`
-  exception raised.
+  exception is raised.
   """
 
   disc = DiscId()
