@@ -46,6 +46,7 @@ cdef class DiscId:
 
   cdef cdiscid.DiscId *_c_discid
   cdef bool _have_read
+  cdef unicode _device
 
   def __cinit__(self):
     self._c_discid = cdiscid.discid_new()
@@ -53,6 +54,7 @@ cdef class DiscId:
       raise MemoryError()
 
     self._have_read = False
+    self._device = None
 
   def __dealloc__(self):
     if self._c_discid is not NULL:
@@ -260,6 +262,14 @@ cdef class DiscId:
                                                            track)) for \
                    track in range(self.first_track, self.last_track + 1))
 
+  property device:
+    """ The device the data was read from.
+
+    If it is ``None``, :func:`libdiscid.put` was called to create the instance.
+    """
+
+    def __get__(self):
+      return self._device
 
 FEATURES_MAPPING = {
     cdiscid.DISCID_FEATURE_READ: _to_unicode(cdiscid.DISCID_FEATURE_STR_READ),

@@ -28,7 +28,7 @@ try:
 except ImportError:
   from unittest import TestCase, main
 import libdiscid
-from libdiscid.discid import DiscError
+from libdiscid import DiscError
 
 class TestLibDiscId(TestCase):
   def test_default_device(self):
@@ -54,6 +54,7 @@ class TestLibDiscId(TestCase):
 
     disc = libdiscid.put(first, last, sectors, offsets)
     self.assertIsNotNone(disc)
+    self.assertIsNone(disc.device)
 
     self.assertEqual(disc.id, disc_id)
     self.assertEqual(disc.freedb_id, freedb_id)
