@@ -1,3 +1,11 @@
+python-libdiscid (0.3) UNRELEASED; urgency=low
+
+  * The device used to read the data is now stored in DiscId's device
+    property.
+  * Make DiscError available as libdiscid.DiscError.
+
+ -- Sebastian Ramacher <sebastian+dev@ramacher.at>  Wed, 03 Jul 2013 00:00:57 +0200
+
 python-libdiscid (0.2.0) unstable; urgency=low
 
   * Add libdiscid.compat.discid module that provides the same interface as the
@@ -6,7 +14,7 @@ python-libdiscid (0.2.0) unstable; urgency=low
     without much effort.
   * Deprecate libdiscid.DEFAULT_DEVICE in favor of libdiscid.default_device.
     The default device might change one some platforms during the runtime, so
-    the this shouldn't be a constant.
+    it shouldn't be a constant.
 
  -- Sebastian Ramacher <sebastian+dev@ramacher.at>  Sun, 30 Jun 2013 21:39:27 +0200
 
