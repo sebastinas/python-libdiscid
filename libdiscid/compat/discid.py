@@ -105,7 +105,10 @@ class Disc(object):
 
   def read(self, device, features=[]):
     self.disc = libdiscid.read(device, functools.reduce(
-      operator.or_, (_INVERSE_FEATURES[feature] for feature in FEATURES), 0))
+      operator.or_, (
+        _INVERSE_FEATURES[feature]
+        for feature in features if feature in FEATURES
+      ), 0))
     self.tracks = [
       Track(self.disc, numb) for numb in range(self.disc.first_track,
                                                self.disc.last_track + 1)]
