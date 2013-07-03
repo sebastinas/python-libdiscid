@@ -6,16 +6,16 @@ Bugs
 
 Please report bugs to the project's issue tracker at `GitHub`_.
 
-libdiscid features support
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Supported libdiscid features
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 `python-libdiscid` supports all the features introduced by `libdiscid` up to
-version 0.5.0, meaning:
+version 0.5.0, that is:
 
-* Retrieval of the disc's Media Catalogue Number and retrieving the
+* retrieval of the disc's Media Catalogue Number and retrieving the
   :musicbrainz:`International Standard Recording Code <ISRC>` of
   the tracks if you're using `libdiscid` 0.4.0 and above.
-* Selective reading support if you're using `libdiscid` 0.5.0 and above.
+* selective reading support if you're using `libdiscid` 0.5.0 and above.
 
 Please note that if `python-libdiscid` was built against versions of `libdiscid`
 prior to 0.4.0 or 0.5.0, `python-libdiscid` has to be rebuilt against the newer

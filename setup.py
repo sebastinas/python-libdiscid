@@ -7,7 +7,7 @@ from Cython.Build import cythonize
 
 test_requires=[]
 if sys.version_info[0:2] < (2,7):
-  test_requires=["unittest2"]
+  test_require=["unittest2"]
 
 def read(name):
   f = open(os.path.join(os.path.dirname(__file__), name))
@@ -42,7 +42,7 @@ setup(
     "setuptools"
   ],
   test_suite="libdiscid.tests",
-  tests_require=test_requires,
+  tests_require=test_require,
   use_2to3=True,
   classifiers=[
     "Development Status :: 4 - Beta",
