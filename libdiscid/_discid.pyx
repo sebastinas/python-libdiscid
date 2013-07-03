@@ -213,7 +213,7 @@ cdef class DiscId:
     def __get__(self):
       assert self._have_read
 
-      return tuple(cdiscid.discid_get_track_offset(self._c_discid, track) \
+      return tuple(cdiscid.discid_get_track_offset(self._c_discid, track)
                    for track in range(self.first_track, self.last_track + 1))
 
   property pregap:
@@ -235,7 +235,7 @@ cdef class DiscId:
     def __get__(self):
       assert self._have_read
 
-      return tuple(cdiscid.discid_get_track_length(self._c_discid, track) \
+      return tuple(cdiscid.discid_get_track_length(self._c_discid, track)
                    for track in range(self.first_track, self.last_track + 1))
 
   property mcn:
@@ -264,7 +264,7 @@ cdef class DiscId:
         raise NotImplementedError("ISRC is not available with this version "
                                   "of libdiscid and/or platform")
       return tuple(_to_unicode(cdiscid.wrap_get_track_isrc(self._c_discid,
-                                                           track)) for \
+                                                           track)) for
                    track in range(self.first_track, self.last_track + 1))
 
   property device:
