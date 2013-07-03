@@ -64,7 +64,7 @@ cdef class DiscId:
 
   cdef _read(self, char* device, unsigned int features):
     if not _has_feature(cdiscid.DISCID_FEATURE_READ):
-      raise NotImplementedError("read is not available with this version of " \
+      raise NotImplementedError("read is not available with this version of "
                                 "libdiscid and/or platform")
 
     if not cdiscid.wrap_read_sparse(self._c_discid, device, features):
@@ -246,7 +246,7 @@ cdef class DiscId:
       assert self._have_read
 
       if not _has_feature(cdiscid.DISCID_FEATURE_MCN):
-        raise NotImplementedError("MCN is not available with this version " \
+        raise NotImplementedError("MCN is not available with this version "
                                   "of libdiscid and/or platform")
       return _to_unicode(cdiscid.wrap_get_mcn(self._c_discid))
 
@@ -261,7 +261,7 @@ cdef class DiscId:
       assert self._have_read
 
       if not _has_feature(cdiscid.DISCID_FEATURE_ISRC):
-        raise NotImplementedError("ISRC is not available with this version " \
+        raise NotImplementedError("ISRC is not available with this version "
                                   "of libdiscid and/or platform")
       return tuple(_to_unicode(cdiscid.wrap_get_track_isrc(self._c_discid,
                                                            track)) for \
