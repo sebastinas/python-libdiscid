@@ -32,6 +32,13 @@ from __future__ import division
 import libdiscid
 import operator
 import functools
+import sys
+
+try:
+  unicode
+except NameError:
+  # 2/3 compat
+  unicode = str
 
 _INVERSE_FEATURES= {
     libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ]: libdiscid.FEATURE_READ,
@@ -53,14 +60,15 @@ def _sectors_to_seconds(sectors):
   return sectors // SECTORS_PER_SECOND + \
     (1 if remainder > SECTORS_PER_SECOND // 2 else 0)
 
-def _decode(string):
+def _decode(string, encoding=None):
   # Let's do the same thing discid is doing. It always accepts both strings and
   # unicode objects and encodes/decodes them as it sees fit. libdiscid always
-  # wants unicode objects, so let's handle this.
-  try:
-    return string.decode()
-  except AttributeError:
-    return string
+  # wants unicode objects, so let's decode it here on a best effort basis.
+  if not isinstance(string, unicode):
+    if encoding is None:
+      encoding = sys.getfilesystemencoding() or 'ascii'
+    return string.decode(encoding)
+  return string
 
 # exceptions defined in discid
 DiscError = libdiscid.DiscError
@@ -168,7 +176,8 @@ get_default_device = libdiscid.default_device
 
 def read(device=None, features=[]):
   disc = Disc()
-  disc.read(_decode(device), map(_decode, features))
+  disc.read(_decode(device),
+            map(lambda feature: _decode(feature, 'ascii'), features))
   return disc
 
 def put(first, last, disc_sectors, track_offsets):
