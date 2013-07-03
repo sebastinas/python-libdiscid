@@ -32,6 +32,13 @@ and hack right away. You can also run::
 but please make sure that ``build/lib.*`` is in ``sys.path`` before the source
 folder.
 
+A note for Windows users
+------------------------
+
+There are eggs available from PyPI that don't require the extension module to be
+built. If these are used, it is still required to drop a working discid.dll in
+``C:\WINDOWS\system32`` (or wherever it can be found).
+
 Usage
 -----
 

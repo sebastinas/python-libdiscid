@@ -32,6 +32,14 @@ it and run::
 
  python setup.py install
 
+A note for Windows users
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+There are eggs available from the same source too. With these eggs, the
+extension module comes pre-built. However, you still need to fetch
+`discid.dll` from :musicbrainz:`libdiscid` and copy the DLL to somewhere it can
+be found, e.g. in ``C:\WINDOWS\system32``.
+
 .. __: https://pypi.python.org/pypi/python-libdiscid/
 .. __: https://pypi.python.org/pypi/python-libdiscid/
 
