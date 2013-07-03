@@ -1,10 +1,15 @@
-python-libdiscid (0.3) UNRELEASED; urgency=low
+python-libdiscid (0.3) unstable; urgency=low
 
   * The device used to read the data is now stored in DiscId's device
     property.
   * Make DiscError available as libdiscid.DiscError.
 
- -- Sebastian Ramacher <sebastian+dev@ramacher.at>  Wed, 03 Jul 2013 00:00:57 +0200
+  * Internal changes:
+    - Move most of the API documentation from the rst files back to the code.
+    - Name the extension module as libdiscid._discid and move some bits that
+      don't require Cython away.
+
+ -- Sebastian Ramacher <sebastian+dev@ramacher.at>  Thu, 04 Jul 2013 01:08:44 +0200
 
 python-libdiscid (0.2.0) unstable; urgency=low
 
