@@ -32,7 +32,7 @@ be read. For example, to read the MCN, one would use::
  # disc.id will be available
  print "id: %s" % (disc.id, )
  # if the disc has a MCN and libdiscid is 0.4.0 or later and libdiscid
- # supports reading the MCN on this platform, disc.id will be non-empty.
+ # supports reading the MCN on this platform, disc.mcn will be non-empty.
  try:
    print "MCN: %s" % (disc.mcn, )
  except NotImplementedError:
