@@ -74,11 +74,11 @@ cdef class DiscId:
   def read(self, unicode device=None, unsigned int features=limits.UINT_MAX):
     """ Reads the TOC from the device given as string.
 
-    If *device* is ``None``, :data:`DEFAULT_DEVICE` is used. *features* can
-    be any combination of :data:`FEATURE_MCN` and :data:`FEATURE_ISRC` and
-    :data:`FEATURE_READ`. Note that prior to libdiscid version 0.5.0
-    *features* has no effect and that :data:`FEATURE_READ` is always assumed,
-    even if not given.
+    If *device* is ``None``, :func:`libdiscid.default_device` is used.
+    *features* can be any combination of :data:`FEATURE_MCN` and
+    :data:`FEATURE_ISRC` and :data:`FEATURE_READ`. Note that prior to libdiscid
+    version 0.5.0 *features* has no effect and that :data:`FEATURE_READ` is
+    always assumed, even if not given.
 
     A :exc:`libdiscid.DiscError` exception is raised when reading fails, and
     :py:exc:`NotImplementedError` when libdiscid does not support reading discs
