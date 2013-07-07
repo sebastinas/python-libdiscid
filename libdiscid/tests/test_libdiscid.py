@@ -24,13 +24,13 @@
 """
 
 try:
-  from unittest2 import TestCase, main
+  import unittest2 as unittest
 except ImportError:
-  from unittest import TestCase, main
+  import unittest
 import libdiscid
 from libdiscid import DiscError
 
-class TestLibDiscId(TestCase):
+class TestLibDiscId(unittest.TestCase):
   def test_version(self):
     self.assertIsNotNone(libdiscid.__version__)
     self.assertIsNotNone(libdiscid.__discid_version__)
@@ -48,6 +48,8 @@ class TestLibDiscId(TestCase):
     self.assertIsNotNone(libdiscid.FEATURE_ISRC)
     self.assertIsNotNone(libdiscid.FEATURES_MAPPING)
 
+  @unittest.skipIf(libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ] not in
+                   libdiscid.FEATURES, "not available on this platform")
   def test_read_fail(self):
     self.assertRaises(DiscError, libdiscid.read, u'/does/not/exist')
 
@@ -123,4 +125,4 @@ class TestLibDiscId(TestCase):
 
 
 if __name__ == '__main__':
-  main()
+  unittest.main()

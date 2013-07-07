@@ -24,13 +24,14 @@
 """
 
 try:
-  from unittest2 import TestCase, main
+  import unittest2 as unittest
 except ImportError:
-  from unittest import TestCase, main
+  import unittest
+import libdiscid
 from libdiscid.compat import discid
 from libdiscid.compat.discid import DiscError, TOCError
 
-class TestCompatDiscID(TestCase):
+class TestCompatDiscID(unittest.TestCase):
   def test_default_device(self):
     self.assertIsNotNone(discid.get_default_device())
 
@@ -51,12 +52,18 @@ class TestCompatDiscID(TestCase):
     self.assertIsNone(disc.seconds)
     self.assertEqual(len(disc.tracks), 0)
 
+  @unittest.skipIf(libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ] not in
+                   libdiscid.FEATURES, "not available on this platform")
   def test_read_fail(self):
     self.assertRaises(DiscError, discid.read, u'/does/not/exist')
 
+  @unittest.skipIf(libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ] not in
+                   libdiscid.FEATURES, "not available on this platform")
   def test_encoded_device(self):
     self.assertRaises(DiscError, discid.read, '/does/not/exist')
 
+  @unittest.skipIf(libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ] not in
+                   libdiscid.FEATURES, "not available on this platform")
   def test_byte_device(self):
     self.assertRaises(DiscError, discid.read, b'/does/not/exist')
 
@@ -131,4 +138,4 @@ class TestCompatDiscID(TestCase):
 
 
 if __name__ == '__main__':
-  main()
+  unittest.main()
