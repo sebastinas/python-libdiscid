@@ -9,6 +9,10 @@ Dependencies
 * :musicbrainz:`libdiscid`
 * `Cython`__ (>= 0.15)
 
+Note that `Cython` is only required if one builds `python-libdiscid` from the
+repository. The released tarballs ship with pre-built C source files for the
+extension mdoules.
+
 On Debian based systems, the dependencies are only an `apt-get` away::
 
  apt-get install cython libdiscid0-dev
@@ -38,7 +42,7 @@ A note for Windows users
 There are eggs available from the same source too. With these eggs, the
 extension module comes pre-built. However, you still need to fetch
 `discid.dll` from :musicbrainz:`libdiscid` and copy the DLL to somewhere it can
-be found, e.g. in ``C:\WINDOWS\system32``.
+be found, e.g. to ``C:\WINDOWS\system32``.
 
 .. __: https://pypi.python.org/pypi/python-libdiscid/
 .. __: https://pypi.python.org/pypi/python-libdiscid/

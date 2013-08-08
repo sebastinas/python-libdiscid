@@ -10,6 +10,9 @@ Dependencies
 * libdiscid
 * Cython (>= 0.15)
 
+Note that the tarballs come with pre-built C source for the Cython module. So
+Cython is only required if one builds python-libdiscid from the git repository.
+
 Quick installation guide
 ------------------------
 
