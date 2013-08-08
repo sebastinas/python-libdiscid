@@ -104,3 +104,21 @@ int wrap_read_sparse(DiscId *d, const char *device, unsigned int features)
 
 #endif /* libdiscid < 0.5.0 */
 
+/* discid_get_toc_string appeared in 0.6.0 */
+#if !defined(DISCID_VERSION_MAJOR) || \
+  (DISCID_VERSION_MAJOR == 0 && DISCID_VERSION_MINOR < 6)
+
+char* wrap_get_toc(DiscId* d)
+{
+  return NULL;
+}
+
+# else
+
+char* wrap_get_toc(DiscId* d)
+{
+  return discid_get_toc_string(d);
+}
+
+#endif
+

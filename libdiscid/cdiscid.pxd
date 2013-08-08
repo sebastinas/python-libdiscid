@@ -56,3 +56,5 @@ cdef extern from "discid-wrapper.h":
   char* wrap_get_mcn(DiscId *d)
   char* wrap_get_track_isrc(DiscId *d, int track_num)
 
+  char* wrap_get_toc(DiscId *d)
+

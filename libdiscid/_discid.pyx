@@ -27,6 +27,7 @@ from libc.stdlib cimport malloc, free
 from cpython cimport bool
 from libdiscid.exceptions import DiscError
 import warnings
+import re
 
 cdef bool _has_feature(int feature):
   return cdiscid.wrap_has_feature(feature) == 1
@@ -275,6 +276,23 @@ cdef class DiscId:
 
     def __get__(self):
       return self._device
+
+  property toc:
+    """ String representing the CD's Table of Contents (TOC).
+    """
+
+    def __get__(self):
+      assert self._have_read
+
+      cdef char* tocstr = cdiscid.wrap_get_toc(self._c_discid)
+      if tocstr is not NULL:
+        return _to_unicode(tocstr)
+
+      # extract TOC string from submission URL
+      match = re.match(r'.*toc=([0-9+]+)$', self.submission_url)
+      if match is None:
+        raise ValueError("failed to extract TOC from submission URL")
+      return match.group(1).replace('+', ' ')
 
 FEATURES_MAPPING = {
     cdiscid.DISCID_FEATURE_READ: _to_unicode(cdiscid.DISCID_FEATURE_STR_READ),
