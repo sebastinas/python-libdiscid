@@ -2,12 +2,56 @@
 
 import os.path
 import sys
-from setuptools import setup, Extension
-from Cython.Build import cythonize
+
+try:
+  from setuptools import setup, Extension
+  have_setuptools = True
+except ImportError:
+  from distutils.core import setup
+  from distutils.extension import Extension
+  have_setuptools = False
+
+try:
+  from Cython.Build import cythonize
+  have_cython = True
+except ImportError:
+  have_cython = False
+
+if have_cython:
+  # if Cython is available, rebuild _discid.c
+  ext = cythonize([
+    Extension("libdiscid._discid",
+      [
+        "libdiscid/_discid.pyx",
+        "libdiscid/discid-wrapper.c"
+      ]
+    )
+  ])
+else:
+  # ... otherwise use the shipped version of _discid.c
+  ext = [
+    Extension("libdiscid._discid",
+      [
+        "libdiscid/_discid.c",
+        "libdiscid/discid-wrapper.c"
+      ]
+    )
+  ]
 
 tests_require=[]
 if sys.version_info[0:2] < (2,7):
   tests_require=["unittest2"]
+
+if have_setuptools:
+  args = {
+    "setup_requires": [
+      "cython >= 0.15"
+    ],
+    "test_suite": "libdiscid.tests",
+    "tests_require": tests_require,
+  }
+else:
+  args = {}
 
 def read(name):
   f = open(os.path.join(os.path.dirname(__file__), name))
@@ -24,26 +68,12 @@ setup(
   author_email="sebastian+dev@ramacher.at",
   url="https://github.com/sebastinas/python-libdiscid",
   license="Expat",
-  ext_modules=cythonize([
-    Extension("libdiscid._discid",
-      [
-        "libdiscid/_discid.pyx",
-        "libdiscid/discid-wrapper.c"
-      ]
-    )
-  ]),
+  ext_modules=ext,
   packages=[
     'libdiscid',
     'libdiscid.tests',
     'libdiscid.compat'
   ],
-  setup_requires=[
-    "cython >= 0.15",
-    "setuptools"
-  ],
-  test_suite="libdiscid.tests",
-  tests_require=tests_require,
-  use_2to3=True,
   classifiers=[
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -57,5 +87,6 @@ setup(
     "Programming Language :: Python :: 3.3",
     "Topic :: Multimedia :: Sound/Audio :: CD Audio :: CD Ripping",
     "Topic :: Software Development :: Libraries :: Python Modules"
-  ]
+  ],
+  **args
 )
