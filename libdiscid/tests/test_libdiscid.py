@@ -70,8 +70,8 @@ class TestLibDiscId(unittest.TestCase):
     sectors = 258725
     offsets = (150, 17510, 33275, 45910, 57805, 78310, 94650,109580, 132010,
                149160, 165115, 177710, 203325, 215555, 235590)
-    disc_id = 'TqvKjMu7dMliSfmVEBtrL7sBSno-'
-    freedb_id = 'b60d770f'
+    disc_id = u('TqvKjMu7dMliSfmVEBtrL7sBSno-')
+    freedb_id = u('b60d770f')
 
     disc = libdiscid.put(first, last, sectors, offsets)
     self.assertIsNotNone(disc)

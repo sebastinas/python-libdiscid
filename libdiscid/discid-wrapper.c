@@ -103,3 +103,4 @@ int wrap_read_sparse(DiscId *d, const char *device, unsigned int features)
 }
 
 #endif /* libdiscid < 0.5.0 */
+

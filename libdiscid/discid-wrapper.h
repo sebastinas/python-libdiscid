@@ -56,6 +56,9 @@ char* wrap_get_version_string(void) INTERNAL;
 char* wrap_get_mcn(DiscId* d) INTERNAL;
 char* wrap_get_track_isrc(DiscId* d, int track_num) INTERNAL;
 
-int wrap_read_sparse(DiscId *d, const char *device, unsigned int features) INTERNAL;
+/* discid_read_sparse appeared in 0.5.0 */
+int wrap_read_sparse(DiscId *d, const char *device, unsigned int features)
+  INTERNAL;
 
 #endif
+

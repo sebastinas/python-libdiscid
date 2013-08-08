@@ -64,8 +64,8 @@ cdef class DiscId:
 
   cdef _read(self, char* device, unsigned int features):
     if not _has_feature(cdiscid.DISCID_FEATURE_READ):
-      raise NotImplementedError("read is not available with this version of "
-                                "libdiscid and/or platform")
+      raise NotImplementedError('read is not available with this version of '
+                                'libdiscid and/or platform')
 
     if not cdiscid.wrap_read_sparse(self._c_discid, device, features):
       raise DiscError(self._get_error_msg())
@@ -163,9 +163,9 @@ cdef class DiscId:
 
     def __get__(self):
       assert self._have_read
-      warnings.warn("webservice_url is deprecated since it points to the old "
-                    "webservice. Please use python-musicbrainz-ngs to access "
-                    "the webservice.", DeprecationWarning)
+      warnings.warn('webservice_url is deprecated since it points to the old '
+                    'webservice. Please use python-musicbrainz-ngs to access '
+                    'the webservice.', DeprecationWarning)
 
       return _to_unicode(cdiscid.discid_get_webservice_url(self._c_discid))
 
@@ -246,8 +246,8 @@ cdef class DiscId:
       assert self._have_read
 
       if not _has_feature(cdiscid.DISCID_FEATURE_MCN):
-        raise NotImplementedError("MCN is not available with this version "
-                                  "of libdiscid and/or platform")
+        raise NotImplementedError('MCN is not available with this version '
+                                  'of libdiscid and/or platform')
       return _to_unicode(cdiscid.wrap_get_mcn(self._c_discid))
 
   property track_isrcs:
@@ -300,3 +300,4 @@ FEATURE_READ = cdiscid.DISCID_FEATURE_READ
 FEATURE_MCN = cdiscid.DISCID_FEATURE_MCN
 FEATURE_ISRC = cdiscid.DISCID_FEATURE_ISRC
 __discid_version__ = _to_unicode(cdiscid.wrap_get_version_string())
+

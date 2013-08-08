@@ -20,35 +20,35 @@ except ImportError:
 if have_cython:
   # if Cython is available, rebuild _discid.c
   ext = cythonize([
-    Extension("libdiscid._discid",
+    Extension('libdiscid._discid',
       [
-        "libdiscid/_discid.pyx",
-        "libdiscid/discid-wrapper.c"
+        'libdiscid/_discid.pyx',
+        'libdiscid/discid-wrapper.c'
       ]
     )
   ])
 else:
   # ... otherwise use the shipped version of _discid.c
   ext = [
-    Extension("libdiscid._discid",
+    Extension('libdiscid._discid',
       [
-        "libdiscid/_discid.c",
-        "libdiscid/discid-wrapper.c"
+        'libdiscid/_discid.c',
+        'libdiscid/discid-wrapper.c'
       ]
     )
   ]
 
-tests_require=[]
-if sys.version_info[0:2] < (2,7):
-  tests_require=["unittest2"]
-
 if have_setuptools:
+  tests_require=[]
+  if sys.version_info[0:2] < (2,7):
+    tests_require=['unittest2']
+
   args = {
-    "setup_requires": [
-      "cython >= 0.15"
+    'setup_requires': [
+      'cython >= 0.15'
     ],
-    "test_suite": "libdiscid.tests",
-    "tests_require": tests_require,
+    'test_suite': 'libdiscid.tests',
+    'tests_require': tests_require,
   }
 else:
   args = {}
@@ -60,14 +60,14 @@ def read(name):
   return ret
 
 setup(
-  name="python-libdiscid",
-  version="0.3",
-  description="Python bindings for libdiscid",
-  long_description=read("README.rst"),
-  author="Sebastian Ramacher",
-  author_email="sebastian+dev@ramacher.at",
-  url="https://github.com/sebastinas/python-libdiscid",
-  license="Expat",
+  name='python-libdiscid',
+  version='0.3',
+  description='Python bindings for libdiscid',
+  long_description=read('README.rst'),
+  author='Sebastian Ramacher',
+  author_email='sebastian+dev@ramacher.at',
+  url='https://github.com/sebastinas/python-libdiscid',
+  license='Expat',
   ext_modules=ext,
   packages=[
     'libdiscid',
@@ -75,18 +75,18 @@ setup(
     'libdiscid.compat'
   ],
   classifiers=[
-    "Development Status :: 4 - Beta",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python :: 2",
-    "Programming Language :: Python :: 2.6",
-    "Programming Language :: Python :: 2.7",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.2",
-    "Programming Language :: Python :: 3.3",
-    "Topic :: Multimedia :: Sound/Audio :: CD Audio :: CD Ripping",
-    "Topic :: Software Development :: Libraries :: Python Modules"
+    'Development Status :: 4 - Beta',
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: MIT License',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python :: 2',
+    'Programming Language :: Python :: 2.6',
+    'Programming Language :: Python :: 2.7',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.2',
+    'Programming Language :: Python :: 3.3',
+    'Topic :: Multimedia :: Sound/Audio :: CD Audio :: CD Ripping',
+    'Topic :: Software Development :: Libraries :: Python Modules'
   ],
   **args
 )
