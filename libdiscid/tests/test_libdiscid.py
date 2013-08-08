@@ -53,6 +53,11 @@ class TestLibDiscId(unittest.TestCase):
   def test_read_fail(self):
     self.assertRaises(DiscError, libdiscid.read, u'/does/not/exist')
 
+  @unittest.skipIf(libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ] in
+                   libdiscid.FEATURES, "available on this platform")
+  def test_read_not_implemented(self):
+    self.assertRaises(NotImplemented, libdiscid.read)
+
   def test_put(self):
     first = 1
     last = 15
