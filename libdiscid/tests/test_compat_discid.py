@@ -31,6 +31,12 @@ import libdiscid
 from libdiscid.compat import discid
 from libdiscid.compat.discid import DiscError, TOCError
 
+# as long as Python 3.2 is supported, hack around the missing u
+try:
+  u = unicode
+except NameError:
+  u = str
+
 class TestCompatDiscID(unittest.TestCase):
   def test_default_device(self):
     self.assertIsNotNone(discid.get_default_device())
@@ -55,7 +61,7 @@ class TestCompatDiscID(unittest.TestCase):
   @unittest.skipIf(libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ] not in
                    libdiscid.FEATURES, "not available on this platform")
   def test_read_fail(self):
-    self.assertRaises(DiscError, discid.read, u'/does/not/exist')
+    self.assertRaises(DiscError, discid.read, u('/does/not/exist'))
 
   @unittest.skipIf(libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ] not in
                    libdiscid.FEATURES, "not available on this platform")

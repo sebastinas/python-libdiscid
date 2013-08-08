@@ -30,6 +30,12 @@ except ImportError:
 import libdiscid
 from libdiscid import DiscError
 
+# as long as Python 3.2 is supported, hack around the missing u
+try:
+  u = unicode
+except NameError:
+  u = str
+
 class TestLibDiscId(unittest.TestCase):
   def test_version(self):
     self.assertIsNotNone(libdiscid.__version__)
@@ -51,7 +57,7 @@ class TestLibDiscId(unittest.TestCase):
   @unittest.skipIf(libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ] not in
                    libdiscid.FEATURES, "not available on this platform")
   def test_read_fail(self):
-    self.assertRaises(DiscError, libdiscid.read, u'/does/not/exist')
+    self.assertRaises(DiscError, libdiscid.read, u('/does/not/exist'))
 
   @unittest.skipIf(libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ] in
                    libdiscid.FEATURES, "available on this platform")
@@ -88,11 +94,11 @@ class TestLibDiscId(unittest.TestCase):
     if libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_ISRC] in libdiscid.FEATURES:
       self.assertEqual(len(disc.track_isrcs), 15)
       for read_isrc in disc.track_isrcs:
-        self.assertEqual(read_isrc, u'')
+        self.assertEqual(read_isrc, u(''))
 
     # MCN is not available if one calls put
     if libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_MCN] in libdiscid.FEATURES:
-      self.assertEqual(disc.mcn, u'')
+      self.assertEqual(disc.mcn, u(''))
 
   def test_put_fail_1(self):
     # !(first < last)
