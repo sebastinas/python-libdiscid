@@ -33,8 +33,8 @@ True
 __version__ = '0.3'
 
 import libdiscid._discid
-from libdiscid._discid import DiscId
 from libdiscid.exceptions import DiscError
+import warnings
 
 DEFAULT_DEVICE = libdiscid._discid.default_device()
 """ The default device to use for :func:`DiscId.read` on this platform.
@@ -64,6 +64,154 @@ __discid_version__ = libdiscid._discid.__discid_version__
 """ The version of the underlying libdiscid.
 """
 
+class DiscId(object):
+  """ Disc information
+
+  Class holding all the information obtained from a disc.
+  """
+
+  def __init__(self, cdiscid):
+      self._id = cdiscid.id
+      self._freedb_id = cdiscid.freedb_id
+      self._submission_url = cdiscid.submission_url
+      self._webservice_url = cdiscid.webservice_url
+      self._first_track = cdiscid.first_track
+      self._last_track = cdiscid.last_track
+      self._sectors = cdiscid.sectors
+      self._track_offsets = cdiscid.track_offsets
+      self._track_lengths = cdiscid.track_lengths
+      self._mcn = cdiscid.mcn
+      self._track_isrcs = cdiscid.track_isrcs
+      self._device = cdiscid.device
+
+  @property
+  def id(self):
+    """ The MusicBrainz :musicbrainz:`Disc ID`.
+    """
+
+    return self._id
+
+  @property
+  def freedb_id(self):
+    """ The :musicbrainz:`FreeDB` Disc ID (without category).
+    """
+
+    return self._freedb_id
+
+  @property
+  def submission_url(self):
+    """ Disc ID / TOC Submission URL for MusicBrainz
+
+    With this url you can submit the current TOC as a new MusicBrainz
+    :musicbrainz:`Disc ID`.
+    """
+
+    return self._submission_url
+
+  @property
+  def webservice_url(self):
+    """ The web service URL for info about the CD
+
+    With this url you can retrive information about the CD in XML from the
+    MusicBrainz web service.
+    """
+
+    warnings.warn('webservice_url is deprecated since it points to the old '
+                  'webservice. Please use python-musicbrainz-ngs to access '
+                  'the webservice.', DeprecationWarning)
+    return self._webservice_url
+
+  @property
+  def first_track(self):
+    """ Number of the first audio track.
+    """
+
+    return self._first_track
+
+  @property
+  def last_track(self):
+    """ Number of the last audio track.
+    """
+
+    return self._last_track
+
+  @property
+  def sectors(self):
+    """ Total sector count.
+    """
+
+    return self._sectors
+
+  @property
+  def leadout_track(self):
+    """ Leadout track.
+    """
+
+    return self.sectors
+
+  @property
+  def track_offsets(self):
+    """ Tuple of all track offsets (in sectors).
+
+    The first element corresponds to the offset of the track denoted by
+    :attr:`first_track` and so on.
+    """
+
+    return self._track_offsets
+
+  @property
+  def pregap(self):
+    """ Pregap of the first track (in sectors).
+    """
+
+    return self.track_offsets[0]
+
+
+  @property
+  def track_lengths(self):
+    """ Tuple of all track lengths (in sectors).
+
+    The first element corresponds to the length of the track denoted by
+    :attr:`first_track` and so on.
+    """
+
+    return self._track_lengths
+
+  @property
+  def mcn(self):
+    """ Media Catalogue Number of the disc.
+
+    :raises NotImplementedError: reading MCN is not supported on this platform
+    """
+
+    if self._mcn is None:
+      raise NotImplementedError('MCN is not available with this version '
+                                'of libdiscid and/or platform')
+    return self._mcn
+
+  @property
+  def track_isrcs(self):
+    """ Tuple of :musicbrainz:`ISRCs <ISRC>` of all tracks.
+
+    The first element of the list corresponds to the ISRC of the
+    :attr:`first_track` and so on.
+
+    :raises NotImplementedError: reading ISRCs is not supported on this platform
+    """
+
+    if self._track_isrcs is None:
+      raise NotImplementedError('ISRC is not available with this version '
+                                'of libdiscid and/or platform')
+    return self._track_isrcs
+
+  @property
+  def device(self):
+    """ The device the data was read from.
+
+    If it is ``None``, :func:`libdiscid.put` was called to create the instance.
+    """
+
+    return self._device
 
 def read(device=None, features=None):
   """ Reads the TOC from the device given as string.
@@ -74,17 +222,23 @@ def read(device=None, features=None):
   has no effect and that :data:`FEATURE_READ` is always assumed, even if not
   given.
 
-  A :exc:`libdiscid.DiscError` exception is raised when reading fails, and
-  :py:exc:`NotImplementedError` when libdiscid does not support reading discs on
-  the current platform.
+  :param device: device to read from
+  :type device: unicode or None
+  :param features: selected features, possible values are :data:`FEATURE_READ` \
+    :data:`FEATURE_MCN`, :data:`FEATURE_ISRC` and any of these values combined \
+    with bitwise or.
+  :type features: integer or None
+  :raises libdiscid.DiscError: reading the disc failed
+  :raises NotImplementedError: reading discs is not supported
+  :rtype: :class:`DiscId` object
   """
 
-  disc = DiscId()
+  disc = libdiscid._discid.DiscId()
   if features is None:
     disc.read(device)
   else:
     disc.read(device, features)
-  return disc
+  return DiscId(disc)
 
 def put(first, last, sectors, offsets):
   """ Creates a TOC based on the given offets.
@@ -92,19 +246,29 @@ def put(first, last, sectors, offsets):
   Takes the *first* and *last* audio track, as well as the number of
   *sectors* and a list of *offsets* as in :attr:`track_offsets`.
 
-  If the operation fails for some reason, a :exc:`libdiscid.DiscError`
-  exception is raised.
+  :param first: number of the first audio track
+  :type first: integer
+  :param last: number of the last audio track
+  :type last: integer
+  :param sectors: total number of sectors on the disc
+  :type sectors: integer
+  :param offsets: offsets of each track
+  :type offsets: list or tuple of integers
+  :raises libdiscid.DiscError: operation failed for some reason
+  :rtype: :class:`DiscId` object
   """
 
-  disc = DiscId()
+  disc = libdiscid._discid.DiscId()
   disc.put(first, last, sectors, offsets)
-  return disc
+  return DiscId(disc)
 
 def default_device():
   """ The default device on this platform.
 
   The default device can change during the run-time of the program. This can
   happen with removable devices for example.
+
+  :rtype: unicode
   """
 
   return libdiscid._discid.default_device()
