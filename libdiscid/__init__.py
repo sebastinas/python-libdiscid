@@ -34,6 +34,7 @@ __version__ = '0.3'
 
 import libdiscid._discid
 from libdiscid.exceptions import DiscError
+import re
 import warnings
 
 DEFAULT_DEVICE = libdiscid._discid.default_device()
@@ -83,6 +84,7 @@ class DiscId(object):
       self._mcn = cdiscid.mcn
       self._track_isrcs = cdiscid.track_isrcs
       self._device = cdiscid.device
+      self._toc = cdiscid.toc
 
   @property
   def id(self):
@@ -212,6 +214,21 @@ class DiscId(object):
     """
 
     return self._device
+
+  @property
+  def toc(self):
+    """ String representing the CD's Table of Contents (TOC).
+
+    :raises ValueError: extracting TOC string from the submission URL failed
+    """
+
+    if self._toc is None:
+      # extract TOC string from submission URL
+      match = re.match(r'.*toc=([0-9+]+)$', self.submission_url)
+      if match is None:
+        raise ValueError('Failed to extract TOC from submission URL')
+      self._toc = match.group(1).replace('+', ' ')
+    return self._toc
 
 def read(device=None, features=None):
   """ Reads the TOC from the device given as string.
