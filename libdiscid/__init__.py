@@ -65,6 +65,11 @@ __discid_version__ = libdiscid._discid.__discid_version__
 """
 
 class DiscId(object):
+  """ Disc information
+
+  Class holding all the information obtained from a disc.
+  """
+
   def __init__(self, cdiscid):
       self._id = cdiscid.id
       self._freedb_id = cdiscid.freedb_id
@@ -175,6 +180,8 @@ class DiscId(object):
   @property
   def mcn(self):
     """ Media Catalogue Number of the disc.
+
+    :raises NotImplementedError: reading MCN is not supported on this platform
     """
 
     if self._mcn is None:
@@ -188,6 +195,8 @@ class DiscId(object):
 
     The first element of the list corresponds to the ISRC of the
     :attr:`first_track` and so on.
+
+    :raises NotImplementedError: reading ISRCs is not supported on this platform
     """
 
     if self._track_isrcs is None:
@@ -213,9 +222,15 @@ def read(device=None, features=None):
   has no effect and that :data:`FEATURE_READ` is always assumed, even if not
   given.
 
-  A :exc:`libdiscid.DiscError` exception is raised when reading fails, and
-  :py:exc:`NotImplementedError` when libdiscid does not support reading discs on
-  the current platform.
+  :param device: device to read from
+  :type device: unicode or None
+  :param features: selected features, possible values are :data:`FEATURE_READ` \
+    :data:`FEATURE_MCN`, :data:`FEATURE_ISRC` and any of these values combined \
+    with bitwise or.
+  :type features: integer or None
+  :raises libdiscid.DiscError: reading the disc failed
+  :raises NotImplementedError: reading discs is not supported
+  :rtype: :class:`DiscId` object
   """
 
   disc = libdiscid._discid.DiscId()
@@ -231,8 +246,16 @@ def put(first, last, sectors, offsets):
   Takes the *first* and *last* audio track, as well as the number of
   *sectors* and a list of *offsets* as in :attr:`track_offsets`.
 
-  If the operation fails for some reason, a :exc:`libdiscid.DiscError`
-  exception is raised.
+  :param first: number of the first audio track
+  :type first: integer
+  :param last: number of the last audio track
+  :type last: integer
+  :param sectors: total number of sectors on the disc
+  :type sectors: integer
+  :param offsets: offsets of each track
+  :type offsets: list or tuple of integers
+  :raises libdiscid.DiscError: operation failed for some reason
+  :rtype: :class:`DiscId` object
   """
 
   disc = libdiscid._discid.DiscId()
@@ -244,6 +267,8 @@ def default_device():
 
   The default device can change during the run-time of the program. This can
   happen with removable devices for example.
+
+  :rtype: unicode
   """
 
   return libdiscid._discid.default_device()

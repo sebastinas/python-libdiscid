@@ -24,6 +24,6 @@
 """
 
 class DiscError(IOError):
-  """ :func:`DiscId.read` and :func:`DiscId.put` will raise this exception when
-  an error occurred.
+  """ :func:`libdiscid.read` and :func:`libdiscid.put` will raise this exception
+      when an error occurred.
   """
