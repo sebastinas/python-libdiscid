@@ -26,7 +26,6 @@ from libc cimport limits
 from libc.stdlib cimport malloc, free
 from cpython cimport bool
 from libdiscid.exceptions import DiscError
-import warnings
 
 cdef bool _has_feature(int feature):
   return cdiscid.wrap_has_feature(feature) == 1
@@ -163,9 +162,6 @@ cdef class DiscId:
 
     def __get__(self):
       assert self._have_read
-      warnings.warn('webservice_url is deprecated since it points to the old '
-                    'webservice. Please use python-musicbrainz-ngs to access '
-                    'the webservice.', DeprecationWarning)
 
       return _to_unicode(cdiscid.discid_get_webservice_url(self._c_discid))
 
@@ -196,13 +192,6 @@ cdef class DiscId:
 
       return cdiscid.discid_get_sectors(self._c_discid)
 
-  property leadout_track:
-    """ Leadout track.
-    """
-
-    def __get__(self):
-      return self.sectors
-
   property track_offsets:
     """ Tuple of all track offsets (in sectors).
 
@@ -215,15 +204,6 @@ cdef class DiscId:
 
       return tuple(cdiscid.discid_get_track_offset(self._c_discid, track)
                    for track in range(self.first_track, self.last_track + 1))
-
-  property pregap:
-    """ Pregap of the first track (in sectors).
-    """
-
-    def __get__(self):
-      assert self._have_read
-
-      return self.track_offsets[0]
 
   property track_lengths:
     """ Tuple of all track lengths (in sectors).
@@ -246,8 +226,7 @@ cdef class DiscId:
       assert self._have_read
 
       if not _has_feature(cdiscid.DISCID_FEATURE_MCN):
-        raise NotImplementedError('MCN is not available with this version '
-                                  'of libdiscid and/or platform')
+        return None
       return _to_unicode(cdiscid.wrap_get_mcn(self._c_discid))
 
   property track_isrcs:
@@ -261,8 +240,7 @@ cdef class DiscId:
       assert self._have_read
 
       if not _has_feature(cdiscid.DISCID_FEATURE_ISRC):
-        raise NotImplementedError("ISRC is not available with this version "
-                                  "of libdiscid and/or platform")
+        return None
       return tuple(_to_unicode(cdiscid.wrap_get_track_isrc(self._c_discid,
                                                            track)) for
                    track in range(self.first_track, self.last_track + 1))
