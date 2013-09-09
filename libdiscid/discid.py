@@ -29,3 +29,8 @@ from libdiscid._discid import default_device
 from libdiscid._discid import FEATURES_MAPPING, FEATURES
 from libdiscid._discid import FEATURE_READ, FEATURE_MCN, FEATURE_ISRC
 from libdiscid._discid import __discid_version__
+
+import warnings
+warnings.warn('libdiscid.discid is deprecated and should not be used in newly '
+              'written code. It will be removed sometime in the future.',
+              DeprecationWarning)
