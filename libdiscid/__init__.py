@@ -230,6 +230,7 @@ def read(device=None, features=None):
   :type features: integer or None
   :raises libdiscid.DiscError: reading the disc failed
   :raises NotImplementedError: reading discs is not supported
+  :raises MemoryError: failed to allocate the internal DiscId object
   :rtype: :class:`DiscId` object
   """
 
@@ -255,6 +256,8 @@ def put(first, last, sectors, offsets):
   :param offsets: offsets of each track
   :type offsets: list or tuple of integers
   :raises libdiscid.DiscError: operation failed for some reason
+  :raises MemoryError: failed to allocated memory to store the offsets or the \
+    internal DiscId object
   :rtype: :class:`DiscId` object
   """
 

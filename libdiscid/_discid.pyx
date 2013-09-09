@@ -52,7 +52,7 @@ cdef class DiscId:
   def __cinit__(self):
     self._c_discid = cdiscid.discid_new()
     if self._c_discid is NULL:
-      raise MemoryError()
+      raise MemoryError('Failed to allocate DiscId object')
 
     self._have_read = False
     self._device = None
@@ -110,7 +110,7 @@ cdef class DiscId:
 
     cdef int* coffsets = <int*> malloc((len(offsets) + 1) * sizeof(int))
     if coffsets is NULL:
-      raise MemoryError()
+      raise MemoryError('Failed to allocate memory to store offsets')
 
     try:
       coffsets[0] = sectors
