@@ -216,11 +216,11 @@ class DiscId(object):
 def read(device=None, features=None):
   """ Reads the TOC from the device given as string.
 
-  If *device* is ``None``, :data:`DEFAULT_DEVICE` is used. *features* can be
-  any combination of :data:`FEATURE_MCN` and :data:`FEATURE_ISRC` and
-  :data:`FEATURE_READ`. Note that prior to libdiscid version 0.5.0 *features*
-  has no effect and that :data:`FEATURE_READ` is always assumed, even if not
-  given.
+  If *device* is ``None``, :func:`default_device` is used to determine
+  the device. *features* can be any combination of :data:`FEATURE_MCN` and
+  :data:`FEATURE_ISRC` and :data:`FEATURE_READ`. Note that prior to libdiscid
+  version 0.5.0 *features* has no effect and that :data:`FEATURE_READ` is always
+  assumed, even if not given.
 
   :param device: device to read from
   :type device: unicode or None

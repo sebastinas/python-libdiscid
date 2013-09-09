@@ -55,8 +55,8 @@ last track, the number of total sectors and track offsets::
  disc = put(first_track, last_track, num_sectors, offsets)
  print "id: %s" % (disc.id, )
 
-Please note that :data:`libdiscid.DiscId.mcn` and
-:data:`libdiscid.DiscId.track_isrcs` will be empty after a call to
+Please note that :attr:`libdiscid.DiscId.mcn` and
+:attr:`libdiscid.DiscId.track_isrcs` will be empty after a call to
 :func:`libdiscid.put`.
 
 python-discid compat module
