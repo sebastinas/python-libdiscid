@@ -291,10 +291,10 @@ def sectors_to_seconds(sectors):
   return sectors // SECTORS_PER_SECOND + \
     (1 if remainder > SECTORS_PER_SECOND // 2 else 0)
 
-__all__ = [
+__all__ = (
   'read', 'put', 'default_device', 'sectors_to_seconds',
   '__version__', '__discid_version__',
   'FEATURES', 'FEATURES_MAPPING', 'FEATURE_READ', 'FEATURE_MCN', 'FEATURE_ISRC',
   'DEFAULT_DEVICE',
   'DiscId', 'DiscError'
-]
+)

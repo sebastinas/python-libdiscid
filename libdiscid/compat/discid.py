@@ -186,3 +186,9 @@ LIBDISCID_VERSION_STRING = libdiscid.__discid_version__
 FEATURES = libdiscid.FEATURES
 FEATURES_IMPLEMENTED = (libdiscid.FEATURE_READ, libdiscid.FEATURE_MCN,
                         libdiscid.FEATURE_ISRC)
+
+__all__ = (
+  'read', 'put', 'get_default_device',
+  '__version__', 'LIBDISCID_VERSION_STRING', 'FEATURES', 'FEATURES_IMPLEMENTED',
+  'Disc', 'DiscError', 'TOCError'
+)
