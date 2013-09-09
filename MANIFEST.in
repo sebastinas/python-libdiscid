@@ -1,4 +1,4 @@
 include libdiscid/discid-wrapper.h
 include libdiscid/cdiscid.pxd libdiscid/_discid.pyx
 include LICENSE README.rst changelog
-recursive-include docs/source *.py *.rst
+recursive-include docs *.py *.rst
