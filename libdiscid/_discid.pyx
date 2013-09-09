@@ -128,8 +128,6 @@ cdef class DiscId:
     """
 
     def __get__(self):
-      assert self._have_read
-
       return _to_unicode(cdiscid.discid_get_id(self._c_discid))
 
   property freedb_id:
@@ -137,8 +135,6 @@ cdef class DiscId:
     """
 
     def __get__(self):
-      assert self._have_read
-
       return _to_unicode(cdiscid.discid_get_freedb_id(self._c_discid))
 
   property submission_url:
@@ -149,8 +145,6 @@ cdef class DiscId:
     """
 
     def __get__(self):
-      assert self._have_read
-
       return _to_unicode(cdiscid.discid_get_submission_url(self._c_discid))
 
   property webservice_url:
@@ -161,8 +155,6 @@ cdef class DiscId:
     """
 
     def __get__(self):
-      assert self._have_read
-
       return _to_unicode(cdiscid.discid_get_webservice_url(self._c_discid))
 
   property first_track:
@@ -170,8 +162,6 @@ cdef class DiscId:
     """
 
     def __get__(self):
-      assert self._have_read
-
       return cdiscid.discid_get_first_track_num(self._c_discid)
 
   property last_track:
@@ -179,8 +169,6 @@ cdef class DiscId:
     """
 
     def __get__(self):
-      assert self._have_read
-
       return cdiscid.discid_get_last_track_num(self._c_discid)
 
   property sectors:
@@ -188,8 +176,6 @@ cdef class DiscId:
     """
 
     def __get__(self):
-      assert self._have_read
-
       return cdiscid.discid_get_sectors(self._c_discid)
 
   property track_offsets:
@@ -200,8 +186,6 @@ cdef class DiscId:
     """
 
     def __get__(self):
-      assert self._have_read
-
       return tuple(cdiscid.discid_get_track_offset(self._c_discid, track)
                    for track in range(self.first_track, self.last_track + 1))
 
@@ -213,8 +197,6 @@ cdef class DiscId:
     """
 
     def __get__(self):
-      assert self._have_read
-
       return tuple(cdiscid.discid_get_track_length(self._c_discid, track)
                    for track in range(self.first_track, self.last_track + 1))
 
@@ -223,8 +205,6 @@ cdef class DiscId:
     """
 
     def __get__(self):
-      assert self._have_read
-
       if not _has_feature(cdiscid.DISCID_FEATURE_MCN):
         return None
       return _to_unicode(cdiscid.wrap_get_mcn(self._c_discid))
@@ -237,8 +217,6 @@ cdef class DiscId:
     """
 
     def __get__(self):
-      assert self._have_read
-
       if not _has_feature(cdiscid.DISCID_FEATURE_ISRC):
         return None
       return tuple(_to_unicode(cdiscid.wrap_get_track_isrc(self._c_discid,

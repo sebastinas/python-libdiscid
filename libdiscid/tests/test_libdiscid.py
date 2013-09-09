@@ -55,12 +55,12 @@ class TestLibDiscId(unittest.TestCase):
     self.assertIsNotNone(libdiscid.FEATURES_MAPPING)
 
   @unittest.skipIf(libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ] not in
-                   libdiscid.FEATURES, "not available on this platform")
+                   libdiscid.FEATURES, 'not available on this platform')
   def test_read_fail(self):
     self.assertRaises(DiscError, libdiscid.read, u('/does/not/exist'))
 
   @unittest.skipIf(libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ] in
-                   libdiscid.FEATURES, "available on this platform")
+                   libdiscid.FEATURES, 'available on this platform')
   def test_read_not_implemented(self):
     self.assertRaises(NotImplemented, libdiscid.read)
 
