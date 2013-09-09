@@ -168,7 +168,7 @@ get_default_device = libdiscid.default_device
 
 def read(device=None, features=[]):
   disc = Disc()
-  disc.read(_decode(device),
+  disc.read(_decode(device) if device is not None else None,
             map(lambda feature: _decode(feature, 'ascii'), features))
   return disc
 
