@@ -30,11 +30,13 @@ This module provides Python-bindings for libdiscid.
 True
 """
 
-__version__ = '0.3'
+from __future__ import division
 
 import libdiscid._discid
 from libdiscid.exceptions import DiscError
 import warnings
+
+__version__ = '0.3'
 
 DEFAULT_DEVICE = libdiscid._discid.default_device()
 """ The default device to use for :func:`DiscId.read` on this platform.
@@ -276,8 +278,21 @@ def default_device():
 
   return libdiscid._discid.default_device()
 
+def sectors_to_seconds(sectors):
+  """ Convert sectors to seconds rounded to the nearest second.
+
+  :param sectors: number of sectors
+  :type sectors: integer
+  :rtype: integer
+  """
+
+  SECTORS_PER_SECOND = 75
+  remainder = sectors % SECTORS_PER_SECOND
+  return sectors // SECTORS_PER_SECOND + \
+    (1 if remainder > SECTORS_PER_SECOND // 2 else 0)
+
 __all__ = [
-  'read', 'put', 'default_device',
+  'read', 'put', 'default_device', 'sectors_to_seconds',
   '__version__', '__discid_version__',
   'FEATURES', 'FEATURES_MAPPING', 'FEATURE_READ', 'FEATURE_MCN', 'FEATURE_ISRC',
   'DEFAULT_DEVICE',

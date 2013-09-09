@@ -27,8 +27,6 @@ a replacement for python-discid. It provides an interface compatible with
 python-discid version 1.0.2.
 """
 
-from __future__ import division
-
 import libdiscid
 import operator
 import functools
@@ -53,12 +51,6 @@ class _NoneHelper(object):
       return None
 
     return super(_NoneHelper, self).__getattr__(name)
-
-def _sectors_to_seconds(sectors):
-  SECTORS_PER_SECOND = 75
-  remainder = sectors % SECTORS_PER_SECOND
-  return sectors // SECTORS_PER_SECOND + \
-    (1 if remainder > SECTORS_PER_SECOND // 2 else 0)
 
 def _decode(string, encoding=None):
   # Let's do the same thing discid is doing. It always accepts both strings and
@@ -96,7 +88,7 @@ class Track(object):
 
   @property
   def seconds(self):
-    return _sectors_to_seconds(self.sectors)
+    return libdiscid.sectors_to_seconds(self.sectors)
 
   @property
   def isrc(self):
@@ -160,8 +152,8 @@ class Disc(object):
 
   @property
   def seconds(self):
-    return _sectors_to_seconds(self.sectors) if self.sectors is not None \
-      else None
+    return libdiscid.sectors_to_seconds(self.sectors) \
+        if self.sectors is not None else None
 
   @property
   def mcn(self):
@@ -186,7 +178,7 @@ def put(first, last, disc_sectors, track_offsets):
   return disc
 
 # constants defined in discid
-__version__ = '1.0.2 (compat layer from python-discid %s)' % \
+__version__ = '1.0.2 (compat layer from python-libdiscid %s)' % \
   (libdiscid.__version__, )
 """ This is the version of python-discid this layer is compatible with. """
 
