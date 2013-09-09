@@ -1,3 +1,9 @@
+python-libdiscid (0.3.1) unstable; urgency=low
+
+  * Fix handling of None in libdiscid.compat.discid.read.
+
+ -- Sebastian Ramacher <sebasitan+dev@ramacher.at>  Mon, 09 Sep 2013 15:36:41 +0200
+
 python-libdiscid (0.3) unstable; urgency=low
 
   * The device used to read the data is now stored in DiscId's device
