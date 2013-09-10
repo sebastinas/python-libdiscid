@@ -63,6 +63,12 @@ class TestCompatDiscID(unittest.TestCase):
   def test_read_fail(self):
     self.assertRaises(DiscError, discid.read, u('/does/not/exist'))
 
+  def test_read_None(self):
+    try:
+      discid.read()
+    except (DiscError, NotImplementedError):
+      pass
+
   @unittest.skipIf(libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ] not in
                    libdiscid.FEATURES, "not available on this platform")
   def test_encoded_device(self):
