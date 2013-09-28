@@ -39,17 +39,18 @@ else:
   ]
 
 if have_setuptools:
-  tests_require=[]
+  tests_require = []
   if sys.version_info[0:2] < (2,7):
-    tests_require=['unittest2']
+    tests_require = ['unittest2']
 
   args = {
-    'setup_requires': [
-      'cython >= 0.15'
-    ],
     'test_suite': 'libdiscid.tests',
     'tests_require': tests_require,
   }
+
+  if have_cython:
+    # if Cython is available, check if it's new enough
+    args['setup_requires'] = ['cython >= 0.15']
 else:
   args = {}
 
