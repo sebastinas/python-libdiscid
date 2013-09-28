@@ -2,7 +2,7 @@ libdiscid Python bindings
 =========================
 
 python-libdiscid implements Python bindings for libdiscid using Cython. Both
-Python 2.x and 3.x are supported.
+Python 2 (>= 2.6) and 3 (>= 3.1) are supported.
 
 Dependencies
 ------------
@@ -11,14 +11,20 @@ Dependencies
 * Cython (>= 0.15)
 
 Note that the tarballs come with pre-built C source for the Cython module. So
-Cython is only required if one builds python-libdiscid from the git repository.
+Cython is only required if one builds python-libdiscid from the git repository
+or if one wants to change anything in the Cython module.
 
 Quick installation guide
 ------------------------
 
-libdiscid can be installed via ``pip``::
+python-libdiscid is available in some distributions:
 
-  pip install libdiscid
+* Debian/Ubuntu: ``apt-get install python-libdiscid`` (Python 2) or
+  ``apt-get install python3-libdiscid`` (Python 3)
+
+python-libdiscid can be installed via ``pip``::
+
+  pip install python-libdiscid
 
 or by running::
 

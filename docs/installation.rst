@@ -24,12 +24,20 @@ On Debian based systems, the dependencies are only an `apt-get` away::
 .. __: http://www.cython.org/
 .. __: https://pypi.python.org/pypi/Cython/
 
+Known supported distributions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+`python-libdiscid` is available in some distributions:
+
+* `Debian <http://packages.debian.org/en/source/sid/python-libdiscid>`_
+* `Ubuntu <https://launchpad.net/ubuntu/+source/python-libdiscid>`_
+
 PyPI
 ^^^^
 
 `python-libdiscid` is available from `PyPI`__::
 
- pip install libdiscid
+ pip install python-libdiscid
 
 You can also download the tarball from `PyPI`__ manually, unpack
 it and run::
