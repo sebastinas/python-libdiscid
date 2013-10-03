@@ -142,6 +142,14 @@ class TestLibDiscId(unittest.TestCase):
     last = 100
     self.assertRaises(DiscError, libdiscid.put, first, last, sectors, offsets)
 
+  def test_sectors_to_seconds(self):
+    # there are 75 sectors per second
+    for sectors in range(38):
+      # round down for sectors in the first half
+      self.assertEqual(libdiscid.sectors_to_seconds(sectors), 0)
+    for sectors in range(38, 76):
+      # round up for sectors in the second half
+      self.assertEqual(libdiscid.sectors_to_seconds(sectors), 1)
 
 if __name__ == '__main__':
   unittest.main()
