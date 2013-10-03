@@ -60,5 +60,8 @@ char* wrap_get_track_isrc(DiscId* d, int track_num) INTERNAL;
 int wrap_read_sparse(DiscId *d, const char *device, unsigned int features)
   INTERNAL;
 
+/* discid_get_toc_string appeared in 0.6.0 */
+char* wrap_get_toc(DiscId* d) INTERNAL;
+
 #endif
 

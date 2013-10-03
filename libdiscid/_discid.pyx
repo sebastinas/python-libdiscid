@@ -232,6 +232,18 @@ cdef class DiscId:
     def __get__(self):
       return self._device
 
+  property toc:
+    """ String representing the CD's Table of Contents (TOC).
+    """
+
+    def __get__(self):
+      assert self._have_read
+
+      cdef char* tocstr = cdiscid.wrap_get_toc(self._c_discid)
+      if tocstr is not NULL:
+        return _to_unicode(tocstr)
+      return None
+
 FEATURES_MAPPING = {
     cdiscid.DISCID_FEATURE_READ: _to_unicode(cdiscid.DISCID_FEATURE_STR_READ),
     cdiscid.DISCID_FEATURE_MCN: _to_unicode(cdiscid.DISCID_FEATURE_STR_MCN),

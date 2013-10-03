@@ -78,6 +78,7 @@ class TestLibDiscId(unittest.TestCase):
                149160, 165115, 177710, 203325, 215555, 235590)
     disc_id = u('TqvKjMu7dMliSfmVEBtrL7sBSno-')
     freedb_id = u('b60d770f')
+    toc = u(' ').join(map(u, [first, last, sectors] + list(offsets)))
 
     disc = libdiscid.put(first, last, sectors, offsets)
     self.assertIsNotNone(disc)
@@ -91,6 +92,7 @@ class TestLibDiscId(unittest.TestCase):
     self.assertEqual(disc.sectors, sectors)
     self.assertEqual(disc.pregap, offsets[0])
     self.assertEqual(disc.leadout_track, sectors)
+    self.assertEqual(disc.toc, toc)
 
     self.assertEqual(len(disc.track_offsets), len(offsets))
     for read_offset, expected_offset in zip(disc.track_offsets, offsets):
