@@ -68,7 +68,7 @@ class TestLibDiscId(unittest.TestCase):
   @unittest.skipIf(libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ] in
                    libdiscid.FEATURES, 'available on this platform')
   def test_read_not_implemented(self):
-    self.assertRaises(NotImplemented, libdiscid.read)
+    self.assertRaises(NotImplementedError, libdiscid.read)
 
   def test_put(self):
     first = 1
