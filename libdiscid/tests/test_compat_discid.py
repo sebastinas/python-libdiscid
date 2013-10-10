@@ -90,7 +90,7 @@ class TestCompatDiscID(unittest.TestCase):
     self.assertEqual(disc.id, testdata.disc_id)
     self.assertEqual(disc.freedb_id, testdata.freedb_id)
     self.assertIsNotNone(disc.submission_url)
-    self.assertIsNotNone(disc.toc_string)
+    self.assertEqual(disc.toc_string, testdata.toc)
     self.assertEqual(disc.first_track_num, testdata.first)
     self.assertEqual(disc.last_track_num, testdata.last)
     self.assertEqual(disc.sectors, testdata.sectors)
