@@ -46,8 +46,8 @@ _INVERSE_FEATURES= {
 
 class _NoneHelper(object):
   def __getattr__(self, name):
-    if name in ('id', 'freedb_id', 'submission_url', 'first_track',
-                'last_track', 'sectors', 'mcn'):
+    if name in ('id', 'freedb_id', 'submission_url', 'toc',
+                'first_track', 'last_track', 'sectors', 'mcn'):
       return None
 
     return super(_NoneHelper, self).__getattr__(name)
@@ -136,6 +136,10 @@ class Disc(object):
   @property
   def submission_url(self):
     return self.disc.submission_url
+
+  @property
+  def toc_string(self):
+    return self.disc.toc
 
   @property
   def first_track_num(self):
