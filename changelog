@@ -1,3 +1,17 @@
+python-libdiscid (0.4.1) UNRELEASED; urgency=low
+
+  [ Sebastian Ramacher ]
+  * Fix typo in test_read_not_implemented test.
+
+  * Internal changes:
+    - Move test data to common location for deduplication.
+
+  [ Johannes Dewender ]
+  * libdiscid.compat.discid: Add toc_string property for compatibility with
+    python-discid 1.1.0.
+
+ -- Sebastian Ramacher <sebasitan+dev@ramacher.at>  Thu, 10 Oct 2013 18:06:14 +0200
+
 python-libdiscid (0.4) unstable; urgency=low
 
   * Add support for libdiscid's discid_get_toc_string introduced in 0.6.0.
