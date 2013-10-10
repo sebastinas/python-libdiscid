@@ -28,6 +28,7 @@ try:
 except ImportError:
   import unittest
 import libdiscid
+import libdiscid.tests.common
 from libdiscid import DiscError
 
 # as long as Python 3.2 is supported, hack around the missing u
@@ -71,31 +72,26 @@ class TestLibDiscId(unittest.TestCase):
     self.assertRaises(NotImplementedError, libdiscid.read)
 
   def test_put(self):
-    first = 1
-    last = 15
-    sectors = 258725
-    offsets = (150, 17510, 33275, 45910, 57805, 78310, 94650,109580, 132010,
-               149160, 165115, 177710, 203325, 215555, 235590)
-    disc_id = u('TqvKjMu7dMliSfmVEBtrL7sBSno-')
-    freedb_id = u('b60d770f')
-    toc = u(' ').join(map(u, [first, last, sectors] + list(offsets)))
+    testdata = libdiscid.tests.common.PutSuccess
 
-    disc = libdiscid.put(first, last, sectors, offsets)
+    disc = libdiscid.put(testdata.first, testdata.last, testdata.sectors,
+                         testdata.offsets)
     self.assertIsNotNone(disc)
     self.assertIsNone(disc.device)
 
-    self.assertEqual(disc.id, disc_id)
-    self.assertEqual(disc.freedb_id, freedb_id)
+    self.assertEqual(disc.id, testdata.disc_id)
+    self.assertEqual(disc.freedb_id, testdata.freedb_id)
     self.assertIsNotNone(disc.submission_url)
-    self.assertEqual(disc.first_track, first)
-    self.assertEqual(disc.last_track, last)
-    self.assertEqual(disc.sectors, sectors)
-    self.assertEqual(disc.pregap, offsets[0])
-    self.assertEqual(disc.leadout_track, sectors)
-    self.assertEqual(disc.toc, toc)
+    self.assertEqual(disc.first_track, testdata.first)
+    self.assertEqual(disc.last_track, testdata.last)
+    self.assertEqual(disc.sectors, testdata.sectors)
+    self.assertEqual(disc.pregap, testdata.offsets[0])
+    self.assertEqual(disc.leadout_track, testdata.sectors)
+    self.assertEqual(disc.toc, testdata.toc)
 
-    self.assertEqual(len(disc.track_offsets), len(offsets))
-    for read_offset, expected_offset in zip(disc.track_offsets, offsets):
+    self.assertEqual(len(disc.track_offsets), len(testdata.offsets))
+    for read_offset, expected_offset in zip(disc.track_offsets,
+                                            testdata.offsets):
       self.assertEqual(read_offset, expected_offset)
 
     # ISRCs are not available if one calls put
@@ -110,37 +106,31 @@ class TestLibDiscId(unittest.TestCase):
 
   def test_put_fail_1(self):
     # !(first < last)
-    first = 13
-    last = 1
-    sectors = 200
-    offsets = (1, 2, 3, 4, 5, 6, 7)
-    self.assertRaises(DiscError, libdiscid.put, first, last, sectors, offsets)
+    testdata = libdiscid.tests.common.PutFail1
+    self.assertRaises(DiscError, libdiscid.put, testdata.first, testdata.last,
+                      testdata.sectors, testdata.offsets)
 
   def test_put_fail_2(self):
     # !(first >= 1)
-    first = 0
-    last = 10
-    sectors = 200
-    offsets = (1, 2, 3, 4, 5, 6, 7)
-    self.assertRaises(DiscError, libdiscid.put, first, last, sectors, offsets)
+    testdata = libdiscid.tests.common.PutFail2
+    self.assertRaises(DiscError, libdiscid.put, testdata.first, testdata.last,
+                      testdata.sectors, testdata.offsets)
 
     # !(first < 100)
-    first = 100
-    last = 200
-    self.assertRaises(DiscError, libdiscid.put, first, last, sectors, offsets)
+    testdata = libdiscid.tests.common.PutFail2_2
+    self.assertRaises(DiscError, libdiscid.put, testdata.first, testdata.last,
+                      testdata.sectors, testdata.offsets)
 
   def test_put_fail_3(self):
     # !(last >= 1)
-    first = 0
-    last = 0
-    sectors = 200
-    offsets = (1, 2, 3, 4, 5, 6, 7)
-    self.assertRaises(DiscError, libdiscid.put, first, last, sectors, offsets)
+    testdata = libdiscid.tests.common.PutFail3
+    self.assertRaises(DiscError, libdiscid.put, testdata.first, testdata.last,
+                      testdata.sectors, testdata.offsets)
 
     # !(last < 100)
-    first = 1
-    last = 100
-    self.assertRaises(DiscError, libdiscid.put, first, last, sectors, offsets)
+    testdata = libdiscid.tests.common.PutFail3_2
+    self.assertRaises(DiscError, libdiscid.put, testdata.first, testdata.last,
+                      testdata.sectors, testdata.offsets)
 
   def test_sectors_to_seconds(self):
     # there are 75 sectors per second

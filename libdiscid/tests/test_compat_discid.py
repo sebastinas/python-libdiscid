@@ -60,7 +60,7 @@ class TestCompatDiscID(unittest.TestCase):
     self.assertEqual(len(disc.tracks), 0)
 
   @unittest.skipIf(libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ] not in
-                   libdiscid.FEATURES, "not available on this platform")
+                   libdiscid.FEATURES, 'not available on this platform')
   def test_read_fail(self):
     self.assertRaises(DiscError, discid.read, u('/does/not/exist'))
 
@@ -71,41 +71,34 @@ class TestCompatDiscID(unittest.TestCase):
       pass
 
   @unittest.skipIf(libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ] not in
-                   libdiscid.FEATURES, "not available on this platform")
+                   libdiscid.FEATURES, 'not available on this platform')
   def test_encoded_device(self):
     self.assertRaises(DiscError, discid.read, '/does/not/exist')
 
   @unittest.skipIf(libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ] not in
-                   libdiscid.FEATURES, "not available on this platform")
+                   libdiscid.FEATURES, 'not available on this platform')
   def test_byte_device(self):
     self.assertRaises(DiscError, discid.read, b'/does/not/exist')
 
   def test_put(self):
-    first = 1
-    last = 15
-    sectors = 258725
-    seconds = 3450
-    offsets = (150, 17510, 33275, 45910, 57805, 78310, 94650,109580, 132010,
-               149160, 165115, 177710, 203325, 215555, 235590)
-    track_seconds = (231, 210, 168, 159, 273, 218, 199, 299, 229, 213, 168, 342,
-                     163, 267, 308)
-    disc_id = 'TqvKjMu7dMliSfmVEBtrL7sBSno-'
-    freedb_id = 'b60d770f'
+    testdata = libdiscid.tests.common.PutSuccess
 
-    disc = discid.put(first, last, sectors, offsets)
+    disc = discid.put(testdata.first, testdata.last, testdata.sectors,
+                      testdata.offsets)
     self.assertIsNotNone(disc)
 
-    self.assertEqual(disc.id, disc_id)
-    self.assertEqual(disc.freedb_id, freedb_id)
+    self.assertEqual(disc.id, testdata.disc_id)
+    self.assertEqual(disc.freedb_id, testdata.freedb_id)
     self.assertIsNotNone(disc.submission_url)
     self.assertIsNotNone(disc.toc_string)
-    self.assertEqual(disc.first_track_num, first)
-    self.assertEqual(disc.last_track_num, last)
-    self.assertEqual(disc.sectors, sectors)
-    self.assertEqual(disc.seconds, seconds)
+    self.assertEqual(disc.first_track_num, testdata.first)
+    self.assertEqual(disc.last_track_num, testdata.last)
+    self.assertEqual(disc.sectors, testdata.sectors)
+    self.assertEqual(disc.seconds, testdata.seconds)
 
-    self.assertEqual(len(disc.tracks), len(offsets))
-    for track, offset, sec in zip(disc.tracks, offsets, track_seconds):
+    self.assertEqual(len(disc.tracks), len(testdata.offsets))
+    for track, offset, sec in zip(disc.tracks, testdata.offsets,
+                                  testdata.track_seconds):
       self.assertEqual(track.offset, offset)
       self.assertEqual(track.seconds, sec)
 
@@ -118,37 +111,31 @@ class TestCompatDiscID(unittest.TestCase):
 
   def test_put_fail_1(self):
     # !(first < last)
-    first = 13
-    last = 1
-    sectors = 200
-    offsets = (1, 2, 3, 4, 5, 6, 7)
-    self.assertRaises(TOCError, discid.put, first, last, sectors, offsets)
+    testdata = libdiscid.tests.common.PutFail1
+    self.assertRaises(TOCError, discid.put, testdata.first, testdata.last,
+                      testdata.sectors, testdata.offsets)
 
   def test_put_fail_2(self):
     # !(first >= 1)
-    first = 0
-    last = 10
-    sectors = 200
-    offsets = (1, 2, 3, 4, 5, 6, 7)
-    self.assertRaises(TOCError, discid.put, first, last, sectors, offsets)
+    testdata = libdiscid.tests.common.PutFail2
+    self.assertRaises(TOCError, discid.put, testdata.first, testdata.last,
+                      testdata.sectors, testdata.offsets)
 
     # !(first < 100)
-    first = 100
-    last = 200
-    self.assertRaises(TOCError, discid.put, first, last, sectors, offsets)
+    testdata = libdiscid.tests.common.PutFail2_2
+    self.assertRaises(TOCError, discid.put, testdata.first, testdata.last,
+                      testdata.sectors, testdata.offsets)
 
   def test_put_fail_3(self):
     # !(last >= 1)
-    first = 0
-    last = 0
-    sectors = 200
-    offsets = (1, 2, 3, 4, 5, 6, 7)
-    self.assertRaises(TOCError, discid.put, first, last, sectors, offsets)
+    testdata = libdiscid.tests.common.PutFail3
+    self.assertRaises(TOCError, discid.put, testdata.first, testdata.last,
+                      testdata.sectors, testdata.offsets)
 
     # !(last < 100)
-    first = 1
-    last = 100
-    self.assertRaises(TOCError, discid.put, first, last, sectors, offsets)
+    testdata = libdiscid.tests.common.PutFail3_2
+    self.assertRaises(TOCError, discid.put, testdata.first, testdata.last,
+                      testdata.sectors, testdata.offsets)
 
 
 if __name__ == '__main__':
