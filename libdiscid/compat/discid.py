@@ -182,7 +182,7 @@ def put(first, last, disc_sectors, track_offsets):
   return disc
 
 # constants defined in discid
-__version__ = '1.0.2 (compat layer from python-libdiscid %s)' % \
+__version__ = '1.1.0 (compat layer from python-libdiscid %s)' % \
   (libdiscid.__version__, )
 """ This is the version of python-discid this layer is compatible with. """
 
