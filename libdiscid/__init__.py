@@ -37,7 +37,7 @@ from libdiscid.exceptions import DiscError
 import re
 import warnings
 
-__version__ = '0.4'
+__version__ = '0.4.1'
 
 DEFAULT_DEVICE = libdiscid._discid.default_device()
 """ The default device to use for :func:`DiscId.read` on this platform.

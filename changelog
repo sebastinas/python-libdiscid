@@ -1,4 +1,4 @@
-python-libdiscid (0.4.1) UNRELEASED; urgency=low
+python-libdiscid (0.4.1) unstable; urgency=low
 
   [ Sebastian Ramacher ]
   * Fix typo in test_read_not_implemented test.
@@ -10,7 +10,7 @@ python-libdiscid (0.4.1) UNRELEASED; urgency=low
   * libdiscid.compat.discid: Add toc_string property for compatibility with
     python-discid 1.1.0.
 
- -- Sebastian Ramacher <sebasitan+dev@ramacher.at>  Thu, 10 Oct 2013 18:06:14 +0200
+ -- Sebastian Ramacher <sramacher@debian.org>  Fri, 03 Jan 2014 21:34:17 +0100
 
 python-libdiscid (0.4) unstable; urgency=low
 
