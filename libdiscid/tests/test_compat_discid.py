@@ -28,6 +28,7 @@ try:
 except ImportError:
   import unittest
 import libdiscid
+import libdiscid.tests.common
 from libdiscid.compat import discid
 from libdiscid.compat.discid import DiscError, TOCError
 
