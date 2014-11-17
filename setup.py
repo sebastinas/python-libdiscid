@@ -3,13 +3,7 @@
 import os.path
 import sys
 
-try:
-  from setuptools import setup, Extension
-  have_setuptools = True
-except ImportError:
-  from distutils.core import setup
-  from distutils.extension import Extension
-  have_setuptools = False
+from setuptools import setup, Extension
 
 try:
   from Cython.Build import cythonize
@@ -38,21 +32,14 @@ else:
     )
   ]
 
-if have_setuptools:
-  tests_require = []
-  if sys.version_info[0:2] < (2,7):
-    tests_require = ['unittest2']
+tests_require = []
+if sys.version_info[0:2] < (2,7):
+  tests_require = ['unittest2']
 
-  args = {
-    'test_suite': 'libdiscid.tests',
-    'tests_require': tests_require,
-  }
-
-  if have_cython:
-    # if Cython is available, check if it's new enough
-    args['setup_requires'] = ['cython >= 0.15']
-else:
-  args = {}
+args = {}
+if have_cython:
+  # if Cython is available, check if it's new enough
+  args['setup_requires'] = ['cython >= 0.15']
 
 def read(name):
   f = open(os.path.join(os.path.dirname(__file__), name))
@@ -89,5 +76,7 @@ setup(
     'Topic :: Multimedia :: Sound/Audio :: CD Audio :: CD Ripping',
     'Topic :: Software Development :: Libraries :: Python Modules'
   ],
+  test_suite='libdiscid.tests',
+  tests_require=tests_require,
   **args
 )
