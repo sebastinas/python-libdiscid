@@ -11,6 +11,24 @@ try:
 except ImportError:
   have_cython = False
 
+try:
+  import pkgconfig
+  have_pkgconfig = True
+except ImportError:
+  have_pkgconfig = False
+
+if have_pkgconfig and pkgconfig.exists('libdiscid'):
+  flags = pkgconfig.parse('libdiscid')
+  define_macros = flags['define_macros']
+  include_dirs = flags['include_dirs']
+  library_dirs = flags['library_dirs']
+  libraries = list(flags['libraries'])
+else:
+  define_macros = ''
+  include_dirs = ''
+  library_dirs = ''
+  libraries = 'discid'
+
 if have_cython:
   # if Cython is available, rebuild _discid.c
   ext = cythonize([
@@ -18,7 +36,11 @@ if have_cython:
       [
         'libdiscid/_discid.pyx',
         'libdiscid/discid-wrapper.c'
-      ]
+      ],
+      define_macros=define_macros,
+      include_dirs=include_dirs,
+      library_dirs=library_dirs,
+      libraries=libraries
     )
   ])
 else:
@@ -28,7 +50,11 @@ else:
       [
         'libdiscid/_discid.c',
         'libdiscid/discid-wrapper.c'
-      ]
+      ],
+      define_macros=define_macros,
+      include_dirs=include_dirs,
+      library_dirs=library_dirs,
+      libraries=libraries
     )
   ]
 
@@ -36,10 +62,10 @@ tests_require = []
 if sys.version_info[0:2] < (2,7):
   tests_require = ['unittest2']
 
-args = {}
+setup_requires = ['pkgconfig']
 if have_cython:
   # if Cython is available, check if it's new enough
-  args['setup_requires'] = ['cython >= 0.15']
+  setup_requires.append('cython >= 0.15')
 
 def read(name):
   f = open(os.path.join(os.path.dirname(__file__), name))
@@ -78,5 +104,5 @@ setup(
   ],
   test_suite='libdiscid.tests',
   tests_require=tests_require,
-  **args
+  setup_requires=setup_requires
 )
