@@ -62,3 +62,11 @@ License
 -------
 
 python-libdiscid is release under the Expat license. Check LICENSE for details.
+
+Build status
+------------
+
+|TravisCI|_
+
+.. |TravisCI| image:: https://travis-ci.org/sebastinas/python-libdiscid.svg?branch=master
+.. _TravisCI: https://travis-ci.org/sebastinas/python-libdiscid
