@@ -99,6 +99,8 @@ setup(
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3.2',
     'Programming Language :: Python :: 3.3',
+    'Programming Language :: Python :: 3.4',
+    'Programming Language :: Python :: 3.5',
     'Topic :: Multimedia :: Sound/Audio :: CD Audio :: CD Ripping',
     'Topic :: Software Development :: Libraries :: Python Modules'
   ],
