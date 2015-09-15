@@ -39,7 +39,7 @@ cdef extern from "discid-wrapper.h":
   int discid_get_track_offset(DiscId *d, int track_num)
   int discid_get_track_length(DiscId *d, int track_num)
 
-  ctypedef enum discid_feature:
+  cdef enum discid_feature:
     DISCID_FEATURE_READ
     DISCID_FEATURE_MCN
     DISCID_FEATURE_ISRC
