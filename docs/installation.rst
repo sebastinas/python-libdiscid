@@ -76,10 +76,10 @@ limitation:
 * If you build with ``python setup.py build``, It is also possible to put
   ``build/lib.*`` before the source directory of `python-libdiscid` in
   ``sys.path``. Assuming that `python-libdiscid` is built on a 64 bit Linux and
-  for `Python` 3.2, one can use the following lines to achieve that::
+  for `Python` 3.4, one can use the following lines to achieve that::
 
     import sys, os
-    sys.path.insert(0, os.path.abspath('build/lib.linux-x86_64-3.2'))
+    sys.path.insert(0, os.path.abspath('build/lib.linux-x86_64-3.4'))
     import libdiscid
 
   Please note that modification to any file in the ``libdiscid`` directory will

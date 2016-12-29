@@ -2,8 +2,6 @@ language: python
 
 python:
   - 2.7
-  - 3.2
-  - 3.3
   - 3.4
   - 3.5
   - 3.6-dev
@@ -23,7 +21,6 @@ install:
   - pip install pkgconfig
   - pip install 'cython >= 0.15'
   # documentation specific dependencies
-  - if [[ $TRAVIS_PYTHON_VERSION == 3.2 ]]; then pip install 'sphinx>=1.2,<1.3a1'; else pip install sphinx; fi
   - python setup.py build
   - python setup.py build_ext -i
   - python setup.py build_sphinx
