@@ -1,12 +1,16 @@
-python-libdiscid (0.4.2) UNRELEASED; urgency=medium
+python-libdiscid (1.0) stable; urgency=low
 
-  * Fix compatibility issue with Cython 0.23.
+  * Fix compatibility issues with Cython 0.23.
+  * Add support for Python 3.4, 3.5, and 3.6.
+  * Drop (active) support for Python 2.6, 3.2 and 3.3. This change only
+    affects the test suite.
+  * Fix various spelling mistakes.
 
   * Internal changes:
     - Use pkgconfig to detect discid.
     - Use Travis-CI.
 
- -- Sebastian Ramacher <sebastian+dev@ramacher.at>  Tue, 15 Sep 2015 22:31:00 +0200
+ -- Sebastian Ramacher <sebastian+dev@ramacher.at>  Thu, 29 Dec 2016 12:58:34 +0100
 
 python-libdiscid (0.4.1) unstable; urgency=low
 
