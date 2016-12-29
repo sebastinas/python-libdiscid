@@ -23,6 +23,9 @@
 """ Tests for the libdiscid module
 """
 
+from __future__ import unicode_literals
+
+
 class PutSuccess(object):
   first = 1
   last = 15
@@ -32,9 +35,9 @@ class PutSuccess(object):
              149160, 165115, 177710, 203325, 215555, 235590)
   track_seconds = (231, 210, 168, 159, 273, 218, 199, 299, 229, 213, 168, 342,
                    163, 267, 308)
-  disc_id = u('TqvKjMu7dMliSfmVEBtrL7sBSno-')
-  freedb_id = u('b60d770f')
-  toc = u(' ').join(map(u, [first, last, sectors] + list(offsets)))
+  disc_id = 'TqvKjMu7dMliSfmVEBtrL7sBSno-'
+  freedb_id = 'b60d770f'
+  toc = ' '.join(map(str, [first, last, sectors] + list(offsets)))
 
 class _PutFail(object):
   sectors = 200

@@ -23,6 +23,8 @@
 """ Tests for the libdiscid.compat.discid module
 """
 
+from __future__ import unicode_literals
+
 import unittest
 import libdiscid
 from libdiscid.compat import discid
@@ -54,7 +56,7 @@ class TestCompatDiscID(unittest.TestCase):
   @unittest.skipIf(libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ] not in
                    libdiscid.FEATURES, 'not available on this platform')
   def test_read_fail(self):
-    self.assertRaises(DiscError, discid.read, u('/does/not/exist'))
+    self.assertRaises(DiscError, discid.read, '/does/not/exist')
 
   def test_read_None(self):
     try:

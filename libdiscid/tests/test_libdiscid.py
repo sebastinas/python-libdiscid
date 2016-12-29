@@ -23,6 +23,8 @@
 """ Tests for the libdiscid module
 """
 
+from __future__ import unicode_literals
+
 import unittest
 import libdiscid
 import libdiscid.tests.common
@@ -50,7 +52,7 @@ class TestLibDiscId(unittest.TestCase):
   @unittest.skipIf(libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ] not in
                    libdiscid.FEATURES, 'not available on this platform')
   def test_read_fail(self):
-    self.assertRaises(DiscError, libdiscid.read, u('/does/not/exist'))
+    self.assertRaises(DiscError, libdiscid.read, '/does/not/exist')
 
   def test_read_None(self):
     try:
@@ -90,11 +92,11 @@ class TestLibDiscId(unittest.TestCase):
     if libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_ISRC] in libdiscid.FEATURES:
       self.assertEqual(len(disc.track_isrcs), 15)
       for read_isrc in disc.track_isrcs:
-        self.assertEqual(read_isrc, u(''))
+        self.assertEqual(read_isrc, '')
 
     # MCN is not available if one calls put
     if libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_MCN] in libdiscid.FEATURES:
-      self.assertEqual(disc.mcn, u(''))
+      self.assertEqual(disc.mcn, '')
 
   def test_put_fail_1(self):
     # !(first < last)
