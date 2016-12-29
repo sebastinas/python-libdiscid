@@ -60,7 +60,7 @@ Usage
   from libdiscid import read
 
   disc = read("/dev/cdrom")
-  print "id: %s" % (disc.id, )
+  print("id: {}".format(disc.id))
 
 License
 -------
