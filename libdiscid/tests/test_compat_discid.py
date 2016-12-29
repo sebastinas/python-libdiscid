@@ -23,10 +23,7 @@
 """ Tests for the libdiscid.compat.discid module
 """
 
-try:
-  import unittest2 as unittest
-except ImportError:
-  import unittest
+import unittest
 import libdiscid
 from libdiscid.compat import discid
 from libdiscid.compat.discid import DiscError, TOCError
