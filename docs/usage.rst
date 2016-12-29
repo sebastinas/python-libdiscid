@@ -9,7 +9,7 @@ from a disc and compute the disc id::
 
  from libdiscid import read
  disc = read()
- print "id: %s" % (disc.id, )
+ print("id: {}".format(disc.id))
 
 If no additional arguments are passed to :func:`libdiscid.read`,
 it will read from :func:`libdiscid.default_device`. If reading is not supported
@@ -22,7 +22,7 @@ accordingly::
 
  from libdiscid import read
  disc = read(device=u'/dev/cdrom1')
- print "id: %s" % (disc.id, )
+ print("id: {}".format(disc.id))
 
 Starting with `libdiscid` 0.5.0, it is possible to explicitly state what should
 be read. For example, to read the MCN, one would use::
@@ -30,13 +30,13 @@ be read. For example, to read the MCN, one would use::
  from libdiscid import read, FEATURE_MCN
  disc = read(features=FEATURE_MCN)
  # disc.id will be available
- print "id: %s" % (disc.id, )
+ print("id: {}".format(disc.id))
  # if the disc has a MCN and libdiscid is 0.4.0 or later and libdiscid
  # supports reading the MCN on this platform, disc.mcn will be non-empty.
  try:
-   print "MCN: %s" % (disc.mcn, )
+   print("MCN: {}".format(disc.mcn))
  except NotImplementedError:
-   print "MCN reading not supported on this platform/with this libdiscid"
+   print("MCN reading not supported on this platform/with this libdiscid")
 
 If you only want to get the disc id and do not care about the MCN and the ISCRs,
 you can tell that to :func:`libdiscid.read` by passing ``0`` or
@@ -53,7 +53,7 @@ last track, the number of total sectors and track offsets::
 
  from libdiscid import put
  disc = put(first_track, last_track, num_sectors, offsets)
- print "id: %s" % (disc.id, )
+ print("id: {}".format(disc.id))
 
 Please note that :attr:`libdiscid.DiscId.mcn` and
 :attr:`libdiscid.DiscId.track_isrcs` will be empty after a call to
