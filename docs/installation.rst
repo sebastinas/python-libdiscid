@@ -8,21 +8,27 @@ Dependencies
 
 * :musicbrainz:`libdiscid`
 * `Cython`__ (>= 0.15)
+* `pkgconfig`__
 
 Note that `Cython` is only required if one builds `python-libdiscid` from the
 repository. The released tarballs ship with pre-built C source files for the
 extension mdoules.
 
+If `pkgconfig` is installed, `setup.py` uses `libdiscid`'s `pkg-config`
+information to set include directories, libraries to link, etc.
+
 On Debian based systems, the dependencies are only an `apt-get` away::
 
- apt-get install cython libdiscid0-dev
+ apt-get install cython libdiscid-dev python-pkgconfig
 
-`Cython` is also available via `PyPI`__::
+`Cython` and `pkgconfig` are also available via `PyPI`__::
 
  pip install cython
+ pip install pkgconfig
 
 .. __: http://www.cython.org/
-.. __: https://pypi.python.org/pypi/Cython/
+.. __: https://github.com/matze/pkgconfig
+.. __: https://pypi.python.org
 
 Known supported distributions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
