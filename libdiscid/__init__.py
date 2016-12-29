@@ -261,7 +261,7 @@ def read(device=None, features=None):
   return DiscId(disc)
 
 def put(first, last, sectors, offsets):
-  """ Creates a TOC based on the given offets.
+  """ Creates a TOC based on the given offsets.
 
   Takes the *first* and *last* audio track, as well as the number of
   *sectors* and a list of *offsets* as in :attr:`track_offsets`.

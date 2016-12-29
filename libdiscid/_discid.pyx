@@ -99,7 +99,7 @@ cdef class DiscId:
     self._have_read = True
 
   def put(self, int first, int last, int sectors, offsets):
-    """ Creates a TOC based on the given offets.
+    """ Creates a TOC based on the given offsets.
 
     Takes the *first* and *last* audio track, as well as the number of
     *sectors* and a list of *offsets* as in :attr:`DiscId.track_offsets`.
