@@ -23,12 +23,6 @@
 """ Tests for the libdiscid module
 """
 
-# as long as Python 3.2 is supported, hack around the missing u
-try:
-  u = unicode
-except NameError:
-  u = str
-
 class PutSuccess(object):
   first = 1
   last = 15

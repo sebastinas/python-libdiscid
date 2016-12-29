@@ -31,11 +31,6 @@ import libdiscid
 from libdiscid.compat import discid
 from libdiscid.compat.discid import DiscError, TOCError
 
-# as long as Python 3.2 is supported, hack around the missing u
-try:
-  u = unicode
-except NameError:
-  u = str
 
 class TestCompatDiscID(unittest.TestCase):
   def test_default_device(self):

@@ -31,11 +31,6 @@ import libdiscid
 import libdiscid.tests.common
 from libdiscid import DiscError
 
-# as long as Python 3.2 is supported, hack around the missing u
-try:
-  u = unicode
-except NameError:
-  u = str
 
 class TestLibDiscId(unittest.TestCase):
   def test_version(self):
