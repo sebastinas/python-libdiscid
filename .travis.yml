@@ -11,7 +11,7 @@ python:
   - pypy3
 
 matrix:
-  allowe_failures:
+  allow_failures:
       - python: pypy3
 
 before_install:
