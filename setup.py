@@ -58,10 +58,6 @@ else:
     )
   ]
 
-tests_require = []
-if sys.version_info[0:2] < (2,7):
-  tests_require = ['unittest2']
-
 setup_requires = ['pkgconfig']
 if have_cython:
   # if Cython is available, check if it's new enough
@@ -94,7 +90,6 @@ setup(
     'License :: OSI Approved :: MIT License',
     'Operating System :: OS Independent',
     'Programming Language :: Python :: 2',
-    'Programming Language :: Python :: 2.6',
     'Programming Language :: Python :: 2.7',
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3.2',
@@ -105,6 +100,5 @@ setup(
     'Topic :: Software Development :: Libraries :: Python Modules'
   ],
   test_suite='libdiscid.tests',
-  tests_require=tests_require,
   setup_requires=setup_requires
 )

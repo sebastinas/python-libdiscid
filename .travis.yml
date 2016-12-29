@@ -1,7 +1,6 @@
 language: python
 
 python:
-  - 2.6
   - 2.7
   - 3.3
   - 3.4
@@ -19,7 +18,6 @@ install:
   - pip install 'cython >= 0.15'
   # documentation specific dependencies
   - pip install sphinx
-  - if [[ $TRAVIS_PYTHON_VERSION == 2.6 ]]; then pip install unittest2; fi
   - python setup.py build
   - python setup.py build_ext -i
   - python setup.py build_sphinx
