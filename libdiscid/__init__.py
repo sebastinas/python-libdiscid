@@ -116,7 +116,7 @@ class DiscId(object):
   def webservice_url(self):
     """ The web service URL for info about the CD
 
-    With this url you can retrive information about the CD in XML from the
+    With this url you can retrieve information about the CD in XML from the
     MusicBrainz web service.
     """
 
