@@ -37,7 +37,6 @@ Known supported distributions
 
 * `Debian <http://packages.debian.org/en/source/sid/python-libdiscid>`_
 * `Ubuntu <https://launchpad.net/ubuntu/+source/python-libdiscid>`_
-* `Arch <https://aur.archlinux.org/packages/python-libdiscid>`_
 
 PyPI
 ^^^^
