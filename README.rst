@@ -8,11 +8,15 @@ Dependencies
 ------------
 
 * libdiscid
-* Cython (>= 0.15)
+* Cython (>= 0.15, optional)
+* pkgconfig (optional)
 
 Note that the tarballs come with pre-built C source for the Cython module. So
 Cython is only required if one builds python-libdiscid from the git repository
 or if one wants to change anything in the Cython module.
+
+If pkgconfig is installed, setup.py uses libdiscid's pkg-config information to
+set include directories, libraries to link, etc.
 
 Quick installation guide
 ------------------------
