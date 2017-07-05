@@ -37,6 +37,7 @@ Known supported distributions
 
 * `Debian <http://packages.debian.org/en/source/sid/python-libdiscid>`_
 * `Ubuntu <https://launchpad.net/ubuntu/+source/python-libdiscid>`_
+* `Fedora <https://apps.fedoraproject.org/packages/python-libdiscid>`_
 
 PyPI
 ^^^^
