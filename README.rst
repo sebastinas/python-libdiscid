@@ -25,6 +25,8 @@ python-libdiscid is available in some distributions:
 
 * Debian/Ubuntu: ``apt-get install python-libdiscid`` (Python 2) or
   ``apt-get install python3-libdiscid`` (Python 3)
+* Fedora: ``dnf install python2-libdiscid`` (Python 2) or
+  ``dnf install python3-libdiscid`` (Python 3)
 
 python-libdiscid can be installed via ``pip``::
 
