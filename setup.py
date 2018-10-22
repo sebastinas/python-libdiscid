@@ -27,7 +27,7 @@ else:
   define_macros = ''
   include_dirs = ''
   library_dirs = ''
-  libraries = 'discid'
+  libraries = ['discid']
 
 if have_cython:
   # if Cython is available, rebuild _discid.c
