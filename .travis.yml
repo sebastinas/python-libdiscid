@@ -13,7 +13,8 @@ python:
 
 matrix:
   allow_failures:
-      - python: pypy3
+     - python: pypy
+     - python: pypy3
 
 before_install:
   - sudo apt-get update -qq
