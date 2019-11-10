@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-cimport cdiscid
+from . cimport cdiscid
 cimport cpython
 from libc cimport limits
 from libc.stdlib cimport malloc, free
