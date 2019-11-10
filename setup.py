@@ -65,10 +65,8 @@ if have_cython:
   setup_requires.append('cython >= 0.15')
 
 def read(name):
-  f = open(os.path.join(os.path.dirname(__file__), name))
-  ret = f.read()
-  f.close()
-  return ret
+  with open(os.path.join(os.path.dirname(__file__), name)) as f:
+    return f.read()
 
 setup(
   name='python-libdiscid',
