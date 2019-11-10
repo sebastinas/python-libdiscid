@@ -67,7 +67,7 @@ __discid_version__ = libdiscid._discid.__discid_version__
 """ The version of the underlying libdiscid.
 """
 
-class DiscId(object):
+class DiscId:
   """ Disc information
 
   Class holding all the information obtained from a disc.

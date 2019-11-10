@@ -19,7 +19,7 @@ information to set include directories, libraries to link, etc.
 
 On Debian based systems, the dependencies are only an `apt-get` away::
 
- apt-get install cython libdiscid-dev python-pkgconfig
+ apt-get install cython3 libdiscid-dev python3-pkgconfig
 
 `Cython` and `pkgconfig` are also available via `PyPI`__::
 
@@ -72,14 +72,14 @@ limitation:
 
 * Running::
 
-   python setup.py build_ext -i
+   python3 setup.py build_ext -i
 
   will copy the extension modules to ``libdiscid`` and one can hack right away.
 
 * Use `setuptools` ``develop`` command. Please read `setuptools`'s
   `documentation`__ for further information.
 
-* If you build with ``python setup.py build``, It is also possible to put
+* If you build with ``python3 setup.py build``, It is also possible to put
   ``build/lib.*`` before the source directory of `python-libdiscid` in
   ``sys.path``. Assuming that `python-libdiscid` is built on a 64 bit Linux and
   for `Python` 3.4, one can use the following lines to achieve that::

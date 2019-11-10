@@ -23,10 +23,7 @@
 """ Tests for the libdiscid module
 """
 
-from __future__ import unicode_literals
-
-
-class PutSuccess(object):
+class PutSuccess:
   first = 1
   last = 15
   sectors = 258725
@@ -39,7 +36,7 @@ class PutSuccess(object):
   freedb_id = 'b60d770f'
   toc = ' '.join(map(str, [first, last, sectors] + list(offsets)))
 
-class _PutFail(object):
+class _PutFail:
   sectors = 200
   offsets = (1, 2, 3, 4, 5, 6, 7)
 

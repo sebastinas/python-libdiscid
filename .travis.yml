@@ -3,17 +3,14 @@ dist: xenial
 sudo: required
 
 python:
-  - 2.7
   - 3.5
   - 3.6
   - 3.7
   - 3.8
-  - pypy
   - pypy3
 
 matrix:
   allow_failures:
-     - python: pypy
      - python: pypy3
 
 before_install:

@@ -23,8 +23,6 @@
 """ Tests for the libdiscid module
 """
 
-from __future__ import unicode_literals
-
 import unittest
 import libdiscid
 import libdiscid.tests.common

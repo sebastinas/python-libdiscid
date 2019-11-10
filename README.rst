@@ -1,8 +1,7 @@
 libdiscid Python bindings
 =========================
 
-python-libdiscid implements Python bindings for libdiscid using Cython. Both
-Python 2 (>= 2.7) and 3 (>= 3.4) are supported.
+python-libdiscid implements Python 3 bindings for libdiscid using Cython.
 
 Dependencies
 ------------
@@ -23,10 +22,8 @@ Quick installation guide
 
 python-libdiscid is available in some distributions:
 
-* Debian/Ubuntu: ``apt-get install python-libdiscid`` (Python 2) or
-  ``apt-get install python3-libdiscid`` (Python 3)
-* Fedora: ``dnf install python2-libdiscid`` (Python 2) or
-  ``dnf install python3-libdiscid`` (Python 3)
+* Debian/Ubuntu: ``apt-get install python3-libdiscid`` (Python 3)
+* Fedora: ``dnf install python3-libdiscid`` (Python 3)
 
 python-libdiscid can be installed via ``pip``::
 
@@ -34,15 +31,15 @@ python-libdiscid can be installed via ``pip``::
 
 or by running::
 
-  python setup.py install
+  python3 setup.py install
 
 If you just want to try it locally, run::
 
-  python setup.py build_ext -i
+  python3 setup.py build_ext -i
 
 and hack right away. You can also run::
 
-  python setup.py build
+  python3 setup.py build
 
 but please make sure that ``build/lib.*`` is in ``sys.path`` before the source
 folder.

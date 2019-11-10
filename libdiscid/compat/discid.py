@@ -32,19 +32,13 @@ import operator
 import functools
 import sys
 
-try:
-  unicode
-except NameError:
-  # 2/3 compat
-  unicode = str
-
 _INVERSE_FEATURES= {
     libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_READ]: libdiscid.FEATURE_READ,
     libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_MCN]: libdiscid.FEATURE_MCN,
     libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_ISRC]: libdiscid.FEATURE_ISRC
   }
 
-class _NoneHelper(object):
+class _NoneHelper:
   def __getattr__(self, name):
     if name in ('id', 'freedb_id', 'submission_url', 'toc',
                 'first_track', 'last_track', 'sectors', 'mcn'):
@@ -56,7 +50,7 @@ def _decode(string, encoding=None):
   # Let's do the same thing discid is doing. It always accepts both strings and
   # unicode objects and encodes/decodes them as it sees fit. libdiscid always
   # wants unicode objects, so let's decode it here on a best effort basis.
-  if not isinstance(string, unicode):
+  if not isinstance(string, str):
     if encoding is None:
       encoding = sys.getfilesystemencoding() or 'ascii'
     return string.decode(encoding)
@@ -69,7 +63,7 @@ class TOCError(Exception):
   pass
 
 # classes defined in discid
-class Track(object):
+class Track:
   def __init__(self, disc, number):
     self.disc = disc
     self.number = number
@@ -98,7 +92,7 @@ class Track(object):
       return None
     return value if value != '' else None
 
-class Disc(object):
+class Disc:
   def __init__(self):
     self.disc = _NoneHelper()
     self.tracks = []

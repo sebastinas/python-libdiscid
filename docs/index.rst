@@ -1,7 +1,7 @@
 python-libdiscid |release|
 ==========================
 
-`python-libdiscid` provides Python bindings for :musicbrainz:`libdiscid`.
+`python-libdiscid` provides Python 3 bindings for :musicbrainz:`libdiscid`.
 `libdiscid`'s main purpose is the calculation of
 :musicbrainz:`identifiers <Disc ID>` for audio discs to use for the
 MusicBrainz_ database.
