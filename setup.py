@@ -70,7 +70,7 @@ def read(name):
 
 setup(
   name='python-libdiscid',
-  version='1.0',
+  version='1.1',
   description='Python bindings for libdiscid',
   long_description=read('README.rst'),
   author='Sebastian Ramacher',
