@@ -43,7 +43,7 @@ if have_cython:
       libraries=libraries
     )
   ],
-  language_level="3")
+  language_level=3)
 else:
   # ... otherwise use the shipped version of _discid.c
   ext = [
