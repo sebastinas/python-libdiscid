@@ -123,126 +123,126 @@ cdef class DiscId:
   cdef unicode _get_error_msg(self):
     return _to_unicode(cdiscid.discid_get_error_msg(self._c_discid))
 
-  property id:
+  @property
+  def id(self):
     """ The MusicBrainz :musicbrainz:`Disc ID`.
     """
 
-    def __get__(self):
-      return _to_unicode(cdiscid.discid_get_id(self._c_discid))
+    return _to_unicode(cdiscid.discid_get_id(self._c_discid))
 
-  property freedb_id:
+  @property
+  def freedb_id(self):
     """ The :musicbrainz:`FreeDB` Disc ID (without category).
     """
 
-    def __get__(self):
-      return _to_unicode(cdiscid.discid_get_freedb_id(self._c_discid))
+    return _to_unicode(cdiscid.discid_get_freedb_id(self._c_discid))
 
-  property submission_url:
+  @property
+  def submission_url(self):
     """ Disc ID / TOC Submission URL for MusicBrainz
 
     With this url you can submit the current TOC as a new MusicBrainz
     :musicbrainz:`Disc ID`.
     """
 
-    def __get__(self):
-      return _to_unicode(cdiscid.discid_get_submission_url(self._c_discid))
+    return _to_unicode(cdiscid.discid_get_submission_url(self._c_discid))
 
-  property webservice_url:
+  @property
+  def webservice_url(self):
     """ The web service URL for info about the CD
 
     With this url you can retrieve information about the CD in XML from the
     MusicBrainz web service.
     """
 
-    def __get__(self):
-      return _to_unicode(cdiscid.discid_get_webservice_url(self._c_discid))
+    return _to_unicode(cdiscid.discid_get_webservice_url(self._c_discid))
 
-  property first_track:
+  @property
+  def first_track(self):
     """ Number of the first audio track.
     """
 
-    def __get__(self):
-      return cdiscid.discid_get_first_track_num(self._c_discid)
+    return cdiscid.discid_get_first_track_num(self._c_discid)
 
-  property last_track:
+  @property
+  def last_track(self):
     """ Number of the last audio track.
     """
 
-    def __get__(self):
-      return cdiscid.discid_get_last_track_num(self._c_discid)
+    return cdiscid.discid_get_last_track_num(self._c_discid)
 
-  property sectors:
+  @property
+  def sectors(self):
     """ Total sector count.
     """
 
-    def __get__(self):
-      return cdiscid.discid_get_sectors(self._c_discid)
+    return cdiscid.discid_get_sectors(self._c_discid)
 
-  property track_offsets:
+  @property
+  def track_offsets(self):
     """ Tuple of all track offsets (in sectors).
 
     The first element corresponds to the offset of the track denoted by
     :attr:`first_track` and so on.
     """
 
-    def __get__(self):
-      return tuple(cdiscid.discid_get_track_offset(self._c_discid, track)
-                   for track in range(self.first_track, self.last_track + 1))
+    return tuple(cdiscid.discid_get_track_offset(self._c_discid, track)
+                 for track in range(self.first_track, self.last_track + 1))
 
-  property track_lengths:
+  @property
+  def track_lengths(self):
     """ Tuple of all track lengths (in sectors).
 
     The first element corresponds to the length of the track denoted by
     :attr:`first_track` and so on.
     """
 
-    def __get__(self):
-      return tuple(cdiscid.discid_get_track_length(self._c_discid, track)
-                   for track in range(self.first_track, self.last_track + 1))
+    return tuple(cdiscid.discid_get_track_length(self._c_discid, track)
+                 for track in range(self.first_track, self.last_track + 1))
 
-  property mcn:
+  @property
+  def mcn(self):
     """ Media Catalogue Number of the disc.
     """
 
-    def __get__(self):
-      if not _has_feature(cdiscid.DISCID_FEATURE_MCN):
-        return None
-      return _to_unicode(cdiscid.wrap_get_mcn(self._c_discid))
+    if not _has_feature(cdiscid.DISCID_FEATURE_MCN):
+      return None
+    return _to_unicode(cdiscid.wrap_get_mcn(self._c_discid))
 
-  property track_isrcs:
+  @property
+  def track_isrcs(self):
     """ Tuple of :musicbrainz:`ISRCs <ISRC>` of all tracks.
 
     The first element of the list corresponds to the ISRC of the
     :attr:`first_track` and so on.
     """
 
-    def __get__(self):
-      if not _has_feature(cdiscid.DISCID_FEATURE_ISRC):
-        return None
-      return tuple(_to_unicode(cdiscid.wrap_get_track_isrc(self._c_discid,
-                                                           track)) for
-                   track in range(self.first_track, self.last_track + 1))
+    if not _has_feature(cdiscid.DISCID_FEATURE_ISRC):
+      return None
+    return tuple(_to_unicode(cdiscid.wrap_get_track_isrc(self._c_discid,
+                                                         track)) for
+                 track in range(self.first_track, self.last_track + 1))
 
-  property device:
+  @property
+  def device(self):
     """ The device the data was read from.
 
     If it is ``None``, :func:`libdiscid.put` was called to create the instance.
     """
 
-    def __get__(self):
-      return self._device
+    return self._device
 
-  property toc:
+  @property
+  def toc(self):
     """ String representing the CD's Table of Contents (TOC).
     """
 
-    def __get__(self):
-      assert self._have_read
+    assert self._have_read
 
-      cdef char* tocstr = cdiscid.wrap_get_toc(self._c_discid)
-      if tocstr is not NULL:
-        return _to_unicode(tocstr)
-      return None
+    cdef char* tocstr = cdiscid.wrap_get_toc(self._c_discid)
+    if tocstr is not NULL:
+      return _to_unicode(tocstr)
+    return None
 
 FEATURES_MAPPING = {
     cdiscid.DISCID_FEATURE_READ: _to_unicode(cdiscid.DISCID_FEATURE_STR_READ),
