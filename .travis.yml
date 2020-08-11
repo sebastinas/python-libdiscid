@@ -1,6 +1,10 @@
 language: python
-dist: xenial
-sudo: required
+dist: bionic
+addons:
+  apt:
+    packages:
+      - libdiscid-dev
+      - pkg-config
 
 python:
   - 3.5
@@ -14,10 +18,6 @@ matrix:
   allow_failures:
      - python: 3.9-dev
      - python: pypy3
-
-before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq libdiscid-dev
 
 install:
   - pip install setuptools
