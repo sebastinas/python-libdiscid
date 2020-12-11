@@ -15,7 +15,7 @@ jobs:
         python-version: '3.x'
     - name: Install dependencies
       run: |
-        sudo apt install -y libdiscid-dev pkg-config
+        sudo apt-get install -y libdiscid-dev pkg-config
         python -m pip install --upgrade pip
         pip install setuptools pkgconfig "cython >= 0.15" twine
     - name: Build and publish
