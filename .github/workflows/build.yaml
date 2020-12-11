@@ -23,7 +23,7 @@ jobs:
       run: |
         sudo apt-get install -y libdiscid-dev pkg-config
         python -m pip install --upgrade pip
-        pip install setuptools pkgconfig "cython >= 0.15" pytest sphinx
+        pip install setuptools pkgconfig "cython >= 0.15" pytest pytest-cov sphinx
     - name: Build with Python ${{ matrix.python-version }}
       run: |
         python setup.py build
@@ -33,4 +33,11 @@ jobs:
         python setup.py build_sphinx
     - name: Test with pytest
       run: |
-        pytest
+        pytest --cov=libdiscid --cov-report=xml
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      env:
+        PYTHON_VERSION: ${{ matrix.python-version }}
+      with:
+        file: ./coverage.xml
+        env_vars: PYTHON_VERSION
