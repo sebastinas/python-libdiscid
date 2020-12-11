@@ -17,11 +17,11 @@ jobs:
       run: |
         sudo apt install -y libdiscid-dev pkg-config
         python -m pip install --upgrade pip
-        pip install setuptools pkgconfig "cython >= 0.15" wheel twine
+        pip install setuptools pkgconfig "cython >= 0.15" twine
     - name: Build and publish
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
-        python setup.py sdist bdist_wheel
+        python setup.py sdist
         twine upload dist/*
