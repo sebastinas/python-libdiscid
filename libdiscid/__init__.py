@@ -35,6 +35,9 @@ import re
 import warnings
 
 __version__ = "1.1"
+__author__ = "Sebastian Ramacher"
+__license__ = "Expat"
+__copyright__ = f"(C) 2013-2021 {__author__}"
 
 DEFAULT_DEVICE = libdiscid._discid.default_device()
 """The default device to use for :func:`DiscId.read` on this platform.
