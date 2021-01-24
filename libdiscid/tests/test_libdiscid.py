@@ -23,8 +23,8 @@
 
 import unittest
 import libdiscid
-import libdiscid.tests.common
 from libdiscid import DiscError
+from .import common
 
 
 class TestLibDiscId(unittest.TestCase):
@@ -66,7 +66,7 @@ class TestLibDiscId(unittest.TestCase):
         self.assertRaises(NotImplementedError, libdiscid.read)
 
     def test_put(self):
-        testdata = libdiscid.tests.common.PutSuccess
+        testdata = common.PutSuccess
 
         disc = libdiscid.put(
             testdata.first, testdata.last, testdata.sectors, testdata.offsets
@@ -100,7 +100,7 @@ class TestLibDiscId(unittest.TestCase):
 
     def test_put_fail_1(self):
         # !(first < last)
-        testdata = libdiscid.tests.common.PutFail1
+        testdata = common.PutFail1
         self.assertRaises(
             DiscError,
             libdiscid.put,
@@ -112,7 +112,7 @@ class TestLibDiscId(unittest.TestCase):
 
     def test_put_fail_2(self):
         # !(first >= 1)
-        testdata = libdiscid.tests.common.PutFail2
+        testdata = common.PutFail2
         self.assertRaises(
             DiscError,
             libdiscid.put,
@@ -123,7 +123,7 @@ class TestLibDiscId(unittest.TestCase):
         )
 
         # !(first < 100)
-        testdata = libdiscid.tests.common.PutFail2_2
+        testdata = common.PutFail2_2
         self.assertRaises(
             DiscError,
             libdiscid.put,
@@ -135,7 +135,7 @@ class TestLibDiscId(unittest.TestCase):
 
     def test_put_fail_3(self):
         # !(last >= 1)
-        testdata = libdiscid.tests.common.PutFail3
+        testdata = common.PutFail3
         self.assertRaises(
             DiscError,
             libdiscid.put,
@@ -146,7 +146,7 @@ class TestLibDiscId(unittest.TestCase):
         )
 
         # !(last < 100)
-        testdata = libdiscid.tests.common.PutFail3_2
+        testdata = common.PutFail3_2
         self.assertRaises(
             DiscError,
             libdiscid.put,
