@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-#
 # python-libdiscid documentation build configuration file, created by
 # sphinx-quickstart on Thu Apr 11 14:36:37 2013.
 #
@@ -51,8 +49,8 @@ source_encoding = 'UTF-8'
 master_doc = 'index'
 
 # General information about the project.
-project = u'python-libdiscid'
-copyright = u'2013, Sebastian Ramacher'
+project = 'python-libdiscid'
+copyright = '2013, Sebastian Ramacher'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # Copyright 2013 Sebastian Ramacher <sebastian+dev@ramacher.at>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -44,7 +42,7 @@ class _NoneHelper:
                 'first_track', 'last_track', 'sectors', 'mcn'):
       return None
 
-    return super(_NoneHelper, self).__getattr__(name)
+    return super().__getattr__(name)
 
 def _decode(string, encoding=None):
   # Let's do the same thing discid is doing. It always accepts both strings and

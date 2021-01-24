@@ -97,5 +97,6 @@ setup(
     'Topic :: Software Development :: Libraries :: Python Modules'
   ],
   test_suite='libdiscid.tests',
-  setup_requires=setup_requires
+  setup_requires=setup_requires,
+  python_requires=">=3.6",
 )

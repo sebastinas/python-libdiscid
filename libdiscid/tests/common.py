@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # Copyright 2013 Sebastian Ramacher <sebastian+dev@ramacher.at>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
