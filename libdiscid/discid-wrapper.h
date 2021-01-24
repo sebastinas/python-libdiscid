@@ -1,4 +1,4 @@
-/* Copyright 2013 Sebastian Ramacher <sebastian+dev@ramacher.at>
+/* Copyright 2013-2021 Sebastian Ramacher <sebastian+dev@ramacher.at>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -64,4 +64,3 @@ int wrap_read_sparse(DiscId *d, const char *device, unsigned int features)
 char* wrap_get_toc(DiscId* d) INTERNAL;
 
 #endif
-
