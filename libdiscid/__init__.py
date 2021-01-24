@@ -34,7 +34,7 @@ from libdiscid.exceptions import DiscError
 import re
 import warnings
 
-__version__ = '1.1'
+__version__ = "1.1"
 
 DEFAULT_DEVICE = libdiscid._discid.default_device()
 """ The default device to use for :func:`DiscId.read` on this platform.
@@ -64,173 +64,173 @@ __discid_version__ = libdiscid._discid.__discid_version__
 """ The version of the underlying libdiscid.
 """
 
+
 class DiscId:
-  """ Disc information
+    """Disc information
 
-  Class holding all the information obtained from a disc.
-  """
-
-  def __init__(self, cdiscid):
-      self._id = cdiscid.id
-      self._freedb_id = cdiscid.freedb_id
-      self._submission_url = cdiscid.submission_url
-      self._webservice_url = cdiscid.webservice_url
-      self._first_track = cdiscid.first_track
-      self._last_track = cdiscid.last_track
-      self._sectors = cdiscid.sectors
-      self._track_offsets = cdiscid.track_offsets
-      self._track_lengths = cdiscid.track_lengths
-      self._mcn = cdiscid.mcn
-      self._track_isrcs = cdiscid.track_isrcs
-      self._device = cdiscid.device
-      self._toc = cdiscid.toc
-
-  @property
-  def id(self):
-    """ The MusicBrainz :musicbrainz:`Disc ID`.
+    Class holding all the information obtained from a disc.
     """
 
-    return self._id
+    def __init__(self, cdiscid):
+        self._id = cdiscid.id
+        self._freedb_id = cdiscid.freedb_id
+        self._submission_url = cdiscid.submission_url
+        self._webservice_url = cdiscid.webservice_url
+        self._first_track = cdiscid.first_track
+        self._last_track = cdiscid.last_track
+        self._sectors = cdiscid.sectors
+        self._track_offsets = cdiscid.track_offsets
+        self._track_lengths = cdiscid.track_lengths
+        self._mcn = cdiscid.mcn
+        self._track_isrcs = cdiscid.track_isrcs
+        self._device = cdiscid.device
+        self._toc = cdiscid.toc
 
-  @property
-  def freedb_id(self):
-    """ The :musicbrainz:`FreeDB` Disc ID (without category).
-    """
+    @property
+    def id(self):
+        """The MusicBrainz :musicbrainz:`Disc ID`."""
 
-    return self._freedb_id
+        return self._id
 
-  @property
-  def submission_url(self):
-    """ Disc ID / TOC Submission URL for MusicBrainz
+    @property
+    def freedb_id(self):
+        """The :musicbrainz:`FreeDB` Disc ID (without category)."""
 
-    With this url you can submit the current TOC as a new MusicBrainz
-    :musicbrainz:`Disc ID`.
-    """
+        return self._freedb_id
 
-    return self._submission_url
+    @property
+    def submission_url(self):
+        """Disc ID / TOC Submission URL for MusicBrainz
 
-  @property
-  def webservice_url(self):
-    """ The web service URL for info about the CD
+        With this url you can submit the current TOC as a new MusicBrainz
+        :musicbrainz:`Disc ID`.
+        """
 
-    With this url you can retrieve information about the CD in XML from the
-    MusicBrainz web service.
-    """
+        return self._submission_url
 
-    warnings.warn('webservice_url is deprecated since it points to the old '
-                  'webservice. Please use python-musicbrainz-ngs to access '
-                  'the webservice.', DeprecationWarning)
-    return self._webservice_url
+    @property
+    def webservice_url(self):
+        """The web service URL for info about the CD
 
-  @property
-  def first_track(self):
-    """ Number of the first audio track.
-    """
+        With this url you can retrieve information about the CD in XML from the
+        MusicBrainz web service.
+        """
 
-    return self._first_track
+        warnings.warn(
+            "webservice_url is deprecated since it points to the old "
+            "webservice. Please use python-musicbrainz-ngs to access "
+            "the webservice.",
+            DeprecationWarning,
+        )
+        return self._webservice_url
 
-  @property
-  def last_track(self):
-    """ Number of the last audio track.
-    """
+    @property
+    def first_track(self):
+        """Number of the first audio track."""
 
-    return self._last_track
+        return self._first_track
 
-  @property
-  def sectors(self):
-    """ Total sector count.
-    """
+    @property
+    def last_track(self):
+        """Number of the last audio track."""
 
-    return self._sectors
+        return self._last_track
 
-  @property
-  def leadout_track(self):
-    """ Leadout track.
-    """
+    @property
+    def sectors(self):
+        """Total sector count."""
 
-    return self.sectors
+        return self._sectors
 
-  @property
-  def track_offsets(self):
-    """ Tuple of all track offsets (in sectors).
+    @property
+    def leadout_track(self):
+        """Leadout track."""
 
-    The first element corresponds to the offset of the track denoted by
-    :attr:`first_track` and so on.
-    """
+        return self.sectors
 
-    return self._track_offsets
+    @property
+    def track_offsets(self):
+        """Tuple of all track offsets (in sectors).
 
-  @property
-  def pregap(self):
-    """ Pregap of the first track (in sectors).
-    """
+        The first element corresponds to the offset of the track denoted by
+        :attr:`first_track` and so on.
+        """
 
-    return self.track_offsets[0]
+        return self._track_offsets
 
+    @property
+    def pregap(self):
+        """Pregap of the first track (in sectors)."""
 
-  @property
-  def track_lengths(self):
-    """ Tuple of all track lengths (in sectors).
+        return self.track_offsets[0]
 
-    The first element corresponds to the length of the track denoted by
-    :attr:`first_track` and so on.
-    """
+    @property
+    def track_lengths(self):
+        """Tuple of all track lengths (in sectors).
 
-    return self._track_lengths
+        The first element corresponds to the length of the track denoted by
+        :attr:`first_track` and so on.
+        """
 
-  @property
-  def mcn(self):
-    """ Media Catalogue Number of the disc.
+        return self._track_lengths
 
-    :raises NotImplementedError: reading MCN is not supported on this platform
-    """
+    @property
+    def mcn(self):
+        """Media Catalogue Number of the disc.
 
-    if self._mcn is None:
-      raise NotImplementedError('MCN is not available with this version '
-                                'of libdiscid and/or platform')
-    return self._mcn
+        :raises NotImplementedError: reading MCN is not supported on this platform
+        """
 
-  @property
-  def track_isrcs(self):
-    """ Tuple of :musicbrainz:`ISRCs <ISRC>` of all tracks.
+        if self._mcn is None:
+            raise NotImplementedError(
+                "MCN is not available with this version " "of libdiscid and/or platform"
+            )
+        return self._mcn
 
-    The first element of the list corresponds to the ISRC of the
-    :attr:`first_track` and so on.
+    @property
+    def track_isrcs(self):
+        """Tuple of :musicbrainz:`ISRCs <ISRC>` of all tracks.
 
-    :raises NotImplementedError: reading ISRCs is not supported on this platform
-    """
+        The first element of the list corresponds to the ISRC of the
+        :attr:`first_track` and so on.
 
-    if self._track_isrcs is None:
-      raise NotImplementedError('ISRC is not available with this version '
-                                'of libdiscid and/or platform')
-    return self._track_isrcs
+        :raises NotImplementedError: reading ISRCs is not supported on this platform
+        """
 
-  @property
-  def device(self):
-    """ The device the data was read from.
+        if self._track_isrcs is None:
+            raise NotImplementedError(
+                "ISRC is not available with this version "
+                "of libdiscid and/or platform"
+            )
+        return self._track_isrcs
 
-    If it is ``None``, :func:`libdiscid.put` was called to create the instance.
-    """
+    @property
+    def device(self):
+        """The device the data was read from.
 
-    return self._device
+        If it is ``None``, :func:`libdiscid.put` was called to create the instance.
+        """
 
-  @property
-  def toc(self):
-    """ String representing the CD's Table of Contents (TOC).
+        return self._device
 
-    :raises ValueError: extracting TOC string from the submission URL failed
-    """
+    @property
+    def toc(self):
+        """String representing the CD's Table of Contents (TOC).
 
-    if self._toc is None:
-      # extract TOC string from submission URL
-      match = re.match(r'.*toc=([0-9+]+)$', self.submission_url)
-      if match is None:
-        raise ValueError('Failed to extract TOC from submission URL')
-      self._toc = match.group(1).replace('+', ' ')
-    return self._toc
+        :raises ValueError: extracting TOC string from the submission URL failed
+        """
+
+        if self._toc is None:
+            # extract TOC string from submission URL
+            match = re.match(r".*toc=([0-9+]+)$", self.submission_url)
+            if match is None:
+                raise ValueError("Failed to extract TOC from submission URL")
+            self._toc = match.group(1).replace("+", " ")
+        return self._toc
+
 
 def read(device=None, features=None):
-  """ Reads the TOC from the device given as string.
+    """ Reads the TOC from the device given as string.
 
   If *device* is ``None``, :func:`default_device` is used to determine
   the device. *features* can be any combination of :data:`FEATURE_MCN` and
@@ -250,15 +250,16 @@ def read(device=None, features=None):
   :rtype: :class:`DiscId` object
   """
 
-  disc = libdiscid._discid.DiscId()
-  if features is None:
-    disc.read(device)
-  else:
-    disc.read(device, features)
-  return DiscId(disc)
+    disc = libdiscid._discid.DiscId()
+    if features is None:
+        disc.read(device)
+    else:
+        disc.read(device, features)
+    return DiscId(disc)
+
 
 def put(first, last, sectors, offsets):
-  """ Creates a TOC based on the given offsets.
+    """ Creates a TOC based on the given offsets.
 
   Takes the *first* and *last* audio track, as well as the number of
   *sectors* and a list of *offsets* as in :attr:`track_offsets`.
@@ -277,38 +278,51 @@ def put(first, last, sectors, offsets):
   :rtype: :class:`DiscId` object
   """
 
-  disc = libdiscid._discid.DiscId()
-  disc.put(first, last, sectors, offsets)
-  return DiscId(disc)
+    disc = libdiscid._discid.DiscId()
+    disc.put(first, last, sectors, offsets)
+    return DiscId(disc)
+
 
 def default_device():
-  """ The default device on this platform.
+    """The default device on this platform.
 
-  The default device can change during the run-time of the program. This can
-  happen with removable devices for example.
+    The default device can change during the run-time of the program. This can
+    happen with removable devices for example.
 
-  :rtype: unicode
-  """
+    :rtype: unicode
+    """
 
-  return libdiscid._discid.default_device()
+    return libdiscid._discid.default_device()
+
 
 def sectors_to_seconds(sectors):
-  """ Convert sectors to seconds rounded to the nearest second.
+    """Convert sectors to seconds rounded to the nearest second.
 
-  :param sectors: number of sectors
-  :type sectors: integer
-  :rtype: integer
-  """
+    :param sectors: number of sectors
+    :type sectors: integer
+    :rtype: integer
+    """
 
-  SECTORS_PER_SECOND = 75
-  remainder = sectors % SECTORS_PER_SECOND
-  return sectors // SECTORS_PER_SECOND + \
-    (1 if remainder > SECTORS_PER_SECOND // 2 else 0)
+    SECTORS_PER_SECOND = 75
+    remainder = sectors % SECTORS_PER_SECOND
+    return sectors // SECTORS_PER_SECOND + (
+        1 if remainder > SECTORS_PER_SECOND // 2 else 0
+    )
+
 
 __all__ = (
-  'read', 'put', 'default_device', 'sectors_to_seconds',
-  '__version__', '__discid_version__',
-  'FEATURES', 'FEATURES_MAPPING', 'FEATURE_READ', 'FEATURE_MCN', 'FEATURE_ISRC',
-  'DEFAULT_DEVICE',
-  'DiscId', 'DiscError'
+    "read",
+    "put",
+    "default_device",
+    "sectors_to_seconds",
+    "__version__",
+    "__discid_version__",
+    "FEATURES",
+    "FEATURES_MAPPING",
+    "FEATURE_READ",
+    "FEATURE_MCN",
+    "FEATURE_ISRC",
+    "DEFAULT_DEVICE",
+    "DiscId",
+    "DiscError",
 )

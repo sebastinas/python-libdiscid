@@ -21,39 +21,76 @@
 """ Tests for the libdiscid module
 """
 
+
 class PutSuccess:
-  first = 1
-  last = 15
-  sectors = 258725
-  seconds = 3450
-  offsets = (150, 17510, 33275, 45910, 57805, 78310, 94650, 109580, 132010,
-             149160, 165115, 177710, 203325, 215555, 235590)
-  track_seconds = (231, 210, 168, 159, 273, 218, 199, 299, 229, 213, 168, 342,
-                   163, 267, 308)
-  disc_id = 'TqvKjMu7dMliSfmVEBtrL7sBSno-'
-  freedb_id = 'b60d770f'
-  toc = ' '.join(map(str, [first, last, sectors] + list(offsets)))
+    first = 1
+    last = 15
+    sectors = 258725
+    seconds = 3450
+    offsets = (
+        150,
+        17510,
+        33275,
+        45910,
+        57805,
+        78310,
+        94650,
+        109580,
+        132010,
+        149160,
+        165115,
+        177710,
+        203325,
+        215555,
+        235590,
+    )
+    track_seconds = (
+        231,
+        210,
+        168,
+        159,
+        273,
+        218,
+        199,
+        299,
+        229,
+        213,
+        168,
+        342,
+        163,
+        267,
+        308,
+    )
+    disc_id = "TqvKjMu7dMliSfmVEBtrL7sBSno-"
+    freedb_id = "b60d770f"
+    toc = " ".join(map(str, [first, last, sectors] + list(offsets)))
+
 
 class _PutFail:
-  sectors = 200
-  offsets = (1, 2, 3, 4, 5, 6, 7)
+    sectors = 200
+    offsets = (1, 2, 3, 4, 5, 6, 7)
+
 
 class PutFail1(_PutFail):
-  first = 13
-  last = 1
+    first = 13
+    last = 1
+
 
 class PutFail2(_PutFail):
-  first = 0
-  last = 10
+    first = 0
+    last = 10
+
 
 class PutFail2_2(_PutFail):
-  first = 100
-  last = 200
+    first = 100
+    last = 200
+
 
 class PutFail3(_PutFail):
-  first = 0
-  last = 0
+    first = 0
+    last = 0
+
 
 class PutFail3_2(_PutFail):
-  first = 1
-  last = 100
+    first = 1
+    last = 100

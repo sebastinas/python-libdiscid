@@ -6,97 +6,95 @@ import sys
 from setuptools import setup, Extension
 
 try:
-  from Cython.Build import cythonize
-  have_cython = True
+    from Cython.Build import cythonize
+
+    have_cython = True
 except ImportError:
-  have_cython = False
+    have_cython = False
 
 try:
-  import pkgconfig
-  have_pkgconfig = True
+    import pkgconfig
+
+    have_pkgconfig = True
 except ImportError:
-  have_pkgconfig = False
+    have_pkgconfig = False
 
-if have_pkgconfig and pkgconfig.exists('libdiscid'):
-  flags = pkgconfig.parse('libdiscid')
-  define_macros = flags['define_macros']
-  include_dirs = flags['include_dirs']
-  library_dirs = flags['library_dirs']
-  libraries = list(flags['libraries'])
+if have_pkgconfig and pkgconfig.exists("libdiscid"):
+    flags = pkgconfig.parse("libdiscid")
+    define_macros = flags["define_macros"]
+    include_dirs = flags["include_dirs"]
+    library_dirs = flags["library_dirs"]
+    libraries = list(flags["libraries"])
 else:
-  define_macros = ''
-  include_dirs = ''
-  library_dirs = ''
-  libraries = ['discid']
+    define_macros = ""
+    include_dirs = ""
+    library_dirs = ""
+    libraries = ["discid"]
 
 if have_cython:
-  # if Cython is available, rebuild _discid.c
-  ext = cythonize([
-    Extension('libdiscid._discid',
-      [
-        'libdiscid/_discid.pyx',
-        'libdiscid/discid-wrapper.c'
-      ],
-      define_macros=define_macros,
-      include_dirs=include_dirs,
-      library_dirs=library_dirs,
-      libraries=libraries
+    # if Cython is available, rebuild _discid.c
+    ext = cythonize(
+        [
+            Extension(
+                "libdiscid._discid",
+                ["libdiscid/_discid.pyx", "libdiscid/discid-wrapper.c"],
+                define_macros=define_macros,
+                include_dirs=include_dirs,
+                library_dirs=library_dirs,
+                libraries=libraries,
+            )
+        ],
+        language_level=3,
     )
-  ],
-  language_level=3)
 else:
-  # ... otherwise use the shipped version of _discid.c
-  ext = [
-    Extension('libdiscid._discid',
-      [
-        'libdiscid/_discid.c',
-        'libdiscid/discid-wrapper.c'
-      ],
-      define_macros=define_macros,
-      include_dirs=include_dirs,
-      library_dirs=library_dirs,
-      libraries=libraries
-    )
-  ]
+    # ... otherwise use the shipped version of _discid.c
+    ext = [
+        Extension(
+            "libdiscid._discid",
+            ["libdiscid/_discid.c", "libdiscid/discid-wrapper.c"],
+            define_macros=define_macros,
+            include_dirs=include_dirs,
+            library_dirs=library_dirs,
+            libraries=libraries,
+        )
+    ]
 
-setup_requires = ['pkgconfig']
+setup_requires = ["pkgconfig"]
 if have_cython:
-  # if Cython is available, check if it's new enough
-  setup_requires.append('cython >= 0.15')
+    # if Cython is available, check if it's new enough
+    setup_requires.append("cython >= 0.15")
+
 
 def read(name):
-  with open(os.path.join(os.path.dirname(__file__), name)) as f:
-    return f.read()
+    with open(os.path.join(os.path.dirname(__file__), name)) as f:
+        return f.read()
+
 
 setup(
-  name='python-libdiscid',
-  version='1.1',
-  description='Python bindings for libdiscid',
-  long_description=read('README.rst'),
-  author='Sebastian Ramacher',
-  author_email='sebastian+dev@ramacher.at',
-  url='https://github.com/sebastinas/python-libdiscid',
-  license='Expat',
-  ext_modules=ext,
-  packages=[
-    'libdiscid',
-    'libdiscid.tests',
-    'libdiscid.compat'
-  ],
-  classifiers=[
-    'Development Status :: 5 - Production/Stable',
-    'Intended Audience :: Developers',
-    'License :: OSI Approved :: MIT License',
-    'Operating System :: OS Independent',
-    'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.5',
-    'Programming Language :: Python :: 3.6',
-    'Programming Language :: Python :: 3.7',
-    'Programming Language :: Python :: 3.8',
-    'Topic :: Multimedia :: Sound/Audio :: CD Audio :: CD Ripping',
-    'Topic :: Software Development :: Libraries :: Python Modules'
-  ],
-  test_suite='libdiscid.tests',
-  setup_requires=setup_requires,
-  python_requires=">=3.6",
+    name="python-libdiscid",
+    version="1.1",
+    description="Python bindings for libdiscid",
+    long_description=read("README.rst"),
+    author="Sebastian Ramacher",
+    author_email="sebastian+dev@ramacher.at",
+    url="https://github.com/sebastinas/python-libdiscid",
+    license="Expat",
+    ext_modules=ext,
+    packages=["libdiscid", "libdiscid.tests", "libdiscid.compat"],
+    classifiers=[
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Topic :: Multimedia :: Sound/Audio :: CD Audio :: CD Ripping",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+    ],
+    test_suite="libdiscid.tests",
+    setup_requires=setup_requires,
+    python_requires=">=3.6",
 )

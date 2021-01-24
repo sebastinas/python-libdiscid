@@ -21,7 +21,8 @@
 """ Module containing all the exceptions from libdiscid
 """
 
+
 class DiscError(IOError):
-  """ :func:`libdiscid.read` and :func:`libdiscid.put` will raise this exception
-      when an error occurred.
-  """
+    """:func:`libdiscid.read` and :func:`libdiscid.put` will raise this exception
+    when an error occurred.
+    """
