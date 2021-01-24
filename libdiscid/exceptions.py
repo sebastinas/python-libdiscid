@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-""" Module containing all the exceptions from libdiscid
+"""Module containing all the exceptions from libdiscid
 """
 
 

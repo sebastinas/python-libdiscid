@@ -113,7 +113,7 @@ char* wrap_get_toc(DiscId* d)
   return NULL;
 }
 
-# else
+#else
 
 char* wrap_get_toc(DiscId* d)
 {
@@ -121,4 +121,3 @@ char* wrap_get_toc(DiscId* d)
 }
 
 #endif
-
