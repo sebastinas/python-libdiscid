@@ -14,7 +14,7 @@ from a disc and compute the disc id::
 If no additional arguments are passed to :func:`libdiscid.read`,
 it will read from :func:`libdiscid.default_device`. If reading is not supported
 on your platform, :py:exc:`NotImplementedError` will be raised. If anything
-goes wrong while reading from the device, :exc:`libdiscid.discid.DiscError`
+goes wrong while reading from the device, :exc:`libdiscid.DiscError`
 will be raised.
 
 To read from a different device than the default one, you can set ``device``
