@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-""" Module to retain compatbility with the old interface.
+"""Module to retain compatibility with the old interface.
 """
 
 from libdiscid.exceptions import DiscError

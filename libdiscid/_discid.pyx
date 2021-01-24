@@ -37,7 +37,7 @@ cdef str _to_str(char* s):
 
 
 cdef class DiscId:
-    """ Class to calculate MusicBrainz Disc IDs.
+    """Class to calculate MusicBrainz Disc IDs.
 
     >>> d = DiscId()
     >>> d.read()
@@ -75,7 +75,7 @@ cdef class DiscId:
         self._have_read = True
 
     def read(self, str device=None, unsigned int features=limits.UINT_MAX):
-        """ Reads the TOC from the device given as string.
+        """Reads the TOC from the device given as string.
 
         If *device* is ``None``, :func:`libdiscid.default_device` is used.
         *features* can be any combination of :data:`FEATURE_MCN` and
@@ -103,7 +103,7 @@ cdef class DiscId:
         self._have_read = True
 
     def put(self, int first, int last, int sectors, offsets):
-        """ Creates a TOC based on the given offsets.
+        """Creates a TOC based on the given offsets.
 
         Takes the *first* and *last* audio track, as well as the number of
         *sectors* and a list of *offsets* as in :attr:`DiscId.track_offsets`.
@@ -129,21 +129,21 @@ cdef class DiscId:
 
     @property
     def id(self):
-        """ The MusicBrainz :musicbrainz:`Disc ID`.
+        """The MusicBrainz :musicbrainz:`Disc ID`.
         """
 
         return _to_str(cdiscid.discid_get_id(self._c_discid))
 
     @property
     def freedb_id(self):
-        """ The :musicbrainz:`FreeDB` Disc ID (without category).
+        """The :musicbrainz:`FreeDB` Disc ID (without category).
         """
 
         return _to_str(cdiscid.discid_get_freedb_id(self._c_discid))
 
     @property
     def submission_url(self):
-        """ Disc ID / TOC Submission URL for MusicBrainz
+        """Disc ID / TOC Submission URL for MusicBrainz
 
         With this url you can submit the current TOC as a new MusicBrainz
         :musicbrainz:`Disc ID`.
@@ -153,7 +153,7 @@ cdef class DiscId:
 
     @property
     def webservice_url(self):
-        """ The web service URL for info about the CD
+        """The web service URL for info about the CD
 
         With this url you can retrieve information about the CD in XML from the
         MusicBrainz web service.
@@ -163,28 +163,28 @@ cdef class DiscId:
 
     @property
     def first_track(self):
-        """ Number of the first audio track.
+        """Number of the first audio track.
         """
 
         return cdiscid.discid_get_first_track_num(self._c_discid)
 
     @property
     def last_track(self):
-        """ Number of the last audio track.
+        """Number of the last audio track.
         """
 
         return cdiscid.discid_get_last_track_num(self._c_discid)
 
     @property
     def sectors(self):
-        """ Total sector count.
+        """Total sector count.
         """
 
         return cdiscid.discid_get_sectors(self._c_discid)
 
     @property
     def track_offsets(self):
-        """ Tuple of all track offsets (in sectors).
+        """Tuple of all track offsets (in sectors).
 
         The first element corresponds to the offset of the track denoted by
         :attr:`first_track` and so on.
@@ -197,7 +197,7 @@ cdef class DiscId:
 
     @property
     def track_lengths(self):
-        """ Tuple of all track lengths (in sectors).
+        """Tuple of all track lengths (in sectors).
 
         The first element corresponds to the length of the track denoted by
         :attr:`first_track` and so on.
@@ -210,7 +210,7 @@ cdef class DiscId:
 
     @property
     def mcn(self):
-        """ Media Catalogue Number of the disc.
+        """Media Catalogue Number of the disc.
         """
 
         if not _has_feature(cdiscid.DISCID_FEATURE_MCN):
@@ -219,7 +219,7 @@ cdef class DiscId:
 
     @property
     def track_isrcs(self):
-        """ Tuple of :musicbrainz:`ISRCs <ISRC>` of all tracks.
+        """Tuple of :musicbrainz:`ISRCs <ISRC>` of all tracks.
 
         The first element of the list corresponds to the ISRC of the
         :attr:`first_track` and so on.
@@ -234,7 +234,7 @@ cdef class DiscId:
 
     @property
     def device(self):
-        """ The device the data was read from.
+        """The device the data was read from.
 
         If it is ``None``, :func:`libdiscid.put` was called to create the instance.
         """
@@ -243,7 +243,7 @@ cdef class DiscId:
 
     @property
     def toc(self):
-        """ String representing the CD's Table of Contents (TOC).
+        """String representing the CD's Table of Contents (TOC).
         """
 
         assert self._have_read
@@ -270,7 +270,7 @@ cdef _feature_list():
 
 
 def default_device():
-    """ The default device on this platform.
+    """The default device on this platform.
     """
 
     return _to_str(cdiscid.discid_get_default_device())

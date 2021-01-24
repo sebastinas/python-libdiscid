@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-""" Tests for the libdiscid.compat.discid module
+"""Tests for the libdiscid.compat.discid module
 """
 
 import unittest

@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-""" python-discid compat layer
+"""python-discid compat layer
 
 This module provides a compatible layer so that python-libdiscid can be used as
 a replacement for python-discid. It provides an interface compatible with
@@ -209,7 +209,7 @@ def put(first, last, disc_sectors, track_offsets):
 
 # constants defined in discid
 __version__ = "1.1.0 (compat layer from python-libdiscid %s)" % (libdiscid.__version__,)
-""" This is the version of python-discid this layer is compatible with. """
+"""This is the version of python-discid this layer is compatible with. """
 
 LIBDISCID_VERSION_STRING = libdiscid.__discid_version__
 FEATURES = libdiscid.FEATURES

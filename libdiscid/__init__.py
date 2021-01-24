@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-""" Python bindings for libdiscid
+"""Python bindings for libdiscid
 
 libdiscid is a library to calculate MusicBrainz Disc IDs.
 This module provides Python-bindings for libdiscid.
@@ -37,31 +37,31 @@ import warnings
 __version__ = "1.1"
 
 DEFAULT_DEVICE = libdiscid._discid.default_device()
-""" The default device to use for :func:`DiscId.read` on this platform.
+"""The default device to use for :func:`DiscId.read` on this platform.
 
 .. deprecated:: 0.2.0
    Please use :func:`default_device` instead.
 """
 
 FEATURES = libdiscid._discid.FEATURES
-""" List of all available features supported by libdiscid on this platform.
+"""List of all available features supported by libdiscid on this platform.
 """
 FEATURE_READ = libdiscid._discid.FEATURE_READ
-""" Read the TOC of the disc to get the disc ID. This feature is always enabled.
+"""Read the TOC of the disc to get the disc ID. This feature is always enabled.
 """
 FEATURE_MCN = libdiscid._discid.FEATURE_MCN
-"""  Read the Media Catalogue Number of the disc.
+"""Read the Media Catalogue Number of the disc.
 """
 FEATURE_ISRC = libdiscid._discid.FEATURE_ISRC
-""" Read :musicbrainz:`International Standard Recording Codes <ISRC>` of all the
-    tracks.
+"""Read :musicbrainz:`International Standard Recording Codes <ISRC>` of all the
+tracks.
 """
 FEATURES_MAPPING = libdiscid._discid.FEATURES_MAPPING
-""" Mapping between the constants representing a feature and their string
-    representation.
+"""Mapping between the constants representing a feature and their string
+representation.
 """
 __discid_version__ = libdiscid._discid.__discid_version__
-""" The version of the underlying libdiscid.
+"""The version of the underlying libdiscid.
 """
 
 
@@ -230,25 +230,25 @@ class DiscId:
 
 
 def read(device=None, features=None):
-    """ Reads the TOC from the device given as string.
+    """Reads the TOC from the device given as string.
 
-  If *device* is ``None``, :func:`default_device` is used to determine
-  the device. *features* can be any combination of :data:`FEATURE_MCN` and
-  :data:`FEATURE_ISRC` and :data:`FEATURE_READ`. Note that prior to libdiscid
-  version 0.5.0 *features* has no effect and that :data:`FEATURE_READ` is always
-  assumed, even if not given.
+    If *device* is ``None``, :func:`default_device` is used to determine
+    the device. *features* can be any combination of :data:`FEATURE_MCN` and
+    :data:`FEATURE_ISRC` and :data:`FEATURE_READ`. Note that prior to libdiscid
+    version 0.5.0 *features* has no effect and that :data:`FEATURE_READ` is always
+    assumed, even if not given.
 
-  :param device: device to read from
-  :type device: unicode or None
-  :param features: selected features, possible values are :data:`FEATURE_READ` \
-    :data:`FEATURE_MCN`, :data:`FEATURE_ISRC` and any of these values combined \
-    with bitwise or.
-  :type features: integer or None
-  :raises libdiscid.DiscError: reading the disc failed
-  :raises NotImplementedError: reading discs is not supported
-  :raises MemoryError: failed to allocate the internal DiscId object
-  :rtype: :class:`DiscId` object
-  """
+    :param device: device to read from
+    :type device: unicode or None
+    :param features: selected features, possible values are :data:`FEATURE_READ` \
+      :data:`FEATURE_MCN`, :data:`FEATURE_ISRC` and any of these values combined \
+      with bitwise or.
+    :type features: integer or None
+    :raises libdiscid.DiscError: reading the disc failed
+    :raises NotImplementedError: reading discs is not supported
+    :raises MemoryError: failed to allocate the internal DiscId object
+    :rtype: :class:`DiscId` object
+    """
 
     disc = libdiscid._discid.DiscId()
     if features is None:
@@ -259,24 +259,24 @@ def read(device=None, features=None):
 
 
 def put(first, last, sectors, offsets):
-    """ Creates a TOC based on the given offsets.
+    """Creates a TOC based on the given offsets.
 
-  Takes the *first* and *last* audio track, as well as the number of
-  *sectors* and a list of *offsets* as in :attr:`track_offsets`.
+    Takes the *first* and *last* audio track, as well as the number of
+    *sectors* and a list of *offsets* as in :attr:`track_offsets`.
 
-  :param first: number of the first audio track
-  :type first: integer
-  :param last: number of the last audio track
-  :type last: integer
-  :param sectors: total number of sectors on the disc
-  :type sectors: integer
-  :param offsets: offsets of each track
-  :type offsets: list or tuple of integers
-  :raises libdiscid.DiscError: operation failed for some reason
-  :raises MemoryError: failed to allocated memory to store the offsets or the \
-    internal DiscId object
-  :rtype: :class:`DiscId` object
-  """
+    :param first: number of the first audio track
+    :type first: integer
+    :param last: number of the last audio track
+    :type last: integer
+    :param sectors: total number of sectors on the disc
+    :type sectors: integer
+    :param offsets: offsets of each track
+    :type offsets: list or tuple of integers
+    :raises libdiscid.DiscError: operation failed for some reason
+    :raises MemoryError: failed to allocated memory to store the offsets or the \
+      internal DiscId object
+    :rtype: :class:`DiscId` object
+    """
 
     disc = libdiscid._discid.DiscId()
     disc.put(first, last, sectors, offsets)
