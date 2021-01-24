@@ -1,3 +1,10 @@
+python-libdiscid (1.2) stable; urgency=medium
+
+  * Bump required Python version to 3.6
+  * Replaced use of unicode with str
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Sun, 24 Jan 2021 23:42:45 +0100
+
 python-libdiscid (1.1) stable; urgency=medium
 
   [ Sebastian Ramacher ]

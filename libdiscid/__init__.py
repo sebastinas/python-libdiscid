@@ -34,7 +34,7 @@ from libdiscid.exceptions import DiscError
 import re
 import warnings
 
-__version__ = "1.1"
+__version__ = "1.2"
 __author__ = "Sebastian Ramacher"
 __license__ = "Expat"
 __copyright__ = f"(C) 2013-2021 {__author__}"
