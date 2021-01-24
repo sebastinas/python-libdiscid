@@ -56,8 +56,8 @@ class _NoneHelper:
 
 def _decode(string, encoding=None):
     # Let's do the same thing discid is doing. It always accepts both strings and
-    # unicode objects and encodes/decodes them as it sees fit. libdiscid always
-    # wants unicode objects, so let's decode it here on a best effort basis.
+    # bytes objects and encodes/decodes them as it sees fit. libdiscid always
+    # wants string objects, so let's decode it here on a best effort basis.
     if not isinstance(string, str):
         if encoding is None:
             encoding = sys.getfilesystemencoding() or "ascii"
