@@ -27,245 +27,258 @@ from libc.stdlib cimport malloc, free
 from cpython cimport bool
 from libdiscid.exceptions import DiscError
 
-cdef bool _has_feature(int feature):
-  return cdiscid.wrap_has_feature(feature) == 1
 
-cdef unicode _to_unicode(char* s):
-  return s.decode('UTF-8', 'strict')
+cdef bool _has_feature(int feature):
+    return cdiscid.wrap_has_feature(feature) == 1
+
+
+cdef str _to_str(char* s):
+    return s.decode('UTF-8', 'strict')
+
 
 cdef class DiscId:
-  """ Class to calculate MusicBrainz Disc IDs.
+    """ Class to calculate MusicBrainz Disc IDs.
 
-  >>> d = DiscId()
-  >>> d.read()
-  >>> d.id is not None
-  True
+    >>> d = DiscId()
+    >>> d.read()
+    >>> d.id is not None
+    True
 
-  Note that all the properties are only set after an successful call to
-  :func:`DiscId.read` or :func:`DiscId.put`.
-  """
-
-  cdef cdiscid.DiscId *_c_discid
-  cdef bool _have_read
-  cdef unicode _device
-
-  def __cinit__(self):
-    self._c_discid = cdiscid.discid_new()
-    if self._c_discid is NULL:
-      raise MemoryError('Failed to allocate DiscId object')
-
-    self._have_read = False
-    self._device = None
-
-  def __dealloc__(self):
-    if self._c_discid is not NULL:
-      cdiscid.discid_free(self._c_discid)
-
-  cdef _read(self, char* device, unsigned int features):
-    if not _has_feature(cdiscid.DISCID_FEATURE_READ):
-      raise NotImplementedError('read is not available with this version of '
-                                'libdiscid and/or platform')
-
-    if not cdiscid.wrap_read_sparse(self._c_discid, device, features):
-      raise DiscError(self._get_error_msg())
-    self._have_read = True
-
-  def read(self, unicode device=None, unsigned int features=limits.UINT_MAX):
-    """ Reads the TOC from the device given as string.
-
-    If *device* is ``None``, :func:`libdiscid.default_device` is used.
-    *features* can be any combination of :data:`FEATURE_MCN` and
-    :data:`FEATURE_ISRC` and :data:`FEATURE_READ`. Note that prior to libdiscid
-    version 0.5.0 *features* has no effect and that :data:`FEATURE_READ` is
-    always assumed, even if not given.
-
-    A :exc:`libdiscid.DiscError` exception is raised when reading fails, and
-    :py:exc:`NotImplementedError` when libdiscid does not support reading discs
-    on the current platform.
+    Note that all the properties are only set after an successful call to
+    :func:`DiscId.read` or :func:`DiscId.put`.
     """
 
-    if device is None:
-      device = default_device()
+    cdef cdiscid.DiscId *_c_discid
+    cdef bool _have_read
+    cdef str _device
 
-    py_byte_device = device.encode('UTF-8')
-    cdef char* cdevice = py_byte_device
-    ret = self._read(cdevice, features)
-    self._device = device
+    def __cinit__(self):
+        self._c_discid = cdiscid.discid_new()
+        if self._c_discid is NULL:
+            raise MemoryError('Failed to allocate DiscId object')
 
-  cdef _put(self, int first, int last, int* offsets):
-    if not cdiscid.discid_put(self._c_discid, first, last, offsets):
-      raise DiscError(self._get_error_msg())
-    self._device = None
-    self._have_read = True
+        self._have_read = False
+        self._device = None
 
-  def put(self, int first, int last, int sectors, offsets):
-    """ Creates a TOC based on the given offsets.
+    def __dealloc__(self):
+        if self._c_discid is not NULL:
+            cdiscid.discid_free(self._c_discid)
 
-    Takes the *first* and *last* audio track, as well as the number of
-    *sectors* and a list of *offsets* as in :attr:`DiscId.track_offsets`.
+    cdef _read(self, char* device, unsigned int features):
+        if not _has_feature(cdiscid.DISCID_FEATURE_READ):
+            raise NotImplementedError(
+                "read is not available with this version of libdiscid and/or platform"
+            )
 
-    If the operation fails for some reason, a :exc:`libdiscid.DiscError`
-    exception is raised.
-    """
+        if not cdiscid.wrap_read_sparse(self._c_discid, device, features):
+            raise DiscError(self._get_error_msg())
+        self._have_read = True
 
-    cdef int* coffsets = <int*> malloc((len(offsets) + 1) * sizeof(int))
-    if coffsets is NULL:
-      raise MemoryError('Failed to allocate memory to store offsets')
+    def read(self, str device=None, unsigned int features=limits.UINT_MAX):
+        """ Reads the TOC from the device given as string.
 
-    try:
-      coffsets[0] = sectors
-      for (i, v) in enumerate(offsets):
-        coffsets[i + 1] = v
-      return self._put(first, last, coffsets)
-    finally:
-      free(coffsets)
+        If *device* is ``None``, :func:`libdiscid.default_device` is used.
+        *features* can be any combination of :data:`FEATURE_MCN` and
+        :data:`FEATURE_ISRC` and :data:`FEATURE_READ`. Note that prior to libdiscid
+        version 0.5.0 *features* has no effect and that :data:`FEATURE_READ` is
+        always assumed, even if not given.
 
-  cdef unicode _get_error_msg(self):
-    return _to_unicode(cdiscid.discid_get_error_msg(self._c_discid))
+        A :exc:`libdiscid.DiscError` exception is raised when reading fails, and
+        :py:exc:`NotImplementedError` when libdiscid does not support reading discs
+        on the current platform.
+        """
 
-  @property
-  def id(self):
-    """ The MusicBrainz :musicbrainz:`Disc ID`.
-    """
+        if device is None:
+            device = default_device()
 
-    return _to_unicode(cdiscid.discid_get_id(self._c_discid))
+        py_byte_device = device.encode('UTF-8')
+        cdef char* cdevice = py_byte_device
+        ret = self._read(cdevice, features)
+        self._device = device
 
-  @property
-  def freedb_id(self):
-    """ The :musicbrainz:`FreeDB` Disc ID (without category).
-    """
+    cdef _put(self, int first, int last, int* offsets):
+        if not cdiscid.discid_put(self._c_discid, first, last, offsets):
+            raise DiscError(self._get_error_msg())
+        self._device = None
+        self._have_read = True
 
-    return _to_unicode(cdiscid.discid_get_freedb_id(self._c_discid))
+    def put(self, int first, int last, int sectors, offsets):
+        """ Creates a TOC based on the given offsets.
 
-  @property
-  def submission_url(self):
-    """ Disc ID / TOC Submission URL for MusicBrainz
+        Takes the *first* and *last* audio track, as well as the number of
+        *sectors* and a list of *offsets* as in :attr:`DiscId.track_offsets`.
 
-    With this url you can submit the current TOC as a new MusicBrainz
-    :musicbrainz:`Disc ID`.
-    """
+        If the operation fails for some reason, a :exc:`libdiscid.DiscError`
+        exception is raised.
+        """
 
-    return _to_unicode(cdiscid.discid_get_submission_url(self._c_discid))
+        cdef int* coffsets = <int*> malloc((len(offsets) + 1) * sizeof(int))
+        if coffsets is NULL:
+            raise MemoryError('Failed to allocate memory to store offsets')
 
-  @property
-  def webservice_url(self):
-    """ The web service URL for info about the CD
+        try:
+            coffsets[0] = sectors
+            for (i, v) in enumerate(offsets):
+                coffsets[i + 1] = v
+            return self._put(first, last, coffsets)
+        finally:
+            free(coffsets)
 
-    With this url you can retrieve information about the CD in XML from the
-    MusicBrainz web service.
-    """
+    cdef str _get_error_msg(self):
+        return _to_str(cdiscid.discid_get_error_msg(self._c_discid))
 
-    return _to_unicode(cdiscid.discid_get_webservice_url(self._c_discid))
+    @property
+    def id(self):
+        """ The MusicBrainz :musicbrainz:`Disc ID`.
+        """
 
-  @property
-  def first_track(self):
-    """ Number of the first audio track.
-    """
+        return _to_str(cdiscid.discid_get_id(self._c_discid))
 
-    return cdiscid.discid_get_first_track_num(self._c_discid)
+    @property
+    def freedb_id(self):
+        """ The :musicbrainz:`FreeDB` Disc ID (without category).
+        """
 
-  @property
-  def last_track(self):
-    """ Number of the last audio track.
-    """
+        return _to_str(cdiscid.discid_get_freedb_id(self._c_discid))
 
-    return cdiscid.discid_get_last_track_num(self._c_discid)
+    @property
+    def submission_url(self):
+        """ Disc ID / TOC Submission URL for MusicBrainz
 
-  @property
-  def sectors(self):
-    """ Total sector count.
-    """
+        With this url you can submit the current TOC as a new MusicBrainz
+        :musicbrainz:`Disc ID`.
+        """
 
-    return cdiscid.discid_get_sectors(self._c_discid)
+        return _to_str(cdiscid.discid_get_submission_url(self._c_discid))
 
-  @property
-  def track_offsets(self):
-    """ Tuple of all track offsets (in sectors).
+    @property
+    def webservice_url(self):
+        """ The web service URL for info about the CD
 
-    The first element corresponds to the offset of the track denoted by
-    :attr:`first_track` and so on.
-    """
+        With this url you can retrieve information about the CD in XML from the
+        MusicBrainz web service.
+        """
 
-    return tuple(cdiscid.discid_get_track_offset(self._c_discid, track)
-                 for track in range(self.first_track, self.last_track + 1))
+        return _to_str(cdiscid.discid_get_webservice_url(self._c_discid))
 
-  @property
-  def track_lengths(self):
-    """ Tuple of all track lengths (in sectors).
+    @property
+    def first_track(self):
+        """ Number of the first audio track.
+        """
 
-    The first element corresponds to the length of the track denoted by
-    :attr:`first_track` and so on.
-    """
+        return cdiscid.discid_get_first_track_num(self._c_discid)
 
-    return tuple(cdiscid.discid_get_track_length(self._c_discid, track)
-                 for track in range(self.first_track, self.last_track + 1))
+    @property
+    def last_track(self):
+        """ Number of the last audio track.
+        """
 
-  @property
-  def mcn(self):
-    """ Media Catalogue Number of the disc.
-    """
+        return cdiscid.discid_get_last_track_num(self._c_discid)
 
-    if not _has_feature(cdiscid.DISCID_FEATURE_MCN):
-      return None
-    return _to_unicode(cdiscid.wrap_get_mcn(self._c_discid))
+    @property
+    def sectors(self):
+        """ Total sector count.
+        """
 
-  @property
-  def track_isrcs(self):
-    """ Tuple of :musicbrainz:`ISRCs <ISRC>` of all tracks.
+        return cdiscid.discid_get_sectors(self._c_discid)
 
-    The first element of the list corresponds to the ISRC of the
-    :attr:`first_track` and so on.
-    """
+    @property
+    def track_offsets(self):
+        """ Tuple of all track offsets (in sectors).
 
-    if not _has_feature(cdiscid.DISCID_FEATURE_ISRC):
-      return None
-    return tuple(_to_unicode(cdiscid.wrap_get_track_isrc(self._c_discid,
-                                                         track)) for
-                 track in range(self.first_track, self.last_track + 1))
+        The first element corresponds to the offset of the track denoted by
+        :attr:`first_track` and so on.
+        """
 
-  @property
-  def device(self):
-    """ The device the data was read from.
+        return tuple(
+            cdiscid.discid_get_track_offset(self._c_discid, track)
+            for track in range(self.first_track, self.last_track + 1)
+        )
 
-    If it is ``None``, :func:`libdiscid.put` was called to create the instance.
-    """
+    @property
+    def track_lengths(self):
+        """ Tuple of all track lengths (in sectors).
 
-    return self._device
+        The first element corresponds to the length of the track denoted by
+        :attr:`first_track` and so on.
+        """
 
-  @property
-  def toc(self):
-    """ String representing the CD's Table of Contents (TOC).
-    """
+        return tuple(
+            cdiscid.discid_get_track_length(self._c_discid, track)
+            for track in range(self.first_track, self.last_track + 1)
+        )
 
-    assert self._have_read
+    @property
+    def mcn(self):
+        """ Media Catalogue Number of the disc.
+        """
 
-    cdef char* tocstr = cdiscid.wrap_get_toc(self._c_discid)
-    if tocstr is not NULL:
-      return _to_unicode(tocstr)
-    return None
+        if not _has_feature(cdiscid.DISCID_FEATURE_MCN):
+            return None
+        return _to_str(cdiscid.wrap_get_mcn(self._c_discid))
+
+    @property
+    def track_isrcs(self):
+        """ Tuple of :musicbrainz:`ISRCs <ISRC>` of all tracks.
+
+        The first element of the list corresponds to the ISRC of the
+        :attr:`first_track` and so on.
+        """
+
+        if not _has_feature(cdiscid.DISCID_FEATURE_ISRC):
+          return None
+        return tuple(
+            _to_str(cdiscid.wrap_get_track_isrc(self._c_discid, track))
+            for track in range(self.first_track, self.last_track + 1)
+        )
+
+    @property
+    def device(self):
+        """ The device the data was read from.
+
+        If it is ``None``, :func:`libdiscid.put` was called to create the instance.
+        """
+
+        return self._device
+
+    @property
+    def toc(self):
+        """ String representing the CD's Table of Contents (TOC).
+        """
+
+        assert self._have_read
+
+        cdef char* tocstr = cdiscid.wrap_get_toc(self._c_discid)
+        if tocstr is not NULL:
+            return _to_str(tocstr)
+        return None
+
 
 FEATURES_MAPPING = {
-    cdiscid.DISCID_FEATURE_READ: _to_unicode(cdiscid.DISCID_FEATURE_STR_READ),
-    cdiscid.DISCID_FEATURE_MCN: _to_unicode(cdiscid.DISCID_FEATURE_STR_MCN),
-    cdiscid.DISCID_FEATURE_ISRC: _to_unicode(cdiscid.DISCID_FEATURE_STR_ISRC)
+    cdiscid.DISCID_FEATURE_READ: _to_str(cdiscid.DISCID_FEATURE_STR_READ),
+    cdiscid.DISCID_FEATURE_MCN: _to_str(cdiscid.DISCID_FEATURE_STR_MCN),
+    cdiscid.DISCID_FEATURE_ISRC: _to_str(cdiscid.DISCID_FEATURE_STR_ISRC)
 }
 
+
 cdef _feature_list():
-  res = []
-  for f, s in FEATURES_MAPPING.items():
-    if _has_feature(f):
-      res.append(s)
-  return res
+    res = []
+    for f, s in FEATURES_MAPPING.items():
+        if _has_feature(f):
+            res.append(s)
+    return res
+
 
 def default_device():
-  """ The default device on this platform.
-  """
+    """ The default device on this platform.
+    """
 
-  return _to_unicode(cdiscid.discid_get_default_device())
+    return _to_str(cdiscid.discid_get_default_device())
+
 
 FEATURES = _feature_list()
 FEATURE_READ = cdiscid.DISCID_FEATURE_READ
 FEATURE_MCN = cdiscid.DISCID_FEATURE_MCN
 FEATURE_ISRC = cdiscid.DISCID_FEATURE_ISRC
-__discid_version__ = _to_unicode(cdiscid.wrap_get_version_string())
+__discid_version__ = _to_str(cdiscid.wrap_get_version_string())
 
