@@ -30,6 +30,7 @@ jobs:
         run: |
           echo EXPORTS > libdiscid-dll/libdiscid-0.6.1-win32/discid.def
           echo discid_new >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_free >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
           echo discid_read >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
           echo discid_read_sparse >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
           echo discid_put >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
