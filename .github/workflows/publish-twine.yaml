@@ -19,14 +19,16 @@ jobs:
         shell: powershell
         run: |
           Invoke-WebRequest -Uri http://ftp.musicbrainz.org/pub/musicbrainz/libdiscid/libdiscid-0.6.1-win32.zip -OutFile libdiscid-0.6.1.zip -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::Chrome
-          Invoke-WebRequest -Uri http://ftp.digitalmars.com/bup.zip -OutFile implib.zip -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::Chrome
           Expand-Archive -LiteralPath libdiscid-0.6.1.zip -DestinationPath libdiscid-dll
-          Expand-Archive -LiteralPath implib.zip -DestinationPath implib
       - name: Install cibuildwheel
         run: |
-          .\implib\dm\bin\implib.exe /s libdiscid-dll\libdiscid-0.6.1-win32\discid.lib libdiscid-dll\libdiscid-0.6.1-win32\discid.dll
           python -m pip install --upgrade pip
           python -m pip install cibuildwheel
+      - name: Prepare libdiscid.def
+        run: |
+          echo EXPORTS > libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          dumpbin /EXPORTS libdiscid-dll/libdiscid-0.6.1-win32/discid.dll >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          lib /def:libdiscid-dll/libdiscid-0.6.1-win32/discid.def /out:libdiscid-dll/libdiscid-0.6.1-win32/discid.lib
       - name: Build wheels
         run: |
           python -m cibuildwheel --output-dir dist
