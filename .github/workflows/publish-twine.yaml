@@ -32,8 +32,7 @@ jobs:
           python -m cibuildwheel --output-dir dist
         env:
           CIBW_BUILD: "cp36-* cp37-* cp38-* cp39-*"
-          CFLAGS: "-IC:\\libdiscid\\libdiscid-0.6.1-win32\\libdiscid-0.6.1\\include"
-          LDFLAGS: "-LC:\\libdiscid\\libdiscid-0.6.1-win32"
+          CIBW_ENVIRONMENT: "LIBDISCID_HOME=C:\libdiscid"
       - uses: actions/upload-artifact@v2
         with:
           path: dist/*.whl
