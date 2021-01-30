@@ -7,24 +7,24 @@ on:
 
 jobs:
   build_wheels:
-    name: Build wheels on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [windows-latest]
+    name: Build wheels on windows-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         name: Install Python
         with:
           python-version: '3.x'
-      - name: Download libdiscid
+      - name: Download libdiscid and implib
         shell: powershell
         run: |
-          Invoke-WebRequest -Uri http://ftp.musicbrainz.org/pub/musicbrainz/libdiscid/libdiscid-0.6.1-win32.zip -OutFile C:\libdiscid.zip -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::Chrome
-          Expand-Archive -LiteralPath 'C:\libdiscid.zip' -DestinationPath C:\libdiscid\
+          Invoke-WebRequest -Uri http://ftp.musicbrainz.org/pub/musicbrainz/libdiscid/libdiscid-0.6.1-win32.zip -OutFile libdiscid-0.6.1.zip -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::Chrome
+          Invoke-WebRequest -Uri http://ftp.digitalmars.com/bup.zip -OutFile implib.zip -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::Chrome
+          Expand-Archive -LiteralPath libdiscid-0.6.1.zip -DestinationPath libdiscid-dll
+          Expand-Archive -LiteralPath implib.zip -DestinationPath implib
       - name: Install cibuildwheel
         run: |
+          .\implib\dm\bin\implib.exe /s libdiscid-dll\libdiscid-0.6.1-win32\discid.lib libdiscid-dll\libdiscid-0.6.1-win32\discid.dll
           python -m pip install --upgrade pip
           python -m pip install cibuildwheel
       - name: Build wheels
@@ -32,7 +32,7 @@ jobs:
           python -m cibuildwheel --output-dir dist
         env:
           CIBW_BUILD: "cp36-* cp37-* cp38-* cp39-*"
-          CIBW_ENVIRONMENT: "LIBDISCID_HOME=C:\\libdiscid"
+          CIBW_ENVIRONMENT: "LIBDISCID_HOME=libdiscid-dll"
       - uses: actions/upload-artifact@v2
         with:
           path: dist/*.whl
