@@ -29,8 +29,8 @@ True
 """
 
 
-import libdiscid._discid
-from libdiscid.exceptions import DiscError
+from . import _discid
+from .exceptions import DiscError
 import re
 import warnings
 
@@ -39,31 +39,31 @@ __author__ = "Sebastian Ramacher"
 __license__ = "Expat"
 __copyright__ = f"(C) 2013-2021 {__author__}"
 
-DEFAULT_DEVICE = libdiscid._discid.default_device()
+DEFAULT_DEVICE = _discid.default_device()
 """The default device to use for :func:`DiscId.read` on this platform.
 
 .. deprecated:: 0.2.0
    Please use :func:`default_device` instead.
 """
 
-FEATURES = libdiscid._discid.FEATURES
+FEATURES = _discid.FEATURES
 """List of all available features supported by libdiscid on this platform.
 """
-FEATURE_READ = libdiscid._discid.FEATURE_READ
+FEATURE_READ = _discid.FEATURE_READ
 """Read the TOC of the disc to get the disc ID. This feature is always enabled.
 """
-FEATURE_MCN = libdiscid._discid.FEATURE_MCN
+FEATURE_MCN = _discid.FEATURE_MCN
 """Read the Media Catalogue Number of the disc.
 """
-FEATURE_ISRC = libdiscid._discid.FEATURE_ISRC
+FEATURE_ISRC = _discid.FEATURE_ISRC
 """Read :musicbrainz:`International Standard Recording Codes <ISRC>` of all the
 tracks.
 """
-FEATURES_MAPPING = libdiscid._discid.FEATURES_MAPPING
+FEATURES_MAPPING = _discid.FEATURES_MAPPING
 """Mapping between the constants representing a feature and their string
 representation.
 """
-__discid_version__ = libdiscid._discid.__discid_version__
+__discid_version__ = _discid.__discid_version__
 """The version of the underlying libdiscid.
 """
 
@@ -253,7 +253,7 @@ def read(device=None, features=None):
     :rtype: :class:`DiscId` object
     """
 
-    disc = libdiscid._discid.DiscId()
+    disc = _discid.DiscId()
     if features is None:
         disc.read(device)
     else:
@@ -281,7 +281,7 @@ def put(first, last, sectors, offsets):
     :rtype: :class:`DiscId` object
     """
 
-    disc = libdiscid._discid.DiscId()
+    disc = _discid.DiscId()
     disc.put(first, last, sectors, offsets)
     return DiscId(disc)
 
@@ -295,7 +295,7 @@ def default_device():
     :rtype: unicode
     """
 
-    return libdiscid._discid.default_device()
+    return _discid.default_device()
 
 
 def sectors_to_seconds(sectors):

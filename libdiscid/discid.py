@@ -21,12 +21,12 @@
 """Module to retain compatibility with the old interface.
 """
 
-from libdiscid.exceptions import DiscError
-from libdiscid._discid import DiscId
-from libdiscid._discid import default_device
-from libdiscid._discid import FEATURES_MAPPING, FEATURES
-from libdiscid._discid import FEATURE_READ, FEATURE_MCN, FEATURE_ISRC
-from libdiscid._discid import __discid_version__
+from .exceptions import DiscError
+from ._discid import DiscId
+from ._discid import default_device
+from ._discid import FEATURES_MAPPING, FEATURES
+from ._discid import FEATURE_READ, FEATURE_MCN, FEATURE_ISRC
+from ._discid import __discid_version__
 
 import warnings
 

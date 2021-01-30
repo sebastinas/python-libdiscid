@@ -24,7 +24,7 @@
 import unittest
 import libdiscid
 from libdiscid import DiscError
-from .import common
+from . import common
 
 
 class TestLibDiscId(unittest.TestCase):
