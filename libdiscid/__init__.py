@@ -31,6 +31,7 @@ True
 
 from . import _discid
 from .exceptions import DiscError
+from typing import Optional, Union, List, Tuple
 import re
 import warnings
 
@@ -74,7 +75,7 @@ class DiscId:
     Class holding all the information obtained from a disc.
     """
 
-    def __init__(self, cdiscid):
+    def __init__(self, cdiscid: _discid.DiscId) -> None:
         self._id = cdiscid.id
         self._freedb_id = cdiscid.freedb_id
         self._submission_url = cdiscid.submission_url
@@ -90,19 +91,19 @@ class DiscId:
         self._toc = cdiscid.toc
 
     @property
-    def id(self):
+    def id(self) -> str:
         """The MusicBrainz :musicbrainz:`Disc ID`."""
 
         return self._id
 
     @property
-    def freedb_id(self):
+    def freedb_id(self) -> str:
         """The :musicbrainz:`FreeDB` Disc ID (without category)."""
 
         return self._freedb_id
 
     @property
-    def submission_url(self):
+    def submission_url(self) -> str:
         """Disc ID / TOC Submission URL for MusicBrainz
 
         With this url you can submit the current TOC as a new MusicBrainz
@@ -112,7 +113,7 @@ class DiscId:
         return self._submission_url
 
     @property
-    def webservice_url(self):
+    def webservice_url(self) -> str:
         """The web service URL for info about the CD
 
         With this url you can retrieve information about the CD in XML from the
@@ -128,31 +129,31 @@ class DiscId:
         return self._webservice_url
 
     @property
-    def first_track(self):
+    def first_track(self) -> int:
         """Number of the first audio track."""
 
         return self._first_track
 
     @property
-    def last_track(self):
+    def last_track(self) -> int:
         """Number of the last audio track."""
 
         return self._last_track
 
     @property
-    def sectors(self):
+    def sectors(self) -> int:
         """Total sector count."""
 
         return self._sectors
 
     @property
-    def leadout_track(self):
+    def leadout_track(self) -> int:
         """Leadout track."""
 
         return self.sectors
 
     @property
-    def track_offsets(self):
+    def track_offsets(self) -> Tuple[int]:
         """Tuple of all track offsets (in sectors).
 
         The first element corresponds to the offset of the track denoted by
@@ -162,13 +163,13 @@ class DiscId:
         return self._track_offsets
 
     @property
-    def pregap(self):
+    def pregap(self) -> int:
         """Pregap of the first track (in sectors)."""
 
         return self.track_offsets[0]
 
     @property
-    def track_lengths(self):
+    def track_lengths(self) -> Tuple[int]:
         """Tuple of all track lengths (in sectors).
 
         The first element corresponds to the length of the track denoted by
@@ -178,7 +179,7 @@ class DiscId:
         return self._track_lengths
 
     @property
-    def mcn(self):
+    def mcn(self) -> str:
         """Media Catalogue Number of the disc.
 
         :raises NotImplementedError: reading MCN is not supported on this platform
@@ -191,7 +192,7 @@ class DiscId:
         return self._mcn
 
     @property
-    def track_isrcs(self):
+    def track_isrcs(self) -> Tuple[str]:
         """Tuple of :musicbrainz:`ISRCs <ISRC>` of all tracks.
 
         The first element of the list corresponds to the ISRC of the
@@ -208,7 +209,7 @@ class DiscId:
         return self._track_isrcs
 
     @property
-    def device(self):
+    def device(self) -> Optional[str]:
         """The device the data was read from.
 
         If it is ``None``, :func:`libdiscid.put` was called to create the instance.
@@ -217,7 +218,7 @@ class DiscId:
         return self._device
 
     @property
-    def toc(self):
+    def toc(self) -> str:
         """String representing the CD's Table of Contents (TOC).
 
         :raises ValueError: extracting TOC string from the submission URL failed
@@ -232,7 +233,7 @@ class DiscId:
         return self._toc
 
 
-def read(device=None, features=None):
+def read(device: Optional[Union[str, bytes]] = None, features: Optional[int] = None):
     """Reads the TOC from the device given as string.
 
     If *device* is ``None``, :func:`default_device` is used to determine
@@ -261,7 +262,9 @@ def read(device=None, features=None):
     return DiscId(disc)
 
 
-def put(first, last, sectors, offsets):
+def put(
+    first: int, last, sectors: int, offsets: Union[List[int], Tuple[int]]
+) -> DiscId:
     """Creates a TOC based on the given offsets.
 
     Takes the *first* and *last* audio track, as well as the number of
@@ -286,19 +289,19 @@ def put(first, last, sectors, offsets):
     return DiscId(disc)
 
 
-def default_device():
+def default_device() -> str:
     """The default device on this platform.
 
     The default device can change during the run-time of the program. This can
     happen with removable devices for example.
 
-    :rtype: unicode
+    :rtype: str
     """
 
     return _discid.default_device()
 
 
-def sectors_to_seconds(sectors):
+def sectors_to_seconds(sectors: int) -> int:
     """Convert sectors to seconds rounded to the nearest second.
 
     :param sectors: number of sectors
