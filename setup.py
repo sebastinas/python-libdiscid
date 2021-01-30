@@ -16,10 +16,16 @@ try:
     import pkgconfig
 
     have_pkgconfig = True
+
+    def pkgconfig_exists(package):
+        try:
+            return pkgconfig.exists(package)
+        except OSError:
+            return False
 except ImportError:
     have_pkgconfig = False
 
-if have_pkgconfig and pkgconfig.exists("libdiscid"):
+if have_pkgconfig and pkgconfig_exists("libdiscid"):
     flags = pkgconfig.parse("libdiscid")
     define_macros = flags["define_macros"]
     include_dirs = flags["include_dirs"]
