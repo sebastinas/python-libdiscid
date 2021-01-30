@@ -1,0 +1,23 @@
+[build-system]
+requires = [
+  "setuptools",
+  "Cython (>= 0.15)",
+  "wheel",
+]
+
+[tool.black]
+target_version = ["py36"]
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.eggs
+  | \.mypy_cache
+  | \.tox
+  | venv
+  | _build
+  | build
+  | dist
+)/
+'''

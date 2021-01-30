@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 import os.path
+import os
 import sys
 
 from setuptools import setup, Extension
@@ -22,6 +23,8 @@ try:
             return pkgconfig.exists(package)
         except OSError:
             return False
+
+
 except ImportError:
     have_pkgconfig = False
 
@@ -32,10 +35,18 @@ if have_pkgconfig and pkgconfig_exists("libdiscid"):
     library_dirs = flags["library_dirs"]
     libraries = list(flags["libraries"])
 else:
-    define_macros = ""
-    include_dirs = ""
-    library_dirs = ""
+    define_macros = []
+    include_dirs = []
+    library_dirs = []
     libraries = ["discid"]
+
+    LIBDISCID_HOME = os.environ.get("LIBDISCID_HOME", None)
+    if LIBDISCID_HOME is not None:
+        library_dirs.append(os.path.join(LIBDISCID_HOME, "libdiscid-0.6.1-win32"))
+        include_dirs.append(os.path.join(
+            LIBDISCID_HOME, "libdiscid-0.6.1-win32", "libdiscid-0.6.1", "include"
+        ))
+
 
 if have_cython:
     # if Cython is available, rebuild _discid.c
