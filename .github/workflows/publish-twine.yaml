@@ -27,13 +27,33 @@ jobs:
       - name: Prepare libdiscid.def
         run: |
           echo EXPORTS > libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          dumpbin /EXPORTS libdiscid-dll/libdiscid-0.6.1-win32/discid.dll >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          lib /def:libdiscid-dll/libdiscid-0.6.1-win32/discid.def /out:libdiscid-dll/libdiscid-0.6.1-win32/discid.lib
+          echo discid_new >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_read >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_read_sparse >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_put >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_get_error_msg >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_get_id >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_get_freedb_id >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_get_toc_string >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_get_submission_url >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_get_webservice_url >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_get_default_device >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_get_first_track_num >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_get_last_track_num >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_get_sectors >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_get_track_offset >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_get_track_length >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_get_mcn >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_get_track_isrc >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_has_feature >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_get_feature_list >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
+          echo discid_get_version_string >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
       - name: Build wheels
         run: |
           python -m cibuildwheel --output-dir dist
         env:
           CIBW_BUILD: "cp36-* cp37-* cp38-* cp39-*"
+          CIBW_BEFORE_BUILD: lib /def:libdiscid-dll/libdiscid-0.6.1-win32/discid.def /out:libdiscid-dll/libdiscid-0.6.1-win32/discid.lib
           CIBW_ENVIRONMENT: "LIBDISCID_HOME=libdiscid-dll"
       - uses: actions/upload-artifact@v2
         with:
