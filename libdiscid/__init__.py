@@ -47,7 +47,7 @@ DEFAULT_DEVICE = _discid.default_device()
 """
 
 FEATURES = _discid.FEATURES
-"""List of all available features supported by libdiscid on this platform.
+"""Tuple of all available features supported by libdiscid on this platform.
 """
 FEATURE_READ = _discid.FEATURE_READ
 """Read the TOC of the disc to get the disc ID. This feature is always enabled.

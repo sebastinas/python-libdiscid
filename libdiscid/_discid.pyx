@@ -260,11 +260,7 @@ FEATURES_MAPPING = {
 
 
 cdef _feature_list():
-    res = []
-    for f, s in FEATURES_MAPPING.items():
-        if _has_feature(f):
-            res.append(s)
-    return res
+    return tuple(s for f, s in FEATURES_MAPPING.items() if _has_feature(f))
 
 
 def default_device():
@@ -279,4 +275,3 @@ FEATURE_READ = cdiscid.DISCID_FEATURE_READ
 FEATURE_MCN = cdiscid.DISCID_FEATURE_MCN
 FEATURE_ISRC = cdiscid.DISCID_FEATURE_ISRC
 __discid_version__ = _to_str(cdiscid.wrap_get_version_string())
-
