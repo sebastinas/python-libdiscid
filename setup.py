@@ -40,12 +40,16 @@ else:
     library_dirs = []
     libraries = ["discid"]
 
+    # TODO: Solve this properly by passing CFLAGS and LDFLAGS via CIBW_ENVIRONMENT. For some reason,
+    # CFLAGS and LDFLAGS seem to be ignored when built through cibuildwheel.
     LIBDISCID_HOME = os.environ.get("LIBDISCID_HOME", None)
     if LIBDISCID_HOME is not None:
         library_dirs.append(os.path.join(LIBDISCID_HOME, "libdiscid-0.6.1-win32"))
-        include_dirs.append(os.path.join(
-            LIBDISCID_HOME, "libdiscid-0.6.1-win32", "libdiscid-0.6.1", "include"
-        ))
+        include_dirs.append(
+            os.path.join(
+                LIBDISCID_HOME, "libdiscid-0.6.1-win32", "libdiscid-0.6.1", "include"
+            )
+        )
 
 
 if have_cython:
