@@ -26,6 +26,8 @@ jobs:
           python -m pip install cibuildwheel
       - name: Set Windows ENV
         uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x86
       - name: Prepare libdiscid.def
         run: |
           echo EXPORTS > libdiscid-dll/libdiscid-0.6.1-win32/discid.def
