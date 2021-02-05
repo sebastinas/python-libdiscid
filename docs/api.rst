@@ -7,21 +7,6 @@ libdiscid package
 .. automodule:: libdiscid
    :members:
 
-Classes
-~~~~~~~
-
-.. autoclass:: libdiscid.DiscId
-   :show-inheritance:
-   :members:
-
-Exceptions
-~~~~~~~~~~
-
-.. autoexception:: libdiscid.DiscError
-   :show-inheritance:
-   :members:
-
-
 Subpackages
 ^^^^^^^^^^^
 
