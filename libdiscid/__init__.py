@@ -37,7 +37,7 @@ import warnings
 
 __version__ = "1.2"
 __author__ = "Sebastian Ramacher"
-__license__ = "Expat"
+__license__ = "MIT"
 __copyright__ = f"(C) 2013-2021 {__author__}"
 
 DEFAULT_DEVICE = _discid.default_device()

@@ -6,7 +6,7 @@ python-libdiscid |release|
 :musicbrainz:`identifiers <Disc ID>` for audio discs to use for the
 MusicBrainz_ database.
 
-`python-libdiscid` is released under the :ref:`Expat license <license>`.
+`python-libdiscid` is released under the :ref:`MIT license <license>`.
 
 Contents
 ^^^^^^^^

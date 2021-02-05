@@ -64,4 +64,4 @@ Usage
 License
 -------
 
-python-libdiscid is released under the Expat license. Check LICENSE for details.
+python-libdiscid is released under the MIT license. Check LICENSE for details.
