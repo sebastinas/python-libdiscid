@@ -93,7 +93,7 @@ cdef class DiscId:
 
         py_byte_device = device.encode('UTF-8')
         cdef char* cdevice = py_byte_device
-        ret = self._read(cdevice, features)
+        self._read(cdevice, features)
         self._device = device
 
     cdef _put(self, int first, int last, int* offsets):
