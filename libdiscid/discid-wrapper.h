@@ -25,20 +25,20 @@
 #include <discid/discid.h>
 
 #if (defined(__GNUC__) && (__GNUC__ >= 4)) || defined(__clang__)
-#	define INTERNAL __attribute__((visibility("hidden")))
+# define INTERNAL __attribute__((visibility("hidden")))
 #elif defined(__SUNPRO_C)
-#	define INTERNAL __hidden
+# define INTERNAL __hidden
 #else
-#	define INTERNAL
+# define INTERNAL
 #endif
 
 /* use the availability of DISCID_FEATURE_LENGTH to detect libdiscid < 0.4.0 */
 #ifndef DISCID_FEATURE_LENGTH
 
 enum discid_feature {
-	DISCID_FEATURE_READ = 1,
-	DISCID_FEATURE_MCN  = 2,
-	DISCID_FEATURE_ISRC = 4
+  DISCID_FEATURE_READ = 1,
+  DISCID_FEATURE_MCN  = 2,
+  DISCID_FEATURE_ISRC = 4
 };
 
 #define DISCID_FEATURE_STR_READ "read"
