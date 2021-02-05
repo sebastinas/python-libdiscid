@@ -45,12 +45,6 @@ else:
         )
 
 
-setup_requires = ["pkgconfig"]
-if have_cython:
-    # if Cython is available, check if it's new enough
-    setup_requires.append("cython >= 0.15")
-
-
 setup(
     ext_modules=[
         Extension(
@@ -67,5 +61,4 @@ setup(
         "libdiscid": ["_discid.pyi", "py.typed"],
     },
     test_suite="libdiscid.tests",
-    setup_requires=setup_requires,
 )

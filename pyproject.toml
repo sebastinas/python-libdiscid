@@ -2,6 +2,7 @@
 requires = [
   "setuptools >= 43",
   "Cython (>= 0.15)",
+  "pkgconfig",
   "wheel",
 ]
 
