@@ -86,35 +86,12 @@ if have_cython:
     setup_requires.append("cython >= 0.15")
 
 
-def read(name):
-    with open(os.path.join(os.path.dirname(__file__), name)) as f:
-        return f.read()
-
-
 setup(
-    name="python-libdiscid",
-    version="1.2",
-    description="Python bindings for libdiscid",
-    long_description=read("README.rst"),
-    author="Sebastian Ramacher",
-    author_email="sebastian+dev@ramacher.at",
-    url="https://github.com/sebastinas/python-libdiscid",
-    license="Expat",
     ext_modules=ext,
     packages=["libdiscid", "libdiscid.tests", "libdiscid.compat"],
     package_data={
         "libdiscid": ["_discid.pyi", "py.typed"],
     },
-    classifiers=[
-        "Development Status :: 5 - Production/Stable",
-        "Intended Audience :: Developers",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
-        "Programming Language :: Python :: 3",
-        "Topic :: Multimedia :: Sound/Audio :: CD Audio :: CD Ripping",
-        "Topic :: Software Development :: Libraries :: Python Modules",
-    ],
     test_suite="libdiscid.tests",
     setup_requires=setup_requires,
-    python_requires=">=3.6",
 )
