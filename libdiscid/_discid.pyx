@@ -18,6 +18,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+# cython: language_level=3, warn.unused=True
+
 from . cimport cdiscid
 cimport cpython
 from libc cimport limits

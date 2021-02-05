@@ -7,13 +7,6 @@ import sys
 from setuptools import setup, Extension
 
 try:
-    from Cython.Build import cythonize
-
-    have_cython = True
-except ImportError:
-    have_cython = False
-
-try:
     import pkgconfig
 
     have_pkgconfig = True
@@ -52,34 +45,6 @@ else:
         )
 
 
-if have_cython:
-    # if Cython is available, rebuild _discid.c
-    ext = cythonize(
-        [
-            Extension(
-                "libdiscid._discid",
-                ["libdiscid/_discid.pyx", "libdiscid/discid-wrapper.c"],
-                define_macros=define_macros,
-                include_dirs=include_dirs,
-                library_dirs=library_dirs,
-                libraries=libraries,
-            )
-        ],
-        language_level=3,
-    )
-else:
-    # ... otherwise use the shipped version of _discid.c
-    ext = [
-        Extension(
-            "libdiscid._discid",
-            ["libdiscid/_discid.c", "libdiscid/discid-wrapper.c"],
-            define_macros=define_macros,
-            include_dirs=include_dirs,
-            library_dirs=library_dirs,
-            libraries=libraries,
-        )
-    ]
-
 setup_requires = ["pkgconfig"]
 if have_cython:
     # if Cython is available, check if it's new enough
@@ -87,7 +52,16 @@ if have_cython:
 
 
 setup(
-    ext_modules=ext,
+    ext_modules=[
+        Extension(
+            "libdiscid._discid",
+            ["libdiscid/_discid.pyx", "libdiscid/discid-wrapper.c"],
+            define_macros=define_macros,
+            include_dirs=include_dirs,
+            library_dirs=library_dirs,
+            libraries=libraries,
+        )
+    ],
     packages=["libdiscid", "libdiscid.tests", "libdiscid.compat"],
     package_data={
         "libdiscid": ["_discid.pyi", "py.typed"],
