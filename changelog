@@ -1,3 +1,14 @@
+python-libdiscid (2.0) stable; urgency=medium
+
+  * Remove compat module for the 0.x style interface
+  * Add type annotations
+
+  * Internal changes:
+    - Modernize build system: move build dependencies to pyproject.toml
+    - Use relative imports
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Wed, 10 Feb 2021 23:33:54 +0100
+
 python-libdiscid (1.2) stable; urgency=medium
 
   * Bump required Python version to 3.6

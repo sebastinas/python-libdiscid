@@ -35,7 +35,7 @@ from typing import Optional, Union, List, Tuple
 import re
 import warnings
 
-__version__ = "1.2"
+__version__ = "2.0"
 __author__ = "Sebastian Ramacher"
 __license__ = "MIT"
 __copyright__ = f"(C) 2013-2021 {__author__}"
