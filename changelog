@@ -1,3 +1,10 @@
+python-libdiscid (2.0.1) stable; urgency=medium
+
+  * Fix python_requires in setup.cfg
+    A typo caused the information not to be included in PKG-INFO
+
+ -- Sebastian Ramacher <sramacher@debian.org>  Thu, 11 Feb 2021 21:15:43 +0100
+
 python-libdiscid (2.0) stable; urgency=medium
 
   * Remove compat module for the 0.x style interface
