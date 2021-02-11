@@ -1,6 +1,6 @@
 # libdiscid Python bindings
 
-python-libdiscid implements Python 3 bindings for libdiscid using Cython.
+python-libdiscid implements Python >= 3.6 bindings for libdiscid using Cython.
 
 ## Dependencies
 
