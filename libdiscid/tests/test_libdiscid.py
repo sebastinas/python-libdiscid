@@ -33,9 +33,6 @@ class TestLibDiscId(unittest.TestCase):
         self.assertIsNotNone(libdiscid.__discid_version__)
 
     def test_default_device(self):
-        self.assertIsNotNone(libdiscid.DEFAULT_DEVICE)
-
-    def test_default_device_2(self):
         self.assertIsNotNone(libdiscid.default_device())
 
     def test_features(self):

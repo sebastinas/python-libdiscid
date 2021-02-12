@@ -40,13 +40,6 @@ __author__ = "Sebastian Ramacher"
 __license__ = "MIT"
 __copyright__ = f"(C) 2013-2021 {__author__}"
 
-DEFAULT_DEVICE = _discid.default_device()
-"""The default device to use for :func:`DiscId.read` on this platform.
-
-.. deprecated:: 0.2.0
-   Please use :func:`default_device` instead.
-"""
-
 FEATURES = _discid.FEATURES
 """Tuple of all available features supported by libdiscid on this platform.
 """
