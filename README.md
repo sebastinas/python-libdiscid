@@ -61,16 +61,3 @@ print("id: {}".format(disc.id))
 
 python-libdiscid is released under the MIT license. Check LICENSE for details.
 
-## Tidelift
-
-### Security contact information
-
-To report a security vulnerability, please use the [Tidelift security
-contact](https://tidelift.com/security). Tidelift will coorindate the fix and disclosure.
-
-### Commercial support
-
-cwcwidth and thousands of other packages are working with Tidelift to deliver commercial support and
-maintenance for the open source packages you use to build your applications. Save time, reduce risk,
-and improve code health, while paying the maintainers of the exact packages you use. [Learn
-more.](https://tidelift.com/subscription/pkg/pypi-cwcwidth?utm_source=pypi-cwcwidth&utm_medium=referral&utm_campaign=enterprise&utm_term=repo)
