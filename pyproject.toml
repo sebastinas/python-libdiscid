@@ -5,6 +5,7 @@ requires = [
   "pkgconfig",
   "wheel",
 ]
+build-backend = "setuptools.build_meta"
 
 [tool.black]
 target_version = ["py36"]
