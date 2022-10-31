@@ -17,7 +17,6 @@ Contents
    usage
    misc
    api
-   changelog
    license
 
 Index
