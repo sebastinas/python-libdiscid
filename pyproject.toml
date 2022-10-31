@@ -1,10 +1,5 @@
 [build-system]
-requires = [
-  "setuptools >= 43",
-  "Cython (>= 0.15)",
-  "pkgconfig",
-  "wheel",
-]
+requires = ["setuptools >= 43", "Cython (>= 0.15)", "pkgconfig"]
 build-backend = "setuptools.build_meta"
 
 [tool.black]
