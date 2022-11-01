@@ -35,10 +35,10 @@ from typing import Optional, Union, List, Tuple
 import re
 import warnings
 
-__version__ = "2.0.1"
+__version__ = "2.0.2"
 __author__ = "Sebastian Ramacher"
 __license__ = "MIT"
-__copyright__ = f"(C) 2013-2021 {__author__}"
+__copyright__ = f"(C) 2013-2022 {__author__}"
 
 FEATURES = _discid.FEATURES
 """Tuple of all available features supported by libdiscid on this platform.

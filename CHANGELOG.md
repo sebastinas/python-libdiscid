@@ -1,6 +1,6 @@
 # Changelog
 
-## 2.0.2 (2022-XX-XX)
+## 2.0.2 (2022-11-01)
 
   * Remove long deprecated `libdiscid.DEFAULT_DEVICE`.
   * Bump required Python version to 3.7.
