@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.3 (2023-07-31)
+
+* Bump required Python version to 3.8.
+* Fix compatibility with Sphinx 7.
+
 ## 2.0.2 (2022-11-01)
 
   * Remove long deprecated `libdiscid.DEFAULT_DEVICE`.
