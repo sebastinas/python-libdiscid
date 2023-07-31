@@ -29,7 +29,7 @@ import libdiscid
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ["sphinx.ext.autodoc", "sphinx.ext.intersphinx", "sphinx.ext.extlinks"]
+extensions = ["sphinx.ext.autodoc", "sphinx.ext.intersphinx"]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -170,10 +170,6 @@ html_show_sourcelink = False
 # Output file base name for HTML help builder.
 htmlhelp_basename = "python-libdisciddoc"
 
-
-extlinks = {
-    "musicbrainz": ("http://musicbrainz.org/doc/%s", ""),
-}
 
 intersphinx_mapping = {
     "python": ("http://docs.python.org/", None),

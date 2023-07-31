@@ -50,7 +50,7 @@ FEATURE_MCN = _discid.FEATURE_MCN
 """Read the Media Catalogue Number of the disc.
 """
 FEATURE_ISRC = _discid.FEATURE_ISRC
-"""Read :musicbrainz:`International Standard Recording Codes <ISRC>` of all the
+"""Read International Standard Recording Codes (ISRC) of all the
 tracks.
 """
 FEATURES_MAPPING = _discid.FEATURES_MAPPING
@@ -85,13 +85,13 @@ class DiscId:
 
     @property
     def id(self) -> str:
-        """The MusicBrainz :musicbrainz:`Disc ID`."""
+        """The MusicBrainz Disc ID."""
 
         return self._id
 
     @property
     def freedb_id(self) -> str:
-        """The :musicbrainz:`FreeDB` Disc ID (without category)."""
+        """The FreeDB Disc ID (without category)."""
 
         return self._freedb_id
 
@@ -100,7 +100,7 @@ class DiscId:
         """Disc ID / TOC Submission URL for MusicBrainz
 
         With this url you can submit the current TOC as a new MusicBrainz
-        :musicbrainz:`Disc ID`.
+        Disc ID.
         """
 
         return self._submission_url
@@ -186,7 +186,7 @@ class DiscId:
 
     @property
     def track_isrcs(self) -> Tuple[str]:
-        """Tuple of :musicbrainz:`ISRCs <ISRC>` of all tracks.
+        """Tuple of ISRCs of all tracks.
 
         The first element of the list corresponds to the ISRC of the
         :attr:`first_track` and so on.

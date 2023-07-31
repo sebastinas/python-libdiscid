@@ -13,7 +13,7 @@ Supported libdiscid features
 version 0.6.0, that is:
 
 * retrieval of the disc's Media Catalogue Number and retrieving the
-  :musicbrainz:`International Standard Recording Code <ISRC>` of
+  International Standard Recording Code (ISRC) of
   the tracks if you are using `libdiscid` 0.4.0 and above.
 * selective reading support if you are using `libdiscid` 0.5.0 and above.
 * fuzzy TOC lookup if you are using `libdiscid` 0.6.0 and above.
@@ -27,7 +27,8 @@ Other Python bindings
 
 There are other Python bindings available. `python-discid`__ is the most
 prominent one. For a full list of bindings (including bindings for other
-languages) check musicbrainz:`libdiscid`.
+languages) check libdiscid_.
 
 .. _GitHub: https://github.com/sebastinas/python-libdiscid
+.. _libdiscid: https://musicbrainz.org/doc/libdiscid
 .. __: https://github.com/JonnyJD/python-discid

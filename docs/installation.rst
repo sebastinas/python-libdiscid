@@ -6,7 +6,7 @@ Dependencies
 
 `python-libdiscid` depends on the following components:
 
-* :musicbrainz:`libdiscid`
+* libdiscid_
 * `Cython`__ (>= 0.15)
 * `pkgconfig`__
 
@@ -56,7 +56,7 @@ A note for Windows users
 
 There are eggs available from the same source too. With these eggs, the
 extension module comes pre-built. However, you still need to fetch
-`discid.dll` from :musicbrainz:`libdiscid` and copy the DLL to somewhere it can
+`discid.dll` from libdiscid_ and copy the DLL to somewhere it can
 be found, e.g. to ``C:\WINDOWS\system32``.
 
 .. __: https://pypi.python.org/pypi/python-libdiscid/
@@ -91,4 +91,5 @@ limitation:
   Please note that modification to any file in the ``libdiscid`` directory will
   only be available after another run of ``python setup.py build``.
 
+.. _libdiscid: https://musicbrainz.org/doc/libdiscid
 .. __: http://pythonhosted.org/distribute/setuptools.html#development-mode

@@ -129,14 +129,14 @@ cdef class DiscId:
 
     @property
     def id(self):
-        """The MusicBrainz :musicbrainz:`Disc ID`.
+        """The MusicBrainz Disc ID.
         """
 
         return _to_str(cdiscid.discid_get_id(self._c_discid))
 
     @property
     def freedb_id(self):
-        """The :musicbrainz:`FreeDB` Disc ID (without category).
+        """The FreeDB Disc ID (without category).
         """
 
         return _to_str(cdiscid.discid_get_freedb_id(self._c_discid))
@@ -146,7 +146,7 @@ cdef class DiscId:
         """Disc ID / TOC Submission URL for MusicBrainz
 
         With this url you can submit the current TOC as a new MusicBrainz
-        :musicbrainz:`Disc ID`.
+        Disc ID.
         """
 
         return _to_str(cdiscid.discid_get_submission_url(self._c_discid))
@@ -219,7 +219,7 @@ cdef class DiscId:
 
     @property
     def track_isrcs(self):
-        """Tuple of :musicbrainz:`ISRCs <ISRC>` of all tracks.
+        """Tuple of ISRCs of all tracks.
 
         The first element of the list corresponds to the ISRC of the
         :attr:`first_track` and so on.
