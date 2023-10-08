@@ -2,14 +2,11 @@
 
 import os.path
 import os
-import sys
 
 from setuptools import setup, Extension
 
 try:
     import pkgconfig
-
-    have_pkgconfig = True
 
     def pkgconfig_exists(package):
         try:
@@ -18,9 +15,12 @@ try:
             return False
 
 except ImportError:
-    have_pkgconfig = False
 
-if have_pkgconfig and pkgconfig_exists("libdiscid"):
+    def pkgconfig_exists(package):
+        return False
+
+
+if pkgconfig_exists("libdiscid"):
     flags = pkgconfig.parse("libdiscid")
     define_macros = flags["define_macros"]
     include_dirs = flags["include_dirs"]
