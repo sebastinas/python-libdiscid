@@ -42,11 +42,21 @@ $ python3 setup.py build
 but please make sure that `build/lib.*` is in `sys.path` before the source
 folder.
 
+It is also avalaible on `conda-forge`: 
+```
+$ conda install python-libdiscid -c conda-forge
+```
+or 
+```
+$ mamba install python-libdiscid -c conda-forge
+```
 ## A note for Windows users
 
 There are eggs available from PyPI that don't require the extension module to be
 built. If these are used, it is still required to drop a working discid.dll in
 `C:\WINDOWS\system32` (or wherever it can be found).
+
+Installing the package through `conda-forge` for Windows 64-Bit will automatically download and install the library.
 
 ## Usage
 
