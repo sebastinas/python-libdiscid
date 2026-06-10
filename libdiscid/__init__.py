@@ -31,7 +31,6 @@ True
 
 from . import _discid
 from .exceptions import DiscError
-from typing import Optional, Union, List, Tuple
 import re
 import warnings
 
@@ -146,7 +145,7 @@ class DiscId:
         return self.sectors
 
     @property
-    def track_offsets(self) -> Tuple[int]:
+    def track_offsets(self) -> tuple[int]:
         """Tuple of all track offsets (in sectors).
 
         The first element corresponds to the offset of the track denoted by
@@ -162,7 +161,7 @@ class DiscId:
         return self.track_offsets[0]
 
     @property
-    def track_lengths(self) -> Tuple[int]:
+    def track_lengths(self) -> tuple[int]:
         """Tuple of all track lengths (in sectors).
 
         The first element corresponds to the length of the track denoted by
@@ -185,7 +184,7 @@ class DiscId:
         return self._mcn
 
     @property
-    def track_isrcs(self) -> Tuple[str]:
+    def track_isrcs(self) -> tuple[str]:
         """Tuple of ISRCs of all tracks.
 
         The first element of the list corresponds to the ISRC of the
@@ -202,7 +201,7 @@ class DiscId:
         return self._track_isrcs
 
     @property
-    def device(self) -> Optional[str]:
+    def device(self) -> str | None:
         """The device the data was read from.
 
         If it is ``None``, :func:`libdiscid.put` was called to create the instance.
@@ -226,7 +225,7 @@ class DiscId:
         return self._toc
 
 
-def read(device: Optional[Union[str, bytes]] = None, features: Optional[int] = None):
+def read(device: str | bytes | None = None, features: int | None = None):
     """Reads the TOC from the device given as string.
 
     If *device* is ``None``, :func:`default_device` is used to determine
@@ -256,7 +255,7 @@ def read(device: Optional[Union[str, bytes]] = None, features: Optional[int] = N
 
 
 def put(
-    first: int, last, sectors: int, offsets: Union[List[int], Tuple[int]]
+    first: int, last, sectors: int, offsets: list[int] | tuple[int]
 ) -> DiscId:
     """Creates a TOC based on the given offsets.
 
