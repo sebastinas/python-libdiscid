@@ -59,5 +59,4 @@ setup(
     package_data={
         "libdiscid": ["_discid.pyi", "py.typed"],
     },
-    test_suite="libdiscid.tests",
 )
