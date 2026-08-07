@@ -31,6 +31,7 @@ True
 
 from . import _discid
 from .exceptions import DiscError
+from collections.abc import Sequence
 import re
 import warnings
 
@@ -254,9 +255,7 @@ def read(device: str | bytes | None = None, features: int | None = None):
     return DiscId(disc)
 
 
-def put(
-    first: int, last, sectors: int, offsets: list[int] | tuple[int]
-) -> DiscId:
+def put(first: int, last, sectors: int, offsets: Sequence[int]) -> DiscId:
     """Creates a TOC based on the given offsets.
 
     Takes the *first* and *last* audio track, as well as the number of

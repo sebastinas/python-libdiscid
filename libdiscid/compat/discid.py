@@ -38,7 +38,7 @@ _INVERSE_FEATURES = {
 }
 
 
-def _decode(string, encoding=None):
+def _decode(string: str | bytes, encoding: str | None = None) -> str:
     # Let's do the same thing discid is doing. It always accepts both strings and
     # bytes objects and encodes/decodes them as it sees fit. libdiscid always
     # wants string objects, so let's decode it here on a best effort basis.
