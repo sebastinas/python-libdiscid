@@ -22,7 +22,7 @@
 
 This module provides a compatible layer so that python-libdiscid can be used as
 a replacement for python-discid. It provides an interface compatible with
-python-discid version 1.0.2.
+python-discid version 1.4.0.
 """
 
 from collections.abc import Iterable, Sequence
@@ -199,6 +199,7 @@ class Disc:
         ]
         return " ".join(map(str, cddb_query))
 
+
 # functions defined in discid
 get_default_device = libdiscid.default_device
 
@@ -220,7 +221,7 @@ def put(first: int, last: int, disc_sectors: int, track_offsets: Sequence[int]) 
 
 
 # constants defined in discid
-__version__ = "1.1.0 (compat layer from python-libdiscid %s)" % (libdiscid.__version__,)
+__version__ = f"1.4.0 (compat layer from python-libdiscid {libdiscid.__version__})"
 """This is the version of python-discid this layer is compatible with. """
 
 LIBDISCID_VERSION_STRING = libdiscid.__discid_version__
