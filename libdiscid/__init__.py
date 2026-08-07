@@ -320,7 +320,6 @@ __all__ = (
     "FEATURE_READ",
     "FEATURE_MCN",
     "FEATURE_ISRC",
-    "DEFAULT_DEVICE",
     "DiscId",
     "DiscError",
 )
