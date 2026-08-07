@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1 (2026-08-07)
+
+* Bump required Python version to 3.11.
+* Require `Cython` 3.
+* Update compatibility layer with changes in `python-discid` 1.4. Thanks to Philipp Wolfer.
+
 ## 2.0.3 (2023-07-31)
 
 * Bump required Python version to 3.8.

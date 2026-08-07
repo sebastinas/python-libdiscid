@@ -34,7 +34,7 @@ from collections.abc import Sequence
 import re
 import warnings
 
-__version__ = "2.0.3"
+__version__ = "2.1"
 __author__ = "Sebastian Ramacher"
 __license__ = "MIT"
 __copyright__ = f"(C) 2013-2026 {__author__}"
