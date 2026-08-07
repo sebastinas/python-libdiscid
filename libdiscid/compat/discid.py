@@ -59,11 +59,11 @@ class TOCError(Exception):
 
 # classes defined in discid
 class Track:
-    def __init__(self, disc: libdiscid.DiscId, number: int):
+    def __init__(self, disc: libdiscid.DiscId, number: int) -> None:
         self._disc = disc
         self.number = number
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.number)
 
     @property
@@ -71,17 +71,17 @@ class Track:
         return self._disc.track_offsets[self.number - self._disc.first_track]
 
     @property
-    def sectors(self):
+    def sectors(self) -> int:
         return self._disc.track_lengths[self.number - self._disc.first_track]
 
     length = sectors
 
     @property
-    def seconds(self):
+    def seconds(self) -> int:
         return libdiscid.sectors_to_seconds(self.sectors)
 
     @property
-    def isrc(self):
+    def isrc(self) -> str | None:
         try:
             value = self._disc.track_isrcs[self.number - self._disc.first_track]
         except NotImplementedError:
@@ -90,7 +90,7 @@ class Track:
 
 
 class Disc:
-    def __init__(self):
+    def __init__(self) -> None:
         self._disc: libdiscid.DiscId | None = None
         self.tracks: list[Track] = []
 
@@ -126,7 +126,7 @@ class Disc:
         self._populate_tracks()
         return True
 
-    def _populate_tracks(self):
+    def _populate_tracks(self) -> None:
         assert self._disc is not None
         self.tracks = [
             Track(self._disc, num)
