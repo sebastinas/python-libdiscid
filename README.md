@@ -19,8 +19,8 @@ set include directories, libraries to link, etc.
 
 python-libdiscid is available in some distributions:
 
-* Debian/Ubuntu: `apt-get install python3-libdiscid` (Python 3)
-* Fedora: `dnf install python3-libdiscid` (Python 3)
+* Debian/Ubuntu: `apt-get install python3-libdiscid`
+* Fedora: `dnf install python3-libdiscid`
 
 python-libdiscid can be installed via `pip`:
 ```
@@ -31,17 +31,6 @@ or by running:
 $ python3 setup.py install
 ```
 
-If you just want to try it locally, run:
-```
-$ python3 setup.py build_ext -i
-```
-and hack right away. You can also run:
-```
-$ python3 setup.py build
-```
-but please make sure that `build/lib.*` is in `sys.path` before the source
-folder.
-
 It is also avalaible on `conda-forge`: 
 ```
 $ conda install python-libdiscid -c conda-forge
@@ -50,6 +39,7 @@ or
 ```
 $ mamba install python-libdiscid -c conda-forge
 ```
+
 ## A note for Windows users
 
 There are eggs available from PyPI that don't require the extension module to be
