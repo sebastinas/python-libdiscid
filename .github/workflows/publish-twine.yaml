@@ -41,6 +41,7 @@ jobs:
           python -m cibuildwheel --output-dir dist
         env:
           CIBW_BUILD: "cp311-win32"
+          CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: "delvewheel repair --add-path . -w {dest_dir} -v {wheel}"
       - uses: actions/upload-artifact@v7
         with:
           path: dist/*.whl
