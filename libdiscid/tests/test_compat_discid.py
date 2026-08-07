@@ -38,16 +38,24 @@ class TestCompatDiscID(unittest.TestCase):
     def test_features_implementes(self):
         self.assertIsNotNone(discid.FEATURES_IMPLEMENTED)
 
-    def test_empty_is_none(self):
+    def test_unitialized_assertion_fails(self):
         disc = discid.Disc()
-        self.assertIsNone(disc.id)
-        self.assertIsNone(disc.freedb_id)
-        self.assertIsNone(disc.submission_url)
-        self.assertIsNone(disc.toc_string)
-        self.assertIsNone(disc.first_track_num)
-        self.assertIsNone(disc.last_track_num)
-        self.assertIsNone(disc.sectors)
-        self.assertIsNone(disc.seconds)
+        with self.assertRaises(AssertionError):
+            disc.id
+        with self.assertRaises(AssertionError):
+            disc.freedb_id
+        with self.assertRaises(AssertionError):
+            disc.submission_url
+        with self.assertRaises(AssertionError):
+            disc.toc_string
+        with self.assertRaises(AssertionError):
+            disc.first_track_num
+        with self.assertRaises(AssertionError):
+            disc.last_track_num
+        with self.assertRaises(AssertionError):
+            disc.sectors
+        with self.assertRaises(AssertionError):
+            disc.seconds
         self.assertEqual(len(disc.tracks), 0)
 
     @unittest.skipIf(
