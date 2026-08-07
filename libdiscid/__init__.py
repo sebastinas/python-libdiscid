@@ -1,4 +1,4 @@
-# Copyright 2013-2023 Sebastian Ramacher <sebastian+dev@ramacher.at>
+# Copyright 2013-2026 Sebastian Ramacher <sebastian@ramacher.at>
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -37,7 +37,7 @@ import warnings
 __version__ = "2.0.3"
 __author__ = "Sebastian Ramacher"
 __license__ = "MIT"
-__copyright__ = f"(C) 2013-2023 {__author__}"
+__copyright__ = f"(C) 2013-2026 {__author__}"
 
 FEATURES = _discid.FEATURES
 """Tuple of all available features supported by libdiscid on this platform.
