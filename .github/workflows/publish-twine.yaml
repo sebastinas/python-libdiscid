@@ -17,30 +17,48 @@ jobs:
         name: Install Python
         with:
           python-version: "3.x"
+      - name: Install cibuildwheel
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install cibuildwheel
       - name: Download libdiscid
         shell: powershell
         run: |
           Invoke-WebRequest -Uri http://ftp.musicbrainz.org/pub/musicbrainz/libdiscid/libdiscid-0.7.0-win.zip -OutFile libdiscid-0.7.0.zip -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::Chrome
           Expand-Archive -LiteralPath libdiscid-0.7.0.zip -DestinationPath libdiscid-dll
-      - name: Prepare libdiscid
+      - name: Prepare libdiscid (Win32)
         run: |
           mv libdiscid-dll/libdiscid-0.7.0-win/Win32/discid.dll .
           mv libdiscid-dll/libdiscid-0.7.0-win/Win32/discid.lib .
           mv libdiscid-dll/libdiscid-0.7.0-win/Win32/discid.exp .
           mv libdiscid-dll/libdiscid-0.7.0-win/include/discid .
-      - name: Install cibuildwheel
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install cibuildwheel
       - name: Set Windows ENV
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: x86
-      - name: Build wheels
+      - name: Build wheels (Win32)
         run: |
           python -m cibuildwheel --output-dir dist
         env:
           CIBW_BUILD: "cp311-win32"
+          CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: "delvewheel repair --add-path . -w {dest_dir} -v {wheel}"
+      - name: Prepare libdiscid (Win64)
+        run: |
+          rm discid.dll
+          rm discid.lib
+          rm discid.exp
+          mv libdiscid-dll/libdiscid-0.7.0-win/x64/discid.dll .
+          mv libdiscid-dll/libdiscid-0.7.0-win/x64/discid.lib .
+          mv libdiscid-dll/libdiscid-0.7.0-win/x64/discid.exp .
+      - name: Set Windows ENV (Win64)
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+      - name: Build wheels (Win64)
+        run: |
+          python -m cibuildwheel --output-dir dist
+        env:
+          CIBW_BUILD: "cp311-win_amd64"
           CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: "delvewheel repair --add-path . -w {dest_dir} -v {wheel}"
       - uses: actions/upload-artifact@v7
         with:
