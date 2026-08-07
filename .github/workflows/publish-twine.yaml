@@ -20,8 +20,14 @@ jobs:
       - name: Download libdiscid
         shell: powershell
         run: |
-          Invoke-WebRequest -Uri http://ftp.musicbrainz.org/pub/musicbrainz/libdiscid/libdiscid-0.6.1-win32.zip -OutFile libdiscid-0.6.1.zip -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::Chrome
-          Expand-Archive -LiteralPath libdiscid-0.6.1.zip -DestinationPath libdiscid-dll
+          Invoke-WebRequest -Uri http://ftp.musicbrainz.org/pub/musicbrainz/libdiscid/libdiscid-0.7.0-win.zip -OutFile libdiscid-0.7.0.zip -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::Chrome
+          Expand-Archive -LiteralPath libdiscid-0.7.0.zip -DestinationPath libdiscid-dll
+      - name: Prepare libdiscid
+        run: |
+          mv libdiscid-dll/libdiscid-0.7.0-win/Win32/discid.dll .
+          mv libdiscid-dll/libdiscid-0.7.0-win/Win32/discid.lib .
+          mv libdiscid-dll/libdiscid-0.7.0-win/Win32/discid.exp .
+          mv libdiscid-dll/libdiscid-0.7.0-win/include/discid .
       - name: Install cibuildwheel
         run: |
           python -m pip install --upgrade pip
@@ -30,38 +36,11 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: x86
-      - name: Prepare libdiscid.def
-        run: |
-          echo EXPORTS > libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_new >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_free >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_read >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_read_sparse >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_put >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_get_error_msg >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_get_id >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_get_freedb_id >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_get_toc_string >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_get_submission_url >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_get_webservice_url >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_get_default_device >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_get_first_track_num >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_get_last_track_num >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_get_sectors >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_get_track_offset >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_get_track_length >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_get_mcn >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_get_track_isrc >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_has_feature >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_get_feature_list >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          echo discid_get_version_string >> libdiscid-dll/libdiscid-0.6.1-win32/discid.def
-          lib /def:libdiscid-dll/libdiscid-0.6.1-win32/discid.def /out:libdiscid-dll/libdiscid-0.6.1-win32/discid.lib /machine:x86
       - name: Build wheels
         run: |
           python -m cibuildwheel --output-dir dist
         env:
           CIBW_BUILD: "cp311-win32"
-          CIBW_ENVIRONMENT: "LIBDISCID_HOME=libdiscid-dll"
       - uses: actions/upload-artifact@v7
         with:
           path: dist/*.whl
