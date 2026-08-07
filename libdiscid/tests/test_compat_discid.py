@@ -18,8 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-"""Tests for the libdiscid.compat.discid module
-"""
+"""Tests for the libdiscid.compat.discid module"""
 
 import unittest
 import libdiscid
@@ -108,7 +107,9 @@ class TestCompatDiscID(unittest.TestCase):
             *testdata.offsets,
             testdata.seconds,
         ]
-        self.assertEqual(disc.cddb_query_string, " ".join(map(str, expected_cddb_query)))
+        self.assertEqual(
+            disc.cddb_query_string, " ".join(map(str, expected_cddb_query))
+        )
 
         self.assertEqual(len(disc.tracks), len(testdata.offsets))
         for track, offset, sec in zip(

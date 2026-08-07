@@ -195,7 +195,7 @@ class Disc:
             self.freedb_id,
             self.last_track_num,
             *self._disc.track_offsets,
-            libdiscid.sectors_to_seconds(self.sectors)
+            libdiscid.sectors_to_seconds(self.sectors),
         ]
         return " ".join(map(str, cddb_query))
 
@@ -203,7 +203,9 @@ class Disc:
 get_default_device = libdiscid.default_device
 
 
-def read(device: str | bytes | None = None, features: Iterable[str] | None = None) -> Disc:
+def read(
+    device: str | bytes | None = None, features: Iterable[str] | None = None
+) -> Disc:
     disc = Disc()
     if features:
         features = map(lambda feature: _decode(feature, "ascii"), features)

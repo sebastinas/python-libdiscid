@@ -28,7 +28,6 @@ This module provides Python-bindings for libdiscid.
 True
 """
 
-
 from . import _discid
 from .exceptions import DiscError
 from collections.abc import Sequence
