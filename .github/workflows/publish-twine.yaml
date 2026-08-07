@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-python@v7
         name: Install Python
         with:
-          python-version: '3.x'
+          python-version: "3.x"
       - name: Download libdiscid
         shell: powershell
         run: |
@@ -67,34 +67,34 @@ jobs:
     name: Build sdist
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v7
-    - name: Set up Python
-      uses: actions/setup-python@v7
-      with:
-        python-version: '3.x'
-    - name: Install dependencies
-      run: |
-        sudo apt-get install -y libdiscid-dev pkg-config
-        python -m pip install --upgrade pip
-        pip install setuptools pkgconfig "Cython >= 3"
-    - name: Build sdist
-      run: |
-        python setup.py sdist
-    - uses: actions/upload-artifact@v7
-      with:
-        path: dist/*
+      - uses: actions/checkout@v7
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.x"
+      - name: Install dependencies
+        run: |
+          sudo apt-get install -y libdiscid-dev pkgconf
+          python -m pip install --upgrade pip
+          pip install setuptools pkgconfig "Cython >= 3"
+      - name: Build sdist
+        run: |
+          python setup.py sdist
+      - uses: actions/upload-artifact@v7
+        with:
+          path: dist/*
 
   publish:
     name: Publish to PyPI
     needs: [build_wheels, build_sdist]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/download-artifact@v8
-      with:
-        name: artifact
-        path: dist
-    - name: Publish to PyPI
-      uses: pypa/gh-action-pypi-publish@master
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_PASSWORD }}
+      - uses: actions/download-artifact@v8
+        with:
+          name: artifact
+          path: dist
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@master
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_PASSWORD }}
