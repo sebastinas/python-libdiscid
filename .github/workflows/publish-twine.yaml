@@ -3,6 +3,9 @@ name: Upload Python Package
 on:
   release:
     types: [published]
+  push:
+    branches:
+      - "main"
 
 jobs:
   build_wheels:
@@ -57,7 +60,7 @@ jobs:
         run: |
           python -m cibuildwheel --output-dir dist
         env:
-          CIBW_BUILD: "cp311-win32 cp312-win32 cp313-win32 cp314-win32"
+          CIBW_BUILD: "cp311-win32"
           CIBW_ENVIRONMENT: "LIBDISCID_HOME=libdiscid-dll"
       - uses: actions/upload-artifact@v7
         with:
@@ -88,6 +91,7 @@ jobs:
     name: Publish to PyPI
     needs: [build_wheels, build_sdist]
     runs-on: ubuntu-latest
+    if: github.event_name == 'release' && github.event.action == 'published'
     steps:
       - uses: actions/download-artifact@v8
         with:
