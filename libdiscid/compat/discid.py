@@ -25,6 +25,7 @@ a replacement for python-discid. It provides an interface compatible with
 python-discid version 1.0.2.
 """
 
+from collections.abc import Iterable, Sequence
 import libdiscid
 import operator
 import functools
@@ -35,23 +36,6 @@ _INVERSE_FEATURES = {
     libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_MCN]: libdiscid.FEATURE_MCN,
     libdiscid.FEATURES_MAPPING[libdiscid.FEATURE_ISRC]: libdiscid.FEATURE_ISRC,
 }
-
-
-class _NoneHelper:
-    def __getattr__(self, name):
-        if name in (
-            "id",
-            "freedb_id",
-            "submission_url",
-            "toc",
-            "first_track",
-            "last_track",
-            "sectors",
-            "mcn",
-        ):
-            return None
-
-        return super().__getattr__(name)
 
 
 def _decode(string, encoding=None):
@@ -75,20 +59,20 @@ class TOCError(Exception):
 
 # classes defined in discid
 class Track:
-    def __init__(self, disc, number):
-        self.disc = disc
+    def __init__(self, disc: libdiscid.DiscId, number: int):
+        self._disc = disc
         self.number = number
 
     def __str__(self):
         return str(self.number)
 
     @property
-    def offset(self):
-        return self.disc.track_offsets[self.number - self.disc.first_track]
+    def offset(self) -> int:
+        return self._disc.track_offsets[self.number - self._disc.first_track]
 
     @property
     def sectors(self):
-        return self.disc.track_lengths[self.number - self.disc.first_track]
+        return self._disc.track_lengths[self.number - self._disc.first_track]
 
     length = sectors
 
@@ -99,7 +83,7 @@ class Track:
     @property
     def isrc(self):
         try:
-            value = self.disc.track_isrcs[self.number - self.disc.first_track]
+            value = self._disc.track_isrcs[self.number - self._disc.first_track]
         except NotImplementedError:
             return None
         return value if value != "" else None
@@ -107,11 +91,16 @@ class Track:
 
 class Disc:
     def __init__(self):
-        self.disc = _NoneHelper()
-        self.tracks = []
+        self._disc: libdiscid.DiscId | None = None
+        self.tracks: list[Track] = []
 
-    def read(self, device, features=[]):
-        self.disc = libdiscid.read(
+    def read(
+        self, device: str | bytes | None = None, features: Iterable[str] | None = None
+    ) -> bool:
+        if features is None:
+            features = []
+
+        self._disc = libdiscid.read(
             device,
             functools.reduce(
                 operator.or_,
@@ -123,66 +112,73 @@ class Disc:
                 0,
             ),
         )
-        self.tracks = [
-            Track(self.disc, numb)
-            for numb in range(self.disc.first_track, self.disc.last_track + 1)
-        ]
+        self._populate_tracks()
         return True
 
-    def put(self, first, last, disc_sectors, track_offsets):
+    def put(
+        self, first: int, last: int, disc_sectors: int, track_offsets: Sequence[int]
+    ) -> bool:
         try:
-            self.disc = libdiscid.put(first, last, disc_sectors, track_offsets)
+            self._disc = libdiscid.put(first, last, disc_sectors, list(track_offsets))
         except DiscError as disc_error:
             raise TOCError(str(disc_error))
 
-        self.tracks = [
-            Track(self.disc, num)
-            for num in range(self.disc.first_track, self.disc.last_track + 1)
-        ]
+        self._populate_tracks()
         return True
 
-    @property
-    def id(self):
-        return self.disc.id
+    def _populate_tracks(self):
+        assert self._disc is not None
+        self.tracks = [
+            Track(self._disc, num)
+            for num in range(self._disc.first_track, self._disc.last_track + 1)
+        ]
 
     @property
-    def freedb_id(self):
-        return self.disc.freedb_id
+    def id(self) -> str:
+        assert self._disc is not None
+        return self._disc.id
 
     @property
-    def submission_url(self):
-        return self.disc.submission_url
+    def freedb_id(self) -> str:
+        assert self._disc is not None
+        return self._disc.freedb_id
 
     @property
-    def toc_string(self):
-        return self.disc.toc
+    def submission_url(self) -> str | None:
+        assert self._disc is not None
+        return self._disc.submission_url
 
     @property
-    def first_track_num(self):
-        return self.disc.first_track
+    def toc_string(self) -> str | None:
+        assert self._disc is not None
+        return self._disc.toc
 
     @property
-    def last_track_num(self):
-        return self.disc.last_track
+    def first_track_num(self) -> int:
+        assert self._disc is not None
+        return self._disc.first_track
 
     @property
-    def sectors(self):
-        return self.disc.sectors
+    def last_track_num(self) -> int:
+        assert self._disc is not None
+        return self._disc.last_track
+
+    @property
+    def sectors(self) -> int:
+        assert self._disc is not None
+        return self._disc.sectors
 
     length = sectors
 
     @property
-    def seconds(self):
-        return (
-            libdiscid.sectors_to_seconds(self.sectors)
-            if self.sectors is not None
-            else None
-        )
+    def seconds(self) -> int:
+        return libdiscid.sectors_to_seconds(self.sectors)
 
     @property
-    def mcn(self):
+    def mcn(self) -> str | None:
+        assert self._disc is not None
         try:
-            value = self.disc.mcn
+            value = self._disc.mcn
         except NotImplementedError:
             return None
         return value if value != "" else None
@@ -192,16 +188,15 @@ class Disc:
 get_default_device = libdiscid.default_device
 
 
-def read(device=None, features=[]):
+def read(device: str | bytes | None = None, features: Iterable[str] | None = None) -> Disc:
     disc = Disc()
-    disc.read(
-        _decode(device) if device is not None else None,
-        map(lambda feature: _decode(feature, "ascii"), features),
-    )
+    if features:
+        features = map(lambda feature: _decode(feature, "ascii"), features)
+    disc.read(_decode(device) if device is not None else None, features)
     return disc
 
 
-def put(first, last, disc_sectors, track_offsets):
+def put(first: int, last: int, disc_sectors: int, track_offsets: Sequence[int]) -> Disc:
     disc = Disc()
     disc.put(first, last, disc_sectors, track_offsets)
     return disc
