@@ -188,6 +188,16 @@ class Disc:
             return None
         return value if value != "" else None
 
+    @property
+    def cddb_query_string(self) -> str:
+        assert self._disc is not None
+        cddb_query = [
+            self.freedb_id,
+            self.last_track_num,
+            *self._disc.track_offsets,
+            libdiscid.sectors_to_seconds(self.sectors)
+        ]
+        return " ".join(map(str, cddb_query))
 
 # functions defined in discid
 get_default_device = libdiscid.default_device

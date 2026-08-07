@@ -102,6 +102,13 @@ class TestCompatDiscID(unittest.TestCase):
         self.assertEqual(disc.pregap, testdata.offsets[0])
         self.assertEqual(disc.sectors, testdata.sectors)
         self.assertEqual(disc.seconds, testdata.seconds)
+        expected_cddb_query = [
+            testdata.freedb_id,
+            testdata.last,
+            *testdata.offsets,
+            testdata.seconds,
+        ]
+        self.assertEqual(disc.cddb_query_string, " ".join(map(str, expected_cddb_query)))
 
         self.assertEqual(len(disc.tracks), len(testdata.offsets))
         for track, offset, sec in zip(
