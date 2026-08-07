@@ -164,6 +164,11 @@ class Disc:
         return self._disc.last_track
 
     @property
+    def pregap(self) -> int:
+        assert self._disc is not None
+        return self._disc.pregap
+
+    @property
     def sectors(self) -> int:
         assert self._disc is not None
         return self._disc.sectors

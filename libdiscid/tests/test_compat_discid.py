@@ -99,6 +99,7 @@ class TestCompatDiscID(unittest.TestCase):
         self.assertEqual(disc.toc_string, testdata.toc)
         self.assertEqual(disc.first_track_num, testdata.first)
         self.assertEqual(disc.last_track_num, testdata.last)
+        self.assertEqual(disc.pregap, testdata.offsets[0])
         self.assertEqual(disc.sectors, testdata.sectors)
         self.assertEqual(disc.seconds, testdata.seconds)
 
