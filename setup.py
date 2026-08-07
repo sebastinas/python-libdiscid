@@ -43,20 +43,24 @@ else:
             )
         )
 
+# Python 3.11
+py_limited_api_defines = [("Py_LIMITED_API", 0x030B0000)]
 
 setup(
     ext_modules=[
         Extension(
             "libdiscid._discid",
             ["libdiscid/_discid.pyx", "libdiscid/discid-wrapper.c"],
-            define_macros=define_macros,
+            define_macros=define_macros + py_limited_api_defines,
             include_dirs=include_dirs,
             library_dirs=library_dirs,
             libraries=libraries,
+            py_limited_api=True,
         )
     ],
     packages=["libdiscid", "libdiscid.tests", "libdiscid.compat"],
     package_data={
         "libdiscid": ["_discid.pyi", "py.typed"],
     },
+    options={"bdist_wheel": {"py_limited_api": "cp311"}},
 )

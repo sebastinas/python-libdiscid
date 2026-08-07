@@ -76,7 +76,7 @@ jobs:
         run: |
           sudo apt-get install -y libdiscid-dev pkgconf
           python -m pip install --upgrade pip
-          pip install setuptools pkgconfig "Cython >= 3"
+          pip install setuptools pkgconfig "Cython >= 3.1"
       - name: Build sdist
         run: |
           python setup.py sdist

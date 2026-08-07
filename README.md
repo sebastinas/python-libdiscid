@@ -5,7 +5,7 @@ python-libdiscid implements Python >= 3.11 bindings for libdiscid using Cython.
 ## Dependencies
 
 * libdiscid
-* Cython (>= 3, optional)
+* Cython (>= 3.1, optional)
 * pkgconfig (optional)
 
 Note that the tarballs come with pre-built C source for the Cython module. So
